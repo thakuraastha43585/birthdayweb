@@ -20,347 +20,81 @@
     --text-mid: #7A3B55;
     --text-light: #C06090;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--blush);
-    color: var(--text-dark);
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
+  body { font-family: 'Nunito', sans-serif; background: var(--blush); color: var(--text-dark); overflow-x: hidden; min-height: 100vh; }
   .font-playfair { font-family: 'Playfair Display', serif; }
   .font-dancing { font-family: 'Dancing Script', cursive; }
-
-  /* ===== PAGES ===== */
   .page { display: none; min-height: 100vh; animation: fadeInPage 0.6s ease; }
   .page.active { display: block; }
-  
-  @keyframes fadeInPage {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ===== CONFETTI ===== */
+  @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
-  .confetti-piece {
-    position: absolute; top: -20px;
-    width: 10px; height: 10px; border-radius: 50%;
-    animation: confettiFall linear infinite;
-  }
-  @keyframes confettiFall {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* ===== BACKGROUND DOTS ===== */
-  .bg-dots {
-    background-image: radial-gradient(circle, var(--pink-mid) 1px, transparent 1px);
-    background-size: 24px 24px;
-    background-color: var(--blush);
-  }
-
-  /* ===== CARDS ===== */
-  .card-cute {
-    background: white;
-    border-radius: 24px;
-    box-shadow: 0 8px 32px rgba(232,71,122,0.12), 0 2px 8px rgba(232,71,122,0.08);
-    border: 1.5px solid rgba(255,182,211,0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+  .confetti-piece { position: absolute; top: -20px; width: 10px; height: 10px; border-radius: 50%; animation: confettiFall linear infinite; }
+  @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+  .bg-dots { background-image: radial-gradient(circle, var(--pink-mid) 1px, transparent 1px); background-size: 24px 24px; background-color: var(--blush); }
+  .card-cute { background: white; border-radius: 24px; box-shadow: 0 8px 32px rgba(232,71,122,0.12), 0 2px 8px rgba(232,71,122,0.08); border: 1.5px solid rgba(255,182,211,0.4); transition: transform 0.3s ease, box-shadow 0.3s ease; }
   .card-cute:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(232,71,122,0.18); }
-
-  /* ===== BUTTONS ===== */
-  .btn-pink {
-    background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
-    color: white;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    padding: 16px 40px;
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(232,71,122,0.35);
-    transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-  }
+  .btn-pink { background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent)); color: white; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.1rem; padding: 16px 40px; border-radius: 50px; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(232,71,122,0.35); transition: all 0.3s ease; letter-spacing: 0.5px; }
   .btn-pink:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,71,122,0.45); }
   .btn-pink:active { transform: translateY(0); }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--pink-accent);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 14px 36px;
-    border-radius: 50px;
-    border: 2px solid var(--pink-deep);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+  .btn-outline { background: transparent; color: var(--pink-accent); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; padding: 14px 36px; border-radius: 50px; border: 2px solid var(--pink-deep); cursor: pointer; transition: all 0.3s ease; }
   .btn-outline:hover { background: var(--pink-soft); transform: translateY(-2px); }
-
-  /* ===== INPUT ===== */
-  .input-cute {
-    width: 100%;
-    padding: 14px 20px;
-    border-radius: 16px;
-    border: 2px solid var(--pink-mid);
-    background: white;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    color: var(--text-dark);
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
+  .input-cute { width: 100%; padding: 14px 20px; border-radius: 16px; border: 2px solid var(--pink-mid); background: white; font-family: 'Nunito', sans-serif; font-size: 1rem; color: var(--text-dark); outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
   .input-cute:focus { border-color: var(--pink-deep); box-shadow: 0 0 0 4px rgba(255,123,172,0.15); }
   .input-cute::placeholder { color: var(--text-light); }
-
-  /* ===== PROGRESS BAR ===== */
-  .progress-bar {
-    width: 100%;
-    height: 6px;
-    background: var(--pink-soft);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--pink-mid), var(--pink-accent));
-    border-radius: 3px;
-    transition: width 0.5s ease;
-  }
-
-  /* ===== FLOATING ELEMENTS ===== */
+  .progress-bar { width: 100%; height: 6px; background: var(--pink-soft); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--pink-mid), var(--pink-accent)); border-radius: 3px; transition: width 0.5s ease; }
   .float-anim { animation: floatUpDown 3s ease-in-out infinite; }
   .float-anim-delay { animation: floatUpDown 3s ease-in-out infinite 1.5s; }
-  @keyframes floatUpDown {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  /* ===== SPARKLE ===== */
-  .sparkle {
-    display: inline-block;
-    animation: sparkleAnim 2s ease-in-out infinite;
-  }
-  @keyframes sparkleAnim {
-    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    50% { transform: scale(1.2) rotate(15deg); opacity: 0.7; }
-  }
-
-  /* ===== HEART PULSE ===== */
+  @keyframes floatUpDown { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
   .heart-pulse { animation: heartBeat 1.5s ease-in-out infinite; }
-  @keyframes heartBeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-  }
-
-  /* ===== MEMORY CARDS ===== */
+  @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
   .flip-card { perspective: 1000px; cursor: pointer; }
   .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-style: preserve-3d; }
   .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
   .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; }
   .flip-card-back { transform: rotateY(180deg); }
-
-  /* ===== GIFT BOX ===== */
-  .gift-lid { transition: transform 0.8s cubic-bezier(0.4,0,0.2,1); transform-origin: bottom center; }
-  .gift-open .gift-lid { transform: translateY(-80px) rotate(-15deg); }
-  
-  /* ===== FLOWER PICK ===== */
-  .flower-btn {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    animation: floatUpDown 2.5s ease-in-out infinite;
-  }
+  .flower-btn { cursor: pointer; transition: transform 0.3s ease; animation: floatUpDown 2.5s ease-in-out infinite; }
   .flower-btn:nth-child(2) { animation-delay: 0.8s; }
   .flower-btn:nth-child(3) { animation-delay: 1.6s; }
   .flower-btn:hover { transform: scale(1.15) rotate(5deg); }
-
-  /* ===== MUSIC BUTTON ===== */
-  #musicBtn {
-    position: fixed; top: 16px; right: 16px; z-index: 1000;
-    width: 44px; height: 44px;
-    background: white;
-    border-radius: 50%;
-    border: 2px solid var(--pink-mid);
-    box-shadow: 0 4px 12px rgba(232,71,122,0.2);
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-  }
+  #musicBtn { position: fixed; top: 16px; right: 16px; z-index: 1000; width: 44px; height: 44px; background: white; border-radius: 50%; border: 2px solid var(--pink-mid); box-shadow: 0 4px 12px rgba(232,71,122,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; }
   #musicBtn:hover { transform: scale(1.1); }
-
-  /* ===== TYPEWRITER ===== */
-  .typewriter { overflow: hidden; border-right: 2px solid var(--pink-accent); white-space: nowrap; animation: typing 3s steps(40,end), blink 0.75s step-end infinite; }
-  @keyframes typing { from { width: 0; } to { width: 100%; } }
-  @keyframes blink { from, to { border-color: transparent; } 50% { border-color: var(--pink-accent); } }
-
-  /* ===== SLIDE IN ===== */
-  .slide-in { animation: slideIn 0.6s ease forwards; opacity: 0; }
-  @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-
-  /* ===== SHINE EFFECT ===== */
-  .shine-effect {
-    position: relative; overflow: hidden;
-  }
-  .shine-effect::after {
-    content: '';
-    position: absolute; top: 0; left: -100%;
-    width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: shine 3s infinite;
-  }
+  .divider-hearts { text-align: center; font-size: 1.2rem; letter-spacing: 8px; color: var(--pink-mid); margin: 20px 0; }
+  .reason-card { background: white; border-radius: 20px; padding: 24px; border-left: 4px solid var(--pink-deep); box-shadow: 0 4px 16px rgba(232,71,122,0.1); transition: transform 0.3s ease; animation: slideInCard 0.5s ease forwards; opacity: 0; }
+  @keyframes slideInCard { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .sticker { display: inline-block; animation: wiggle 3s ease-in-out infinite; }
+  @keyframes wiggle { 0%, 90%, 100% { transform: rotate(0deg); } 92% { transform: rotate(-5deg); } 96% { transform: rotate(5deg); } }
+  .tape { display: inline-block; background: rgba(255,182,211,0.5); padding: 3px 24px; transform: rotate(-2deg); font-size: 0.7rem; color: var(--text-mid); letter-spacing: 2px; text-transform: uppercase; }
+  .preview-banner { background: linear-gradient(135deg, #FF7BAC, #E8477A); color: white; text-align: center; padding: 10px; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; position: sticky; top: 0; z-index: 100; }
+  .link-box { background: var(--pink-soft); border: 2px dashed var(--pink-mid); border-radius: 16px; padding: 16px 20px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--text-mid); word-break: break-all; text-align: center; }
+  .shine-effect { position: relative; overflow: hidden; }
+  .shine-effect::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shine 3s infinite; }
   @keyframes shine { 0% { left: -100%; } 100% { left: 200%; } }
-
-  /* ===== RIBBON ===== */
-  .ribbon {
-    position: absolute; top: -10px; right: 20px;
-    background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
-    color: white; font-size: 0.75rem; font-weight: 700;
-    padding: 6px 14px; border-radius: 4px;
-  }
-  .ribbon::after {
-    content: ''; position: absolute; bottom: -8px; right: 0;
-    width: 0; height: 0;
-    border-left: 8px solid transparent;
-    border-top: 8px solid var(--pink-accent);
-  }
-
-  /* ===== COUPON ===== */
-  .coupon-input {
-    background: var(--pink-soft);
-    border: 2px dashed var(--pink-mid);
-    padding: 10px 16px;
-    border-radius: 12px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    outline: none;
-    width: 100%;
-    color: var(--text-dark);
-    transition: border-color 0.3s;
-  }
+  .coupon-input { background: var(--pink-soft); border: 2px dashed var(--pink-mid); padding: 10px 16px; border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 1rem; outline: none; width: 100%; color: var(--text-dark); transition: border-color 0.3s; }
   .coupon-input:focus { border-color: var(--pink-deep); }
+  .ribbon { position: absolute; top: -10px; right: 20px; background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent)); color: white; font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 4px; }
+  .ribbon::after { content: ''; position: absolute; bottom: -8px; right: 0; width: 0; height: 0; border-left: 8px solid transparent; border-top: 8px solid var(--pink-accent); }
+  .illustration { filter: drop-shadow(0 8px 16px rgba(232,71,122,0.2)); }
+  .emoji-bounce { animation: emojiBounce 2s ease-in-out infinite; }
+  @keyframes emojiBounce { 0%, 100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(-8px) rotate(-5deg); } 75% { transform: translateY(-4px) rotate(5deg); } }
 
-  /* ===== PAGE INDICATORS ===== */
-  .page-dots { display: flex; gap: 8px; justify-content: center; }
-  .page-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pink-mid); transition: all 0.3s ease; }
-  .page-dot.active { width: 24px; border-radius: 4px; background: var(--pink-accent); }
+  /* ===== RECIPIENT JOURNEY NAV ===== */
+  .rjp-step { display: none; }
+  .rjp-step.active { display: block; animation: fadeInPage 0.6s ease; }
+  .step-indicator { display: flex; gap: 6px; justify-content: center; margin-bottom: 20px; }
+  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pink-mid); transition: all 0.3s; }
+  .step-dot.done { background: var(--pink-accent); }
+  .step-dot.current { width: 20px; border-radius: 4px; background: var(--pink-accent); }
 
-  /* ===== SCRAPBOOK TAPE ===== */
-  .tape {
-    display: inline-block;
-    background: rgba(255,182,211,0.5);
-    padding: 3px 24px;
-    transform: rotate(-2deg);
-    font-size: 0.7rem;
-    color: var(--text-mid);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  /* ===== SECTION DIVIDERS ===== */
-  .divider-hearts {
-    text-align: center;
-    font-size: 1.2rem;
-    letter-spacing: 8px;
-    color: var(--pink-mid);
-    margin: 20px 0;
-  }
-
-  /* ===== REASON CARDS ===== */
-  .reason-card {
-    background: white;
-    border-radius: 20px;
-    padding: 24px;
-    border-left: 4px solid var(--pink-deep);
-    box-shadow: 0 4px 16px rgba(232,71,122,0.1);
-    transition: transform 0.3s ease;
-    animation: slideInCard 0.5s ease forwards;
-    opacity: 0;
-  }
-  @keyframes slideInCard {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ===== STICKER ===== */
-  .sticker {
-    display: inline-block;
-    animation: wiggle 3s ease-in-out infinite;
-  }
-  @keyframes wiggle {
-    0%, 90%, 100% { transform: rotate(0deg); }
-    92% { transform: rotate(-5deg); }
-    96% { transform: rotate(5deg); }
-  }
-
-  /* ===== PREVIEW BANNER ===== */
-  .preview-banner {
-    background: linear-gradient(135deg, #FF7BAC, #E8477A);
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    position: sticky; top: 0; z-index: 100;
-  }
-
-  /* ===== LINK BOX ===== */
-  .link-box {
-    background: var(--pink-soft);
-    border: 2px dashed var(--pink-mid);
-    border-radius: 16px;
-    padding: 16px 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: var(--text-mid);
-    word-break: break-all;
-    text-align: center;
-  }
-
-  /* ===== LOADING ===== */
-  .loader {
-    width: 48px; height: 48px;
-    border: 4px solid var(--pink-soft);
-    border-top-color: var(--pink-accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ===== SCROLLBAR ===== */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--pink-soft); }
   ::-webkit-scrollbar-thumb { background: var(--pink-mid); border-radius: 3px; }
-
-  /* ===== EMOJI ANIMATIONS ===== */
-  .emoji-bounce { animation: emojiBounce 2s ease-in-out infinite; }
-  @keyframes emojiBounce {
-    0%, 100% { transform: translateY(0) rotate(0); }
-    25% { transform: translateY(-8px) rotate(-5deg); }
-    75% { transform: translateY(-4px) rotate(5deg); }
-  }
-
-  /* ===== SVG Illustrations ===== */
-  .illustration { filter: drop-shadow(0 8px 16px rgba(232,71,122,0.2)); }
 </style>
 </head>
 <body>
 
-<!-- MUSIC BUTTON -->
 <button id="musicBtn" onclick="toggleMusic()" title="Toggle Music">🎵</button>
-
-<!-- CONFETTI -->
 <div class="confetti-container" id="confettiContainer"></div>
-
-<!-- AUDIO -->
 <audio id="bgMusic" loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"/>
 </audio>
@@ -370,78 +104,52 @@
 <!-- ======================================== -->
 <div id="page-welcome" class="page active">
   <div class="bg-dots min-h-screen flex flex-col">
-    <!-- Header decoration -->
     <div style="background: linear-gradient(180deg, var(--pink-soft) 0%, transparent 100%); padding: 20px; text-align: center;">
       <div class="flex justify-center gap-4 text-2xl">
-        <span class="sticker">🎀</span>
-        <span class="float-anim">🌸</span>
-        <span class="sticker">🎀</span>
+        <span class="sticker">🎀</span><span class="float-anim">🌸</span><span class="sticker">🎀</span>
       </div>
     </div>
-
     <div class="flex-1 flex items-center justify-center px-4 py-8">
       <div class="w-full max-w-md">
-        <!-- Kitten SVG -->
         <div class="text-center mb-6 float-anim">
           <svg width="120" height="120" viewBox="0 0 120 120" class="illustration mx-auto">
-            <!-- Kitten body -->
             <ellipse cx="60" cy="85" rx="30" ry="25" fill="#FFD4A8"/>
-            <!-- Head -->
             <circle cx="60" cy="55" r="28" fill="#FFD4A8"/>
-            <!-- Left ear -->
             <polygon points="36,34 28,14 48,30" fill="#FFD4A8"/>
             <polygon points="38,32 32,18 46,30" fill="#FFB6D3"/>
-            <!-- Right ear -->
             <polygon points="84,34 92,14 72,30" fill="#FFD4A8"/>
             <polygon points="82,32 88,18 74,30" fill="#FFB6D3"/>
-            <!-- Party hat -->
-            <polygon points="60,20 45,45 75,45" fill="linear-gradient(#FF7BAC,#E8477A)"/>
             <polygon points="60,20 45,45 75,45" fill="#FF7BAC"/>
             <line x1="45" y1="45" x2="75" y2="45" stroke="#FFB6D3" stroke-width="3"/>
             <circle cx="60" cy="20" r="3" fill="#FFD700"/>
-            <!-- Hat stripes -->
             <line x1="52" y1="28" x2="68" y2="28" stroke="white" stroke-width="1.5" opacity="0.6"/>
             <line x1="49" y1="35" x2="71" y2="35" stroke="white" stroke-width="1.5" opacity="0.6"/>
-            <!-- Eyes -->
             <ellipse cx="50" cy="55" rx="6" ry="7" fill="white"/>
             <ellipse cx="70" cy="55" rx="6" ry="7" fill="white"/>
             <ellipse cx="51" cy="56" rx="4" ry="5" fill="#5C3A1E"/>
             <ellipse cx="71" cy="56" rx="4" ry="5" fill="#5C3A1E"/>
             <circle cx="52.5" cy="54.5" r="1.5" fill="white"/>
             <circle cx="72.5" cy="54.5" r="1.5" fill="white"/>
-            <!-- Blush -->
             <ellipse cx="43" cy="63" rx="6" ry="4" fill="#FFB6D3" opacity="0.6"/>
             <ellipse cx="77" cy="63" rx="6" ry="4" fill="#FFB6D3" opacity="0.6"/>
-            <!-- Nose -->
             <ellipse cx="60" cy="65" rx="3" ry="2" fill="#FF7BAC"/>
-            <!-- Mouth -->
             <path d="M55 68 Q60 73 65 68" stroke="#FF7BAC" stroke-width="1.5" fill="none"/>
-            <!-- Whiskers -->
             <line x1="32" y1="63" x2="52" y2="65" stroke="#C06090" stroke-width="1" opacity="0.6"/>
             <line x1="32" y1="67" x2="52" y2="67" stroke="#C06090" stroke-width="1" opacity="0.6"/>
             <line x1="68" y1="65" x2="88" y2="63" stroke="#C06090" stroke-width="1" opacity="0.6"/>
             <line x1="68" y1="67" x2="88" y2="67" stroke="#C06090" stroke-width="1" opacity="0.6"/>
-            <!-- Bow -->
-            <ellipse cx="60" cy="105" rx="10" ry="6" fill="#FF7BAC"/>
-            <!-- Collar bow -->
             <path d="M46 78 Q60 85 74 78" stroke="#FF7BAC" stroke-width="2" fill="none"/>
             <ellipse cx="46" cy="78" rx="7" ry="4" fill="#FF7BAC" opacity="0.7"/>
             <ellipse cx="74" cy="78" rx="7" ry="4" fill="#FF7BAC" opacity="0.7"/>
             <circle cx="60" cy="81" r="3" fill="#E8477A"/>
           </svg>
         </div>
-
         <div class="card-cute p-8 relative">
           <div class="tape absolute -top-3 left-1/2 -translate-x-1/2">✨ Birthday Magic ✨</div>
-
           <div class="text-center mb-6">
-            <h1 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">
-              Create a Birthday<br/>
-              <span class="font-dancing text-4xl" style="color: var(--pink-accent);">Surprise 💕</span>
-            </h1>
+            <h1 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">Create a Birthday<br/><span class="font-dancing text-4xl" style="color: var(--pink-accent);">Surprise 💕</span></h1>
             <p class="mt-2 text-sm" style="color: var(--text-light);">Make someone feel extra special today ✨</p>
           </div>
-
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">👤 Your Name</label>
@@ -456,19 +164,12 @@
               <textarea id="customMessage" class="input-cute resize-none" rows="4" placeholder="Write something heartfelt... You mean the world to me! 💕"></textarea>
             </div>
           </div>
-
           <div class="text-center mt-6">
-            <button class="btn-pink shine-effect w-full" onclick="startJourney()">
-              ✨ Create Birthday Magic ✨
-            </button>
+            <button class="btn-pink shine-effect w-full" onclick="startJourney()">✨ Create Birthday Magic ✨</button>
           </div>
         </div>
-
-        <!-- Decorative elements -->
         <div class="flex justify-center gap-6 mt-6 text-2xl">
-          <span class="float-anim-delay">🌸</span>
-          <span class="heart-pulse">💖</span>
-          <span class="float-anim">🌸</span>
+          <span class="float-anim-delay">🌸</span><span class="heart-pulse">💖</span><span class="float-anim">🌸</span>
         </div>
       </div>
     </div>
@@ -481,34 +182,17 @@
 <div id="page-storybook" class="page">
   <div class="min-h-screen" style="background: linear-gradient(135deg, var(--blush) 0%, var(--lavender) 50%, var(--pink-soft) 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
-
-      <!-- Header -->
       <div class="text-center mb-8">
         <div class="sticker text-4xl mb-2">🧸</div>
         <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">Our Little Story</h2>
         <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);">Flip the cards to reveal ✨</p>
         <div class="divider-hearts mt-3">♥ ♥ ♥</div>
       </div>
-
-      <!-- Progress -->
       <div class="flex items-center gap-3 mb-8">
         <span class="text-xs font-semibold" style="color: var(--text-light);">Page 1 of 5</span>
-        <div class="progress-bar flex-1">
-          <div class="progress-fill" style="width: 20%"></div>
-        </div>
-        <div class="page-dots">
-          <div class="page-dot active"></div>
-          <div class="page-dot"></div>
-          <div class="page-dot"></div>
-          <div class="page-dot"></div>
-          <div class="page-dot"></div>
-        </div>
+        <div class="progress-bar flex-1"><div class="progress-fill" style="width: 20%"></div></div>
       </div>
-
-      <!-- Memory Cards Grid -->
-      <div class="grid grid-cols-2 gap-4 mb-8" id="memoryCardsGrid">
-
-        <!-- Card 1 -->
+      <div class="grid grid-cols-2 gap-4 mb-8">
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #FFE4EF, #FFF0F7);">
@@ -521,8 +205,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Card 2 -->
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #F0E6FF, #EDF0FF);">
@@ -535,8 +217,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Card 3 -->
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #FFF8E1, #FFF3E0);">
@@ -549,8 +229,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Card 4 -->
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #E8F5E9, #F1F8E9);">
@@ -563,58 +241,40 @@
             </div>
           </div>
         </div>
-
       </div>
-
-      <!-- Teddy Bear Illustration -->
       <div class="text-center mb-6">
         <svg width="100" height="110" viewBox="0 0 100 110" class="illustration mx-auto float-anim-delay">
-          <!-- Body -->
           <ellipse cx="50" cy="80" rx="26" ry="24" fill="#C8956C"/>
-          <!-- Left arm -->
           <ellipse cx="22" cy="78" rx="10" ry="8" fill="#C8956C" transform="rotate(-20 22 78)"/>
-          <!-- Right arm (holding gift) -->
           <ellipse cx="78" cy="78" rx="10" ry="8" fill="#C8956C" transform="rotate(20 78 78)"/>
-          <!-- Gift box in right arm -->
           <rect x="72" y="86" width="18" height="16" rx="3" fill="#FF7BAC"/>
           <rect x="72" y="91" width="18" height="3" fill="white" opacity="0.5"/>
           <rect x="80" y="86" width="3" height="16" fill="white" opacity="0.5"/>
           <ellipse cx="81" cy="86" rx="5" ry="3" fill="#E8477A"/>
-          <!-- Head -->
           <circle cx="50" cy="47" r="26" fill="#C8956C"/>
-          <!-- Ears -->
           <circle cx="28" cy="27" r="11" fill="#C8956C"/>
           <circle cx="28" cy="27" r="7" fill="#E8A87C"/>
           <circle cx="72" cy="27" r="11" fill="#C8956C"/>
           <circle cx="72" cy="27" r="7" fill="#E8A87C"/>
-          <!-- Face -->
           <ellipse cx="50" cy="53" rx="14" ry="10" fill="#E8A87C"/>
-          <!-- Eyes -->
           <circle cx="41" cy="43" r="5" fill="white"/>
           <circle cx="59" cy="43" r="5" fill="white"/>
           <circle cx="42" cy="43" r="3" fill="#3D1A24"/>
           <circle cx="60" cy="43" r="3" fill="#3D1A24"/>
           <circle cx="43" cy="42" r="1" fill="white"/>
           <circle cx="61" cy="42" r="1" fill="white"/>
-          <!-- Blush -->
           <ellipse cx="35" cy="52" rx="6" ry="4" fill="#FFB6D3" opacity="0.7"/>
           <ellipse cx="65" cy="52" rx="6" ry="4" fill="#FFB6D3" opacity="0.7"/>
-          <!-- Nose -->
           <ellipse cx="50" cy="54" rx="3.5" ry="2.5" fill="#8B5E3C"/>
-          <!-- Mouth -->
           <path d="M44 58 Q50 64 56 58" stroke="#8B5E3C" stroke-width="2" fill="none"/>
-          <!-- Bow tie -->
           <ellipse cx="43" cy="69" rx="6" ry="4" fill="#FF7BAC"/>
           <ellipse cx="57" cy="69" rx="6" ry="4" fill="#FF7BAC"/>
           <circle cx="50" cy="69" r="3" fill="#E8477A"/>
         </svg>
       </div>
-
       <div class="text-center">
         <p class="font-dancing text-xl mb-4" style="color: var(--text-mid);">Ready to continue the magic? 🌟</p>
-        <button class="btn-pink" onclick="goToPage('page-letter')">
-          Read Birthday Letter 💌
-        </button>
+        <button class="btn-pink" onclick="goToPage('page-letter')">Read Birthday Letter 💌</button>
       </div>
     </div>
   </div>
@@ -626,20 +286,14 @@
 <div id="page-letter" class="page">
   <div class="min-h-screen" style="background: linear-gradient(160deg, #FFF8F3 0%, #FDEEF5 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
-
-      <!-- Header -->
       <div class="text-center mb-6">
         <div class="text-4xl heart-pulse mb-2">💌</div>
         <div class="tape">A Birthday Love Letter</div>
         <p class="mt-3 text-sm" style="color: var(--text-light);">From my heart to the birthday queen</p>
       </div>
-
-      <!-- Letter Card -->
       <div class="card-cute p-0 overflow-hidden relative mb-6">
-        <!-- Letter header -->
         <div style="background: linear-gradient(135deg, var(--pink-soft), var(--lavender)); padding: 20px 24px;">
           <div class="flex items-center gap-3">
-            <!-- Kitten with hat mini -->
             <svg width="52" height="52" viewBox="0 0 52 52" class="illustration">
               <circle cx="26" cy="30" r="16" fill="#FFD4A8"/>
               <polygon points="26,10 16,24 36,24" fill="#FF7BAC"/>
@@ -661,49 +315,26 @@
             </div>
           </div>
         </div>
-
-        <!-- Letter body -->
         <div class="p-6 space-y-4" style="background: repeating-linear-gradient(transparent, transparent 27px, #FFE4EF 28px); line-height: 28px;">
           <p class="font-playfair italic text-base" style="color: var(--text-dark);">My dearest birthday girl,</p>
-
-          <p class="text-sm leading-relaxed" style="color: var(--text-mid);">
-            Today marks another year of your incredible existence, and I couldn't be more grateful to celebrate it with you. 🌸
-          </p>
-
-          <p class="text-sm leading-relaxed" style="color: var(--text-mid);" id="customMsgDisplay">
-            You bring so much joy, laughter, and love into this world — and into my life. You deserve all the magic, all the dreams, and all the love this world has to offer. 💕
-          </p>
-
-          <p class="text-sm leading-relaxed" style="color: var(--text-mid);">
-            On this special day, I want you to know that every moment spent with you is a treasure. You are my sunshine, my happy place, my favourite person. 🌟
-          </p>
-
+          <p class="text-sm leading-relaxed" style="color: var(--text-mid);">Today marks another year of your incredible existence, and I couldn't be more grateful to celebrate it with you. 🌸</p>
+          <p class="text-sm leading-relaxed" style="color: var(--text-mid);" id="customMsgDisplay">You bring so much joy, laughter, and love into this world — and into my life. You deserve all the magic, all the dreams, and all the love this world has to offer. 💕</p>
+          <p class="text-sm leading-relaxed" style="color: var(--text-mid);">On this special day, I want you to know that every moment spent with you is a treasure. You are my sunshine, my happy place, my favourite person. 🌟</p>
           <div class="pt-4 text-right">
             <p class="font-dancing text-2xl" style="color: var(--pink-accent);">Forever yours 💕</p>
             <p class="font-dancing text-xl mt-1" style="color: var(--text-mid);" id="senderNameDisplay">Your person ❤️</p>
           </div>
         </div>
-
-        <!-- Decorative ribbon -->
         <div style="background: linear-gradient(135deg, var(--pink-mid), var(--pink-deep)); height: 4px;"></div>
       </div>
-
-      <!-- Divider -->
       <div class="divider-hearts">♥ ♥ ♥</div>
-
-      <!-- Bottom decoration -->
       <div class="text-center my-4">
         <div class="flex justify-center gap-4 text-3xl">
-          <span class="float-anim">🌸</span>
-          <span class="heart-pulse">💖</span>
-          <span class="float-anim-delay">🌸</span>
+          <span class="float-anim">🌸</span><span class="heart-pulse">💖</span><span class="float-anim-delay">🌸</span>
         </div>
       </div>
-
       <div class="text-center">
-        <button class="btn-pink" onclick="goToPage('page-reasons')">
-          See Why I Love You 💝
-        </button>
+        <button class="btn-pink" onclick="goToPage('page-reasons')">See Why I Love You 💝</button>
       </div>
     </div>
   </div>
@@ -715,151 +346,54 @@
 <div id="page-reasons" class="page">
   <div class="min-h-screen" style="background: linear-gradient(135deg, var(--lavender) 0%, var(--pink-soft) 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
-
-      <!-- Header -->
       <div class="text-center mb-8">
         <div class="text-4xl mb-2 float-anim">💝</div>
-        <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">
-          Reasons I Love You
-        </h2>
-        <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);">
-          <span id="reasonsSubtitle">...and counting ✨</span>
-        </p>
+        <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">Reasons I Love You</h2>
+        <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);"><span id="reasonsSubtitle">...and counting ✨</span></p>
       </div>
-
-      <!-- Reasons List -->
-      <div class="space-y-4 mb-8" id="reasonsList">
-
+      <div class="space-y-4 mb-8">
         <div class="reason-card" style="animation-delay: 0.1s;">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">😊</span>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #01</p>
-              <p class="text-sm mt-1" style="color: var(--text-dark);">Your smile lights up every room you walk into. It's genuinely contagious! 🌟</p>
-            </div>
-          </div>
+          <div class="flex items-start gap-3"><span class="text-2xl">😊</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #01</p><p class="text-sm mt-1" style="color: var(--text-dark);">Your smile lights up every room you walk into. It's genuinely contagious! 🌟</p></div></div>
         </div>
-
         <div class="reason-card" style="animation-delay: 0.2s;">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">💪</span>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #02</p>
-              <p class="text-sm mt-1" style="color: var(--text-dark);">You're stronger than you know. Watching you overcome challenges is inspiring every single time.</p>
-            </div>
-          </div>
+          <div class="flex items-start gap-3"><span class="text-2xl">💪</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #02</p><p class="text-sm mt-1" style="color: var(--text-dark);">You're stronger than you know. Watching you overcome challenges is inspiring every single time.</p></div></div>
         </div>
-
         <div class="reason-card" style="animation-delay: 0.3s;">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🤣</span>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #03</p>
-              <p class="text-sm mt-1" style="color: var(--text-dark);">Your sense of humor is unmatched. You make me laugh even on my worst days 😂💕</p>
-            </div>
-          </div>
+          <div class="flex items-start gap-3"><span class="text-2xl">🤣</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #03</p><p class="text-sm mt-1" style="color: var(--text-dark);">Your sense of humor is unmatched. You make me laugh even on my worst days 😂💕</p></div></div>
         </div>
-
         <div class="reason-card" style="animation-delay: 0.4s;">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🌺</span>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #04</p>
-              <p class="text-sm mt-1" style="color: var(--text-dark);">You care so deeply for the people you love. Your heart is pure gold ✨</p>
-            </div>
-          </div>
+          <div class="flex items-start gap-3"><span class="text-2xl">🌺</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #04</p><p class="text-sm mt-1" style="color: var(--text-dark);">You care so deeply for the people you love. Your heart is pure gold ✨</p></div></div>
         </div>
-
         <div class="reason-card" style="animation-delay: 0.5s;">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🌙</span>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #05</p>
-              <p class="text-sm mt-1" style="color: var(--text-dark);">You make ordinary moments feel magical. Life with you is a beautiful adventure 🌙</p>
-            </div>
-          </div>
+          <div class="flex items-start gap-3"><span class="text-2xl">🌙</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #05</p><p class="text-sm mt-1" style="color: var(--text-dark);">You make ordinary moments feel magical. Life with you is a beautiful adventure 🌙</p></div></div>
         </div>
-
         <div class="reason-card" style="animation-delay: 0.6s;">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🎯</span>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #06</p>
-              <p class="text-sm mt-1" style="color: var(--text-dark);">You never give up. Your determination and passion are absolutely breathtaking 🏆</p>
-            </div>
-          </div>
+          <div class="flex items-start gap-3"><span class="text-2xl">🎯</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #06</p><p class="text-sm mt-1" style="color: var(--text-dark);">You never give up. Your determination and passion are absolutely breathtaking 🏆</p></div></div>
         </div>
-
       </div>
-
-      <!-- Flowers section like reference image 5 -->
       <div class="card-cute p-6 text-center mb-6">
         <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--text-light);">🌸 Three Wishes</p>
         <h3 class="font-playfair text-xl font-bold mb-1" style="color: var(--text-dark);">A tiny bouquet of birthday wishes</h3>
         <p class="text-xs mb-6" style="color: var(--text-light);">Pick each flower — there's a wish inside 🌸</p>
-
         <div class="flex justify-center gap-8" id="flowerContainer">
           <div class="flower-btn text-center" onclick="pickFlower(this, '🌸 Wish 1: May all your dreams bloom this year!')">
-            <svg width="60" height="60" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="8" fill="#FFB6D3"/>
-              <ellipse cx="30" cy="14" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/>
-              <ellipse cx="30" cy="46" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/>
-              <ellipse cx="14" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/>
-              <ellipse cx="46" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/>
-              <ellipse cx="18" cy="18" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(45 18 18)"/>
-              <ellipse cx="42" cy="18" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(-45 42 18)"/>
-              <ellipse cx="18" cy="42" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(-45 18 42)"/>
-              <ellipse cx="42" cy="42" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(45 42 42)"/>
-              <circle cx="30" cy="30" r="7" fill="#FF7BAC"/>
-              <circle cx="30" cy="30" r="4" fill="#FFD700"/>
-            </svg>
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#FFB6D3"/><ellipse cx="30" cy="14" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/><ellipse cx="30" cy="46" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/><ellipse cx="14" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/><ellipse cx="46" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/><ellipse cx="18" cy="18" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(45 18 18)"/><ellipse cx="42" cy="18" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(-45 42 18)"/><ellipse cx="18" cy="42" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(-45 18 42)"/><ellipse cx="42" cy="42" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(45 42 42)"/><circle cx="30" cy="30" r="7" fill="#FF7BAC"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
             <p class="text-xs mt-1 font-semibold" style="color: var(--text-light);">PICK ME</p>
           </div>
-
           <div class="flower-btn text-center" onclick="pickFlower(this, '💫 Wish 2: May joy find you in every corner of life!')">
-            <svg width="60" height="60" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="8" fill="#E8B4D8"/>
-              <ellipse cx="30" cy="13" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/>
-              <ellipse cx="30" cy="47" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/>
-              <ellipse cx="13" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/>
-              <ellipse cx="47" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/>
-              <ellipse cx="17" cy="17" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(45 17 17)"/>
-              <ellipse cx="43" cy="17" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(-45 43 17)"/>
-              <ellipse cx="17" cy="43" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(-45 17 43)"/>
-              <ellipse cx="43" cy="43" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(45 43 43)"/>
-              <circle cx="30" cy="30" r="7" fill="#C06090"/>
-              <circle cx="30" cy="30" r="4" fill="#FFD700"/>
-            </svg>
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#E8B4D8"/><ellipse cx="30" cy="13" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/><ellipse cx="30" cy="47" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/><ellipse cx="13" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/><ellipse cx="47" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/><ellipse cx="17" cy="17" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(45 17 17)"/><ellipse cx="43" cy="17" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(-45 43 17)"/><ellipse cx="17" cy="43" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(-45 17 43)"/><ellipse cx="43" cy="43" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(45 43 43)"/><circle cx="30" cy="30" r="7" fill="#C06090"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
             <p class="text-xs mt-1 font-semibold" style="color: var(--text-light);">PICK ME</p>
           </div>
-
           <div class="flower-btn text-center" onclick="pickFlower(this, '🌟 Wish 3: May love surround you always!')">
-            <svg width="60" height="60" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="8" fill="#FFCBA4"/>
-              <ellipse cx="30" cy="12" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/>
-              <ellipse cx="30" cy="48" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/>
-              <ellipse cx="12" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/>
-              <ellipse cx="48" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/>
-              <ellipse cx="16" cy="16" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(45 16 16)"/>
-              <ellipse cx="44" cy="16" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(-45 44 16)"/>
-              <ellipse cx="16" cy="44" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(-45 16 44)"/>
-              <ellipse cx="44" cy="44" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(45 44 44)"/>
-              <circle cx="30" cy="30" r="7" fill="#FFA726"/>
-              <circle cx="30" cy="30" r="4" fill="#FFD700"/>
-            </svg>
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#FFCBA4"/><ellipse cx="30" cy="12" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/><ellipse cx="30" cy="48" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/><ellipse cx="12" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/><ellipse cx="48" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/><ellipse cx="16" cy="16" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(45 16 16)"/><ellipse cx="44" cy="16" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(-45 44 16)"/><ellipse cx="16" cy="44" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(-45 16 44)"/><ellipse cx="44" cy="44" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(45 44 44)"/><circle cx="30" cy="30" r="7" fill="#FFA726"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
             <p class="text-xs mt-1 font-semibold" style="color: var(--text-light);">PICK ME</p>
           </div>
         </div>
-
         <p id="wishReveal" class="font-dancing text-xl mt-4 hidden" style="color: var(--pink-accent);"></p>
       </div>
-
       <div class="text-center">
-        <button class="btn-pink" onclick="goToPage('page-gift')">
-          Open Your Gift Box 🎁
-        </button>
+        <button class="btn-pink" onclick="goToPage('page-gift')">Open Your Gift Box 🎁</button>
       </div>
-
     </div>
   </div>
 </div>
@@ -870,131 +404,67 @@
 <div id="page-gift" class="page">
   <div class="min-h-screen flex flex-col" style="background: linear-gradient(135deg, #FFF0F7 0%, var(--pink-soft) 50%, #FFF8F3 100%);">
     <div class="max-w-lg mx-auto px-4 py-8 flex-1 flex flex-col">
-
-      <!-- Step 1: Blow the candle -->
       <div id="giftStep1" class="flex-1 flex flex-col">
         <div class="text-center mb-6">
           <div class="text-3xl mb-2 float-anim">🎂</div>
-          <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">
-            Blow the candle, <span id="giftCandleName" style="color: var(--pink-accent);">Beautiful</span> 🕯️
-          </h2>
+          <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">Blow the candle, <span id="giftCandleName" style="color: var(--pink-accent);">Beautiful</span> 🕯️</h2>
           <p class="font-dancing text-lg mt-1" style="color: var(--text-light);">Make a wish before you open your gift!</p>
         </div>
-
-        <!-- Animated Cake with candle -->
         <div class="flex justify-center mb-6">
           <div class="relative" style="width:220px; height:240px;">
             <svg id="cakeSvg" width="220" height="240" viewBox="0 0 220 240" class="illustration">
               <defs>
-                <linearGradient id="cakeBottomGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#8B5E3C"/>
-                  <stop offset="100%" style="stop-color:#6D4828"/>
-                </linearGradient>
-                <linearGradient id="cakeMidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#C8956C"/>
-                  <stop offset="100%" style="stop-color:#A8754C"/>
-                </linearGradient>
+                <linearGradient id="cakeBottomGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8B5E3C"/><stop offset="100%" style="stop-color:#6D4828"/></linearGradient>
+                <linearGradient id="cakeMidGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#C8956C"/><stop offset="100%" style="stop-color:#A8754C"/></linearGradient>
               </defs>
-              <!-- Plate shadow -->
               <ellipse cx="110" cy="222" rx="70" ry="10" fill="#FFB6D3" opacity="0.3"/>
-              <!-- Bottom layer -->
               <rect x="20" y="155" width="180" height="55" rx="12" fill="url(#cakeBottomGrad)"/>
-              <!-- Bottom frosting top -->
               <rect x="20" y="155" width="180" height="18" rx="9" fill="white"/>
-              <!-- Bottom frosting drips -->
-              <ellipse cx="44" cy="173" rx="8" ry="12" fill="white"/>
-              <ellipse cx="70" cy="175" rx="8" ry="13" fill="white"/>
-              <ellipse cx="96" cy="173" rx="8" ry="12" fill="white"/>
-              <ellipse cx="122" cy="175" rx="8" ry="13" fill="white"/>
-              <ellipse cx="148" cy="173" rx="8" ry="12" fill="white"/>
-              <ellipse cx="174" cy="175" rx="8" ry="13" fill="white"/>
-              <!-- Bottom layer sprinkles -->
-              <rect x="40" y="185" width="12" height="4" rx="2" fill="#FF7BAC" transform="rotate(-15 40 185)"/>
-              <rect x="75" y="190" width="12" height="4" rx="2" fill="#FFD700" transform="rotate(20 75 190)"/>
-              <rect x="110" y="185" width="12" height="4" rx="2" fill="#7C4DFF" transform="rotate(-5 110 185)"/>
-              <rect x="145" y="190" width="12" height="4" rx="2" fill="#00BCD4" transform="rotate(15 145 190)"/>
-              <rect x="57" y="200" width="10" height="4" rx="2" fill="#FF6B9D" transform="rotate(10 57 200)"/>
-              <rect x="130" y="200" width="10" height="4" rx="2" fill="#FFB6D3" transform="rotate(-20 130 200)"/>
-              <!-- Middle layer -->
+              <ellipse cx="44" cy="173" rx="8" ry="12" fill="white"/><ellipse cx="70" cy="175" rx="8" ry="13" fill="white"/><ellipse cx="96" cy="173" rx="8" ry="12" fill="white"/><ellipse cx="122" cy="175" rx="8" ry="13" fill="white"/><ellipse cx="148" cy="173" rx="8" ry="12" fill="white"/><ellipse cx="174" cy="175" rx="8" ry="13" fill="white"/>
+              <rect x="40" y="185" width="12" height="4" rx="2" fill="#FF7BAC" transform="rotate(-15 40 185)"/><rect x="75" y="190" width="12" height="4" rx="2" fill="#FFD700" transform="rotate(20 75 190)"/><rect x="110" y="185" width="12" height="4" rx="2" fill="#7C4DFF" transform="rotate(-5 110 185)"/><rect x="145" y="190" width="12" height="4" rx="2" fill="#00BCD4" transform="rotate(15 145 190)"/><rect x="57" y="200" width="10" height="4" rx="2" fill="#FF6B9D" transform="rotate(10 57 200)"/><rect x="130" y="200" width="10" height="4" rx="2" fill="#FFB6D3" transform="rotate(-20 130 200)"/>
               <rect x="42" y="105" width="136" height="55" rx="10" fill="url(#cakeMidGrad)"/>
-              <!-- Mid frosting top -->
               <rect x="42" y="105" width="136" height="16" rx="8" fill="white"/>
-              <ellipse cx="62" cy="121" rx="7" ry="11" fill="white"/>
-              <ellipse cx="84" cy="123" rx="7" ry="12" fill="white"/>
-              <ellipse cx="110" cy="121" rx="7" ry="11" fill="white"/>
-              <ellipse cx="136" cy="123" rx="7" ry="12" fill="white"/>
-              <ellipse cx="158" cy="121" rx="7" ry="11" fill="white"/>
-              <!-- Pink rosettes -->
-              <circle cx="70" cy="135" r="8" fill="#FF7BAC"/>
-              <circle cx="70" cy="135" r="5" fill="#FF9CC2"/>
-              <circle cx="110" cy="135" r="8" fill="#FF7BAC"/>
-              <circle cx="110" cy="135" r="5" fill="#FF9CC2"/>
-              <circle cx="150" cy="135" r="8" fill="#FF7BAC"/>
-              <circle cx="150" cy="135" r="5" fill="#FF9CC2"/>
-              <!-- Candle -->
+              <ellipse cx="62" cy="121" rx="7" ry="11" fill="white"/><ellipse cx="84" cy="123" rx="7" ry="12" fill="white"/><ellipse cx="110" cy="121" rx="7" ry="11" fill="white"/><ellipse cx="136" cy="123" rx="7" ry="12" fill="white"/><ellipse cx="158" cy="121" rx="7" ry="11" fill="white"/>
+              <circle cx="70" cy="135" r="8" fill="#FF7BAC"/><circle cx="70" cy="135" r="5" fill="#FF9CC2"/>
+              <circle cx="110" cy="135" r="8" fill="#FF7BAC"/><circle cx="110" cy="135" r="5" fill="#FF9CC2"/>
+              <circle cx="150" cy="135" r="8" fill="#FF7BAC"/><circle cx="150" cy="135" r="5" fill="#FF9CC2"/>
               <rect x="103" y="60" width="14" height="48" rx="5" fill="#E8477A"/>
-              <!-- Candle stripes -->
-              <rect x="103" y="68" width="14" height="4" fill="white" opacity="0.3"/>
-              <rect x="103" y="80" width="14" height="4" fill="white" opacity="0.3"/>
-              <rect x="103" y="92" width="14" height="4" fill="white" opacity="0.3"/>
-              <!-- Wick -->
+              <rect x="103" y="68" width="14" height="4" fill="white" opacity="0.3"/><rect x="103" y="80" width="14" height="4" fill="white" opacity="0.3"/><rect x="103" y="92" width="14" height="4" fill="white" opacity="0.3"/>
               <line x1="110" y1="60" x2="110" y2="52" stroke="#5C3A1E" stroke-width="2"/>
-              <!-- Flame group (animated, hidden when blown) -->
               <g id="flameGroup">
-                <ellipse cx="110" cy="44" rx="7" ry="11" fill="#FFD700" opacity="0.9">
-                  <animateTransform attributeName="transform" type="translate" values="0,0; -1,-2; 1,-1; 0,0" dur="0.8s" repeatCount="indefinite"/>
-                </ellipse>
-                <ellipse cx="110" cy="47" rx="4.5" ry="7" fill="#FFA726">
-                  <animateTransform attributeName="transform" type="translate" values="0,0; 1,-1; -1,-2; 0,0" dur="0.6s" repeatCount="indefinite"/>
-                </ellipse>
+                <ellipse cx="110" cy="44" rx="7" ry="11" fill="#FFD700" opacity="0.9"><animateTransform attributeName="transform" type="translate" values="0,0; -1,-2; 1,-1; 0,0" dur="0.8s" repeatCount="indefinite"/></ellipse>
+                <ellipse cx="110" cy="47" rx="4.5" ry="7" fill="#FFA726"><animateTransform attributeName="transform" type="translate" values="0,0; 1,-1; -1,-2; 0,0" dur="0.6s" repeatCount="indefinite"/></ellipse>
                 <ellipse cx="110" cy="50" rx="2" ry="4" fill="white" opacity="0.7"/>
               </g>
-              <!-- Smoke (hidden initially, shown after blow) -->
               <g id="smokeGroup" opacity="0" style="transition:opacity 0.5s;">
                 <ellipse cx="110" cy="42" rx="3" ry="5" fill="#ccc" opacity="0.6"/>
                 <ellipse cx="112" cy="34" rx="3" ry="5" fill="#ddd" opacity="0.4"/>
                 <ellipse cx="108" cy="26" rx="3" ry="5" fill="#eee" opacity="0.3"/>
               </g>
-              <!-- Stars around cake -->
-              <text x="10" y="80" font-size="16">⭐</text>
-              <text x="186" y="80" font-size="16">⭐</text>
-              <text x="6" y="145" font-size="14">✨</text>
-              <text x="192" y="145" font-size="14">✨</text>
-              <text x="20" y="225" font-size="12">🌸</text>
-              <text x="185" y="225" font-size="12">🌸</text>
+              <text x="10" y="80" font-size="16">⭐</text><text x="186" y="80" font-size="16">⭐</text>
+              <text x="6" y="145" font-size="14">✨</text><text x="192" y="145" font-size="14">✨</text>
+              <text x="20" y="225" font-size="12">🌸</text><text x="185" y="225" font-size="12">🌸</text>
             </svg>
           </div>
         </div>
-
         <div class="text-center mt-2">
-          <button id="blowCandleBtn" class="btn-pink shine-effect" onclick="blowGiftCandle()">
-            🌬️ Tap to blow the candle
-          </button>
+          <button id="blowCandleBtn" class="btn-pink shine-effect" onclick="blowGiftCandle()">🌬️ Tap to blow the candle</button>
           <p class="text-xs mt-2" style="color: var(--text-light);">Close your eyes and make a wish ✨</p>
         </div>
       </div>
-
-      <!-- Step 2: Gift box (hidden initially) -->
       <div id="giftStep2" class="hidden flex-1 flex flex-col">
         <div class="text-center mb-6">
           <div class="text-3xl mb-2">🎀</div>
           <h2 class="font-playfair text-2xl font-bold" style="color: var(--text-dark);">Now open your gift! 🎁</h2>
           <p class="font-dancing text-lg mt-1" style="color: var(--pink-accent);">Tap the box to reveal your surprise</p>
         </div>
-
         <div class="flex-1 flex items-center justify-center">
           <div id="giftBoxContainer" onclick="openGiftBox()" style="cursor: pointer;">
             <div id="giftClosed" class="relative float-anim">
               <svg width="200" height="220" viewBox="0 0 200 220" class="illustration">
                 <defs>
-                  <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FF7BAC"/>
-                    <stop offset="100%" style="stop-color:#E8477A"/>
-                  </linearGradient>
-                  <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FF9CC2"/>
-                    <stop offset="100%" style="stop-color:#FF7BAC"/>
-                  </linearGradient>
+                  <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF7BAC"/><stop offset="100%" style="stop-color:#E8477A"/></linearGradient>
+                  <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF9CC2"/><stop offset="100%" style="stop-color:#FF7BAC"/></linearGradient>
                 </defs>
                 <rect x="20" y="100" width="160" height="110" rx="8" fill="url(#boxGrad)"/>
                 <rect x="90" y="100" width="20" height="110" fill="white" opacity="0.25"/>
@@ -1010,40 +480,27 @@
                 <text x="100" y="218" text-anchor="middle" font-family="Nunito" font-size="12" fill="#FF7BAC">Tap to open! ✨</text>
               </svg>
             </div>
-
             <div id="giftOpened" class="hidden text-center">
               <div class="text-6xl mb-4 heart-pulse">🎊</div>
               <div class="card-cute p-8 max-w-sm mx-auto" style="background: linear-gradient(135deg, white, var(--pink-soft));">
                 <div class="text-4xl mb-4">💝</div>
-                <h3 class="font-playfair text-2xl font-bold mb-2" style="color: var(--text-dark);">
-                  Happy Birthday <span id="giftRecipientName" style="color: var(--pink-accent);">Beautiful!</span>
-                </h3>
-                <p class="font-dancing text-lg mb-4" style="color: var(--pink-accent);">
-                  You are cherished more than words can say 💕
-                </p>
+                <h3 class="font-playfair text-2xl font-bold mb-2" style="color: var(--text-dark);">Happy Birthday <span id="giftRecipientName" style="color: var(--pink-accent);">Beautiful!</span></h3>
+                <p class="font-dancing text-lg mb-4" style="color: var(--pink-accent);">You are cherished more than words can say 💕</p>
                 <div class="divider-hearts">♥ ♥ ♥</div>
-                <p class="text-sm mt-3" style="color: var(--text-mid);">
-                  May this year bring you endless joy, love, laughter, and all the beautiful things you deserve. 🌸
-                </p>
+                <p class="text-sm mt-3" style="color: var(--text-mid);">May this year bring you endless joy, love, laughter, and all the beautiful things you deserve. 🌸</p>
                 <div class="flex justify-center gap-4 mt-4 text-2xl">
-                  <span class="sticker">🎂</span>
-                  <span class="heart-pulse">💖</span>
-                  <span class="float-anim">🌸</span>
-                  <span class="sticker">🎀</span>
+                  <span class="sticker">🎂</span><span class="heart-pulse">💖</span><span class="float-anim">🌸</span><span class="sticker">🎀</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="text-center mt-6">
-          <button class="btn-pink" onclick="goToPage('page-preview')">
-            Preview Full Website 👀
-          </button>
+        <!-- CREATOR sees Preview button; RECIPIENT sees a final note -->
+        <div class="text-center mt-6" id="giftNextBtn">
+          <button class="btn-pink" onclick="goToPage('page-preview')">Preview Full Website 👀</button>
           <p class="text-xs mt-2" style="color: var(--text-light);">See everything before sharing!</p>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -1053,122 +510,34 @@
 <!-- ======================================== -->
 <div id="page-preview" class="page">
   <div class="min-h-screen" style="background: var(--blush);">
-
-    <!-- Preview Banner -->
-    <div class="preview-banner">
-      🎉 FULL PREVIEW — Everything looks perfect? Unlock & Share! 🎉
-    </div>
-
+    <div class="preview-banner">🎉 FULL PREVIEW — Everything looks perfect? Unlock & Share! 🎉</div>
     <div class="max-w-lg mx-auto px-4 py-6">
-
-      <!-- Preview Header -->
       <div class="text-center mb-6">
         <div class="text-4xl mb-2">👀</div>
         <h2 class="font-playfair text-2xl font-bold" style="color: var(--text-dark);">Your Birthday Website</h2>
         <p class="text-sm mt-1" style="color: var(--text-light);">Here's what <span id="previewRecipient" class="font-semibold" style="color: var(--pink-accent);">your person</span> will see 💕</p>
       </div>
-
-      <!-- Preview Cards -->
       <div class="space-y-4 mb-8">
-
-        <div class="card-cute p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎂</div>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-dark);">Welcome Page</p>
-              <p class="text-xs" style="color: var(--text-light);">Personalised birthday greeting with cute kitten</p>
-            </div>
-            <span class="ml-auto text-green-500 text-lg">✅</span>
-          </div>
-        </div>
-
-        <div class="card-cute p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🧸</div>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-dark);">Memory Cards</p>
-              <p class="text-xs" style="color: var(--text-light);">4 flip cards with sweet messages</p>
-            </div>
-            <span class="ml-auto text-green-500 text-lg">✅</span>
-          </div>
-        </div>
-
-        <div class="card-cute p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💌</div>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-dark);">Birthday Letter</p>
-              <p class="text-xs" style="color: var(--text-light);">Personalised love letter with your message</p>
-            </div>
-            <span class="ml-auto text-green-500 text-lg">✅</span>
-          </div>
-        </div>
-
-        <div class="card-cute p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💝</div>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-dark);">6 Appreciation Reasons + 3 Wishes</p>
-              <p class="text-xs" style="color: var(--text-light);">Heartfelt cards + interactive flower wishes</p>
-            </div>
-            <span class="ml-auto text-green-500 text-lg">✅</span>
-          </div>
-        </div>
-
-        <div class="card-cute p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎁</div>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-dark);">Animated Gift Box</p>
-              <p class="text-xs" style="color: var(--text-light);">Interactive surprise reveal with confetti</p>
-            </div>
-            <span class="ml-auto text-green-500 text-lg">✅</span>
-          </div>
-        </div>
-
-        <div class="card-cute p-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎵</div>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-dark);">Background Music + Confetti</p>
-              <p class="text-xs" style="color: var(--text-light);">Soft music & celebration effects</p>
-            </div>
-            <span class="ml-auto text-green-500 text-lg">✅</span>
-          </div>
-        </div>
-
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎂</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Welcome Page</p><p class="text-xs" style="color: var(--text-light);">Personalised birthday greeting with cute kitten</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🧸</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Memory Cards</p><p class="text-xs" style="color: var(--text-light);">4 flip cards with sweet messages</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💌</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Birthday Letter</p><p class="text-xs" style="color: var(--text-light);">Personalised love letter with your message</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💝</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">6 Appreciation Reasons + 3 Wishes</p><p class="text-xs" style="color: var(--text-light);">Heartfelt cards + interactive flower wishes</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎁</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Animated Gift Box</p><p class="text-xs" style="color: var(--text-light);">Interactive surprise reveal with confetti</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎵</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Background Music + Confetti</p><p class="text-xs" style="color: var(--text-light);">Soft music & celebration effects</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
       </div>
-
-      <!-- Summary box -->
       <div class="card-cute p-5 mb-6" style="background: linear-gradient(135deg, white, var(--pink-soft));">
         <h3 class="font-semibold mb-3 text-center" style="color: var(--text-dark);">Website Summary 📋</h3>
         <div class="space-y-2 text-sm">
-          <div class="flex justify-between">
-            <span style="color: var(--text-light);">Created by:</span>
-            <span class="font-semibold" style="color: var(--text-dark);" id="summarySender">—</span>
-          </div>
-          <div class="flex justify-between">
-            <span style="color: var(--text-light);">For:</span>
-            <span class="font-semibold" style="color: var(--pink-accent);" id="summaryRecipient">—</span>
-          </div>
-          <div class="flex justify-between">
-            <span style="color: var(--text-light);">Pages:</span>
-            <span class="font-semibold" style="color: var(--text-dark);">5 Beautiful Pages</span>
-          </div>
-          <div class="flex justify-between">
-            <span style="color: var(--text-light);">Shareable Link:</span>
-            <span class="font-semibold text-green-600">✅ Included</span>
-          </div>
+          <div class="flex justify-between"><span style="color: var(--text-light);">Created by:</span><span class="font-semibold" style="color: var(--text-dark);" id="summarySender">—</span></div>
+          <div class="flex justify-between"><span style="color: var(--text-light);">For:</span><span class="font-semibold" style="color: var(--pink-accent);" id="summaryRecipient">—</span></div>
+          <div class="flex justify-between"><span style="color: var(--text-light);">Pages:</span><span class="font-semibold" style="color: var(--text-dark);">5 Beautiful Pages</span></div>
+          <div class="flex justify-between"><span style="color: var(--text-light);">Shareable Link:</span><span class="font-semibold text-green-600">✅ Included</span></div>
         </div>
       </div>
-
       <div class="text-center">
-        <button class="btn-pink w-full shine-effect" onclick="goToPage('page-checkout')">
-          🔓 Unlock & Share — ₹299 only!
-        </button>
+        <button class="btn-pink w-full shine-effect" onclick="goToPage('page-checkout')">🔓 Unlock & Share — ₹299 only!</button>
         <p class="text-xs mt-2" style="color: var(--text-light);">One-time payment · Lifetime access link 💕</p>
       </div>
-
     </div>
   </div>
 </div>
@@ -1179,53 +548,24 @@
 <div id="page-checkout" class="page">
   <div class="min-h-screen" style="background: linear-gradient(160deg, var(--blush) 0%, white 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
-
-      <!-- Header -->
       <div class="text-center mb-6">
         <div class="text-4xl mb-2">🔒</div>
         <h2 class="font-playfair text-2xl font-bold" style="color: var(--text-dark);">Unlock Birthday Magic</h2>
         <p class="text-sm mt-1" style="color: var(--text-light);">One-time payment, lifetime link ✨</p>
       </div>
-
-      <!-- Order Summary -->
       <div class="card-cute p-5 mb-5 relative">
         <div class="ribbon">POPULAR</div>
         <h3 class="font-semibold mb-4" style="color: var(--text-dark);">Order Summary 🎂</h3>
-
         <div class="space-y-3">
-          <div class="flex justify-between text-sm">
-            <span style="color: var(--text-mid);">Birthday Surprise Website</span>
-            <span class="font-semibold line-through" style="color: var(--text-light);">₹599</span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span style="color: var(--text-mid);">Personalisation (5 pages)</span>
-            <span class="font-semibold" style="color: var(--text-dark);">Included</span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span style="color: var(--text-mid);">Shareable Link (Lifetime)</span>
-            <span class="font-semibold" style="color: var(--text-dark);">Included</span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span style="color: var(--text-mid);">Background Music</span>
-            <span class="font-semibold" style="color: var(--text-dark);">Included</span>
-          </div>
-
-          <!-- Coupon row -->
-          <div id="discountRow" class="hidden flex justify-between text-sm">
-            <span class="text-green-600 font-semibold">🎉 Discount Applied!</span>
-            <span class="text-green-600 font-semibold" id="discountAmount">-₹100</span>
-          </div>
-
+          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Birthday Surprise Website</span><span class="font-semibold line-through" style="color: var(--text-light);">₹599</span></div>
+          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Personalisation (5 pages)</span><span class="font-semibold" style="color: var(--text-dark);">Included</span></div>
+          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Shareable Link (Lifetime)</span><span class="font-semibold" style="color: var(--text-dark);">Included</span></div>
+          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Background Music</span><span class="font-semibold" style="color: var(--text-dark);">Included</span></div>
+          <div id="discountRow" class="hidden flex justify-between text-sm"><span class="text-green-600 font-semibold">🎉 Discount Applied!</span><span class="text-green-600 font-semibold" id="discountAmount">-₹100</span></div>
           <hr style="border-color: var(--pink-soft);"/>
-
-          <div class="flex justify-between font-bold text-base">
-            <span style="color: var(--text-dark);">Total</span>
-            <span style="color: var(--pink-accent);" id="totalAmount">₹299</span>
-          </div>
+          <div class="flex justify-between font-bold text-base"><span style="color: var(--text-dark);">Total</span><span style="color: var(--pink-accent);" id="totalAmount">₹299</span></div>
         </div>
       </div>
-
-      <!-- Coupon Code -->
       <div class="card-cute p-4 mb-5">
         <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">🏷️ Have a discount code?</label>
         <div class="flex gap-2">
@@ -1234,36 +574,14 @@
         </div>
         <p id="couponMsg" class="text-xs mt-2 hidden"></p>
       </div>
-
-      <!-- Trust signals -->
       <div class="flex justify-center gap-6 mb-6">
-        <div class="text-center">
-          <div class="text-2xl">🔐</div>
-          <p class="text-xs mt-1" style="color: var(--text-light);">Secure Pay</p>
-        </div>
-        <div class="text-center">
-          <div class="text-2xl">⚡</div>
-          <p class="text-xs mt-1" style="color: var(--text-light);">Instant Link</p>
-        </div>
-        <div class="text-center">
-          <div class="text-2xl">♾️</div>
-          <p class="text-xs mt-1" style="color: var(--text-light);">Lifetime Access</p>
-        </div>
-        <div class="text-center">
-          <div class="text-2xl">💯</div>
-          <p class="text-xs mt-1" style="color: var(--text-light);">100% Safe</p>
-        </div>
+        <div class="text-center"><div class="text-2xl">🔐</div><p class="text-xs mt-1" style="color: var(--text-light);">Secure Pay</p></div>
+        <div class="text-center"><div class="text-2xl">⚡</div><p class="text-xs mt-1" style="color: var(--text-light);">Instant Link</p></div>
+        <div class="text-center"><div class="text-2xl">♾️</div><p class="text-xs mt-1" style="color: var(--text-light);">Lifetime Access</p></div>
+        <div class="text-center"><div class="text-2xl">💯</div><p class="text-xs mt-1" style="color: var(--text-light);">100% Safe</p></div>
       </div>
-
-      <!-- Pay button -->
-      <button class="btn-pink w-full shine-effect text-lg" onclick="initiatePayment()">
-        🎀 Pay with Razorpay
-      </button>
-
-      <p class="text-center text-xs mt-3" style="color: var(--text-light);">
-        Powered by Razorpay · UPI · Cards · NetBanking
-      </p>
-
+      <button class="btn-pink w-full shine-effect text-lg" onclick="initiatePayment()">🎀 Pay with Razorpay</button>
+      <p class="text-center text-xs mt-3" style="color: var(--text-light);">Powered by Razorpay · UPI · Cards · NetBanking</p>
     </div>
   </div>
 </div>
@@ -1274,41 +592,24 @@
 <div id="page-success" class="page">
   <div class="min-h-screen" style="background: linear-gradient(135deg, var(--pink-soft) 0%, white 50%, var(--lavender) 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
-
-      <!-- Celebration header -->
       <div class="text-center mb-6">
         <div class="text-5xl mb-3 float-anim">🎉</div>
-        <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">
-          Payment Successful! 
-        </h2>
+        <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">Payment Successful!</h2>
         <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);">Your birthday surprise is ready! 🎀</p>
       </div>
-
-      <!-- Link card -->
       <div class="card-cute p-6 mb-6">
         <div class="text-center mb-4">
           <div class="text-3xl mb-2">🔗</div>
           <p class="font-semibold" style="color: var(--text-dark);">Your Unique Shareable Link</p>
           <p class="text-xs mt-1" style="color: var(--text-light);">Share this with <span id="successRecipient" class="font-semibold" style="color: var(--pink-accent);">them</span>! ✨</p>
         </div>
-
-        <div class="link-box mb-4" id="shareableLink">
-          https://bdaysurprise.love/s/...
-        </div>
-
+        <div class="link-box mb-4" id="shareableLink">generating...</div>
         <div class="flex gap-3">
-          <button class="btn-pink flex-1" onclick="copyLink()">
-            📋 Copy Link
-          </button>
-          <button class="btn-outline flex-1" onclick="shareWhatsApp()">
-            💬 WhatsApp
-          </button>
+          <button class="btn-pink flex-1" onclick="copyLink()">📋 Copy Link</button>
+          <button class="btn-outline flex-1" onclick="shareWhatsApp()">💬 WhatsApp</button>
         </div>
-
         <p id="copiedMsg" class="text-center text-xs mt-2 text-green-600 hidden font-semibold">✅ Copied to clipboard!</p>
       </div>
-
-      <!-- What they see note -->
       <div class="card-cute p-4 mb-6" style="background: linear-gradient(135deg, white, var(--pink-soft));">
         <p class="text-sm font-semibold mb-2" style="color: var(--text-dark);">🎀 What they'll experience:</p>
         <ul class="space-y-1 text-xs" style="color: var(--text-mid);">
@@ -1321,226 +622,60 @@
           <li>✨ No payment screens — pure love only 💕</li>
         </ul>
       </div>
-
-      <!-- Save link note -->
       <div class="text-center p-4 rounded-2xl mb-6" style="background: var(--pink-soft);">
-        <p class="text-sm" style="color: var(--text-mid);">
-          💡 <strong>Save this link!</strong> Copy it or share it directly via WhatsApp.<br/>
-          <span class="text-xs" style="color: var(--text-light);">The link works as long as this file is accessible.</span>
-        </p>
+        <p class="text-sm" style="color: var(--text-mid);">💡 <strong>Save this link!</strong> Copy it or share it directly via WhatsApp.<br/><span class="text-xs" style="color: var(--text-light);">The link works as long as this HTML file is accessible.</span></p>
       </div>
-
       <div class="text-center">
         <div class="flex justify-center gap-4 text-3xl mb-4">
-          <span class="sticker">🎂</span>
-          <span class="heart-pulse">💖</span>
-          <span class="float-anim">🌸</span>
-          <span class="emoji-bounce">🎊</span>
+          <span class="sticker">🎂</span><span class="heart-pulse">💖</span><span class="float-anim">🌸</span><span class="emoji-bounce">🎊</span>
         </div>
-        <p class="font-dancing text-xl" style="color: var(--pink-accent);">
-          Made with ❤️ · Birthday Surprise
-        </p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ======================================== -->
-<!-- PAGE 9: RECIPIENT VIEW                   -->
-<!-- ======================================== -->
-<div id="page-recipient" class="page">
-  <div class="min-h-screen" style="background: linear-gradient(160deg, var(--pink-soft) 0%, var(--blush) 50%, white 100%);">
-    <div class="max-w-lg mx-auto px-4 py-8">
-
-      <!-- Blowing candle like reference image 1 -->
-      <div class="text-center mb-8">
-        <div style="background: white; border-radius: 24px; padding: 24px; box-shadow: 0 8px 32px rgba(232,71,122,0.12); max-width: 320px; margin: 0 auto;">
-          <p class="font-playfair text-xl font-bold mb-4" style="color: var(--pink-accent);">
-            Blow the candle, <span id="recipientPageName">Beautiful</span> 🕯️
-          </p>
-
-          <!-- Cake with candle SVG -->
-          <div class="flex justify-center mb-4">
-            <svg width="140" height="150" viewBox="0 0 140 150" class="illustration">
-              <!-- Plate -->
-              <ellipse cx="70" cy="135" rx="55" ry="8" fill="#FFE4EF" opacity="0.5"/>
-              <!-- Cake bottom layer -->
-              <rect x="15" y="95" width="110" height="35" rx="8" fill="#8B5E3C"/>
-              <!-- Cake middle layer -->
-              <rect x="25" y="65" width="90" height="35" rx="8" fill="#C8956C"/>
-              <!-- Frosting drips -->
-              <rect x="25" y="65" width="90" height="12" rx="6" fill="white"/>
-              <ellipse cx="40" cy="77" rx="5" ry="8" fill="white"/>
-              <ellipse cx="60" cy="79" rx="5" ry="9" fill="white"/>
-              <ellipse cx="80" cy="77" rx="5" ry="8" fill="white"/>
-              <ellipse cx="100" cy="79" rx="5" ry="9" fill="white"/>
-              <!-- Sprinkles -->
-              <rect x="35" y="72" width="8" height="3" rx="1.5" fill="#FF7BAC" transform="rotate(-20 35 72)"/>
-              <rect x="55" y="75" width="8" height="3" rx="1.5" fill="#FFD700" transform="rotate(15 55 75)"/>
-              <rect x="75" y="72" width="8" height="3" rx="1.5" fill="#7C4DFF" transform="rotate(-10 75 72)"/>
-              <rect x="90" y="75" width="8" height="3" rx="1.5" fill="#00BCD4" transform="rotate(20 90 75)"/>
-              <!-- Bottom frosting -->
-              <rect x="15" y="95" width="110" height="12" rx="6" fill="white" opacity="0.8"/>
-              <!-- Candle -->
-              <rect x="64" y="40" width="12" height="30" rx="4" fill="#E8477A"/>
-              <rect x="64" y="40" width="12" height="30" rx="4" fill="url(#candleStripe)"/>
-              <defs>
-                <pattern id="candleStripe" x="0" y="0" width="12" height="8" patternUnits="userSpaceOnUse">
-                  <rect width="12" height="4" fill="white" opacity="0.2"/>
-                </pattern>
-              </defs>
-              <!-- Flame -->
-              <ellipse cx="70" cy="34" rx="5" ry="8" fill="#FFD700" class="float-anim"/>
-              <ellipse cx="70" cy="36" rx="3" ry="5" fill="#FFA726"/>
-              <ellipse cx="70" cy="38" rx="1.5" ry="3" fill="white" opacity="0.8"/>
-              <!-- Stars -->
-              <text x="20" y="55" font-size="12">⭐</text>
-              <text x="108" y="55" font-size="12">⭐</text>
-              <text x="18" y="100" font-size="10">✨</text>
-              <text x="108" y="100" font-size="10">✨</text>
-            </svg>
-          </div>
-
-          <button class="btn-pink w-full" onclick="blowCandle()">
-            🌬️ Tap to blow the candle
-          </button>
-        </div>
-      </div>
-
-      <!-- Then show the full experience -->
-      <div id="recipientContent" class="hidden space-y-6">
-
-        <div class="card-cute p-6 text-center" style="background: linear-gradient(135deg, white, var(--pink-soft));">
-          <div class="text-4xl mb-3 heart-pulse">💖</div>
-          <h2 class="font-playfair text-2xl font-bold mb-2" style="color: var(--text-dark);">Happy Birthday, <span id="recipientBigName">Beautiful!</span></h2>
-          <p class="font-dancing text-xl" style="color: var(--pink-accent);">Today is all about you ✨</p>
-          <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-mid);" id="recipientMsgDisplay">
-            You are loved beyond words 💕
-          </p>
-        </div>
-
-        <!-- Kitten card like reference images -->
-        <div class="card-cute overflow-hidden" style="background: white;">
-          <div style="background: linear-gradient(135deg, var(--pink-soft), var(--lavender)); padding: 20px; text-align: center;">
-            <div class="flex justify-center gap-8">
-              <!-- Kitten with cake -->
-              <svg width="80" height="90" viewBox="0 0 80 90" class="illustration float-anim">
-                <ellipse cx="40" cy="70" rx="22" ry="18" fill="#FFD4A8"/>
-                <circle cx="40" cy="42" r="22" fill="#FFD4A8"/>
-                <polygon points="22,27 15,8 32,22" fill="#FFD4A8"/>
-                <polygon points="23,25 18,12 30,22" fill="#FFB6D3"/>
-                <polygon points="58,27 65,8 48,22" fill="#FFD4A8"/>
-                <polygon points="57,25 62,12 50,22" fill="#FFB6D3"/>
-                <!-- Party hat -->
-                <polygon points="40,14 28,34 52,34" fill="#FF7BAC"/>
-                <circle cx="40" cy="14" r="3" fill="#FFD700"/>
-                <!-- Eyes -->
-                <ellipse cx="32" cy="42" rx="5" ry="6" fill="white"/>
-                <ellipse cx="48" cy="42" rx="5" ry="6" fill="white"/>
-                <ellipse cx="33" cy="43" rx="3" ry="4" fill="#3D1A24"/>
-                <ellipse cx="49" cy="43" rx="3" ry="4" fill="#3D1A24"/>
-                <circle cx="34" cy="42" r="1.2" fill="white"/>
-                <circle cx="50" cy="42" r="1.2" fill="white"/>
-                <!-- Blush -->
-                <ellipse cx="26" cy="49" rx="5" ry="3" fill="#FFB6D3" opacity="0.7"/>
-                <ellipse cx="54" cy="49" rx="5" ry="3" fill="#FFB6D3" opacity="0.7"/>
-                <!-- Nose & mouth -->
-                <ellipse cx="40" cy="50" rx="2.5" ry="2" fill="#FF7BAC"/>
-                <path d="M35 53 Q40 57 45 53" stroke="#FF7BAC" stroke-width="1.5" fill="none"/>
-                <!-- Mini cake being held -->
-                <rect x="18" y="72" width="22" height="12" rx="3" fill="#8B5E3C"/>
-                <rect x="18" y="72" width="22" height="5" rx="2.5" fill="white"/>
-                <rect x="27" y="64" width="4" height="12" rx="2" fill="#FF7BAC"/>
-                <ellipse cx="29" cy="62" rx="3" ry="4" fill="#FFD700"/>
-              </svg>
-
-              <!-- Teddy with present -->
-              <svg width="80" height="90" viewBox="0 0 80 90" class="illustration float-anim-delay">
-                <ellipse cx="40" cy="72" rx="20" ry="17" fill="#C8956C"/>
-                <ellipse cx="18" cy="68" rx="8" ry="6" fill="#C8956C" transform="rotate(-15 18 68)"/>
-                <ellipse cx="62" cy="68" rx="8" ry="6" fill="#C8956C" transform="rotate(15 62 68)"/>
-                <circle cx="40" cy="40" r="22" fill="#C8956C"/>
-                <circle cx="22" cy="22" r="9" fill="#C8956C"/>
-                <circle cx="22" cy="22" r="6" fill="#E8A87C"/>
-                <circle cx="58" cy="22" r="9" fill="#C8956C"/>
-                <circle cx="58" cy="22" r="6" fill="#E8A87C"/>
-                <ellipse cx="40" cy="46" rx="11" ry="8" fill="#E8A87C"/>
-                <circle cx="32" cy="36" r="4" fill="white"/>
-                <circle cx="48" cy="36" r="4" fill="white"/>
-                <circle cx="33" cy="36" r="2.5" fill="#3D1A24"/>
-                <circle cx="49" cy="36" r="2.5" fill="#3D1A24"/>
-                <circle cx="34" cy="35" r="0.8" fill="white"/>
-                <circle cx="50" cy="35" r="0.8" fill="white"/>
-                <ellipse cx="26" cy="44" rx="4" ry="3" fill="#FFB6D3" opacity="0.7"/>
-                <ellipse cx="54" cy="44" rx="4" ry="3" fill="#FFB6D3" opacity="0.7"/>
-                <ellipse cx="40" cy="46" rx="3" ry="2" fill="#8B5E3C"/>
-                <path d="M35 50 Q40 54 45 50" stroke="#8B5E3C" stroke-width="1.5" fill="none"/>
-                <!-- Gift box in arms -->
-                <rect x="52" y="72" width="18" height="14" rx="3" fill="#FFD700"/>
-                <rect x="52" y="78" width="18" height="2.5" fill="white" opacity="0.5"/>
-                <rect x="60" y="72" width="2.5" height="14" fill="white" opacity="0.5"/>
-                <ellipse cx="61" cy="72" rx="4" ry="2.5" fill="#FFA726"/>
-                <!-- Bow -->
-                <ellipse cx="34" cy="59" rx="5" ry="3" fill="#FF7BAC"/>
-                <ellipse cx="46" cy="59" rx="5" ry="3" fill="#FF7BAC"/>
-                <circle cx="40" cy="59" r="3" fill="#E8477A"/>
-              </svg>
-            </div>
-
-            <p class="font-dancing text-2xl mt-4 font-bold" style="color: var(--pink-accent);">Lots of love for you 💗</p>
-            <p class="text-sm mt-1" style="color: var(--text-mid);">
-              Once again, Happy Birthday! 🎉 Hope you love your surprise.
-            </p>
-          </div>
-
-          <div class="p-4 text-center">
-            <div class="flex justify-center gap-4 text-2xl">
-              <span class="sticker">🎂</span>
-              <span class="heart-pulse">💖</span>
-              <span class="float-anim">🌸</span>
-              <span class="sticker">🎀</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center">
-          <p class="font-dancing text-xl" style="color: var(--pink-accent);">Made with ❤️ just for you 💕</p>
-        </div>
-
+        <p class="font-dancing text-xl" style="color: var(--pink-accent);">Made with ❤️ · Birthday Surprise</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- SCRIPTS -->
-<!-- ============================================================ -->
+<!-- ======================================== -->
+<!-- SCRIPTS                                  -->
+<!-- ======================================== -->
 <script>
 // ===== STATE =====
 const state = {
   sender: '', recipient: '', message: '',
   discount: 0, basePrice: 299, finalPrice: 299,
-  shareId: '', musicPlaying: false
+  musicPlaying: false,
+  isRecipientView: false
 };
 
-const COUPONS = {
-  'BDAY50': 50, 'LOVE100': 100, 'SURPRISE30': 30,
-  'BDAY2024': 75, 'SWEET50': 50
-};
+const COUPONS = { 'BDAY50': 50, 'LOVE100': 100, 'SURPRISE30': 30, 'BDAY2024': 75, 'SWEET50': 50, 'LOVE1': 298, 'FREEBDAY': 299 };
+
+// ===== ENCODE / DECODE HELPERS =====
+function encodeState(data) {
+  try {
+    return btoa(encodeURIComponent(JSON.stringify(data)));
+  } catch(e) {
+    return btoa(JSON.stringify(data));
+  }
+}
+
+function decodeState(encoded) {
+  try {
+    return JSON.parse(decodeURIComponent(atob(encoded)));
+  } catch(e) {
+    try { return JSON.parse(atob(encoded)); } catch(e2) { return null; }
+  }
+}
 
 // ===== PAGE NAVIGATION =====
 function goToPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   window.scrollTo(0, 0);
-  // Update dynamic content
   if (pageId === 'page-letter') updateLetterPage();
   if (pageId === 'page-reasons') updateReasonsPage();
   if (pageId === 'page-gift') updateGiftPage();
   if (pageId === 'page-preview') updatePreviewPage();
   if (pageId === 'page-success') showSuccessPage();
-  if (pageId === 'page-recipient') updateRecipientPage();
 }
 
 // ===== START JOURNEY =====
@@ -1548,24 +683,15 @@ function startJourney() {
   const sender = document.getElementById('senderName').value.trim();
   const recipient = document.getElementById('recipientName').value.trim();
   const message = document.getElementById('customMessage').value.trim();
-
   if (!sender || !recipient) {
-    shakeElement(document.querySelector('.card-cute'));
     alert('💕 Please enter both names to continue!');
     return;
   }
-
   state.sender = sender;
   state.recipient = recipient;
   state.message = message || "You mean the world to me! Wishing you a day as beautiful as you are 💕";
-
   launchConfetti();
   setTimeout(() => goToPage('page-storybook'), 300);
-}
-
-function shakeElement(el) {
-  el.style.animation = 'shake 0.4s ease';
-  setTimeout(() => el.style.animation = '', 400);
 }
 
 // ===== UPDATE PAGES =====
@@ -1574,15 +700,13 @@ function updateLetterPage() {
   document.getElementById('customMsgDisplay').textContent = state.message;
   document.getElementById('senderNameDisplay').textContent = `— ${state.sender} ❤️`;
 }
-
 function updateReasonsPage() {
   document.getElementById('reasonsSubtitle').textContent = `for ${state.recipient} ✨`;
 }
-
 function updateGiftPage() {
   document.getElementById('giftRecipientName').textContent = state.recipient + '!';
   document.getElementById('giftCandleName').textContent = state.recipient;
-  // Reset gift page to step 1 each time
+  // Reset
   document.getElementById('giftStep1').classList.remove('hidden');
   document.getElementById('giftStep2').classList.add('hidden');
   document.getElementById('giftClosed').classList.remove('hidden');
@@ -1592,58 +716,38 @@ function updateGiftPage() {
   if (flame) flame.style.opacity = '1';
   if (smoke) smoke.style.opacity = '0';
   const blowBtn = document.getElementById('blowCandleBtn');
-  if (blowBtn) { blowBtn.textContent = '🌬️ Tap to blow the candle'; blowBtn.disabled = false; }
+  if (blowBtn) { blowBtn.textContent = '🌬️ Tap to blow the candle'; blowBtn.disabled = false; blowBtn.style.opacity = '1'; }
+  // Show/hide next button based on view
+  const nextBtn = document.getElementById('giftNextBtn');
+  if (nextBtn) {
+    if (state.isRecipientView) {
+      // Recipient: show a final love note instead of Preview button
+      nextBtn.innerHTML = `
+        <div class="card-cute p-4 mt-4 text-center" style="background: linear-gradient(135deg, white, var(--pink-soft));">
+          <p class="font-dancing text-2xl" style="color: var(--pink-accent);">Made with 💕 just for you</p>
+          <p class="text-sm mt-2" style="color: var(--text-mid);">From <strong>${state.sender}</strong>, with all my love 🌸</p>
+        </div>`;
+    } else {
+      nextBtn.innerHTML = `
+        <button class="btn-pink" onclick="goToPage('page-preview')">Preview Full Website 👀</button>
+        <p class="text-xs mt-2" style="color: var(--text-light);">See everything before sharing!</p>`;
+    }
+  }
 }
-
-function blowGiftCandle() {
-  const flame = document.getElementById('flameGroup');
-  const smoke = document.getElementById('smokeGroup');
-  const btn = document.getElementById('blowCandleBtn');
-
-  // Animate flame out
-  flame.style.transition = 'opacity 0.4s ease';
-  flame.style.opacity = '0';
-  smoke.style.opacity = '1';
-
-  btn.textContent = '🎉 Wish made!';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
-
-  launchMiniConfetti();
-
-  // After short pause, reveal gift box
-  setTimeout(() => {
-    document.getElementById('giftStep1').classList.add('hidden');
-    document.getElementById('giftStep2').classList.remove('hidden');
-    document.getElementById('giftStep2').style.animation = 'fadeInPage 0.6s ease';
-  }, 1200);
-}
-
 function updatePreviewPage() {
   document.getElementById('previewRecipient').textContent = state.recipient;
   document.getElementById('summarySender').textContent = state.sender;
   document.getElementById('summaryRecipient').textContent = state.recipient;
 }
 
-function updateRecipientPage() {
-  document.getElementById('recipientPageName').textContent = state.recipient;
-  document.getElementById('recipientBigName').textContent = state.recipient + '!';
-  document.getElementById('recipientMsgDisplay').textContent = state.message;
-}
-
 // ===== FLIP CARDS =====
-function flipCard(card) {
-  card.classList.toggle('flipped');
-}
+function flipCard(card) { card.classList.toggle('flipped'); }
 
 // ===== FLOWER PICKING =====
 function pickFlower(el, wish) {
   const reveal = document.getElementById('wishReveal');
   reveal.textContent = wish;
   reveal.classList.remove('hidden');
-  reveal.style.animation = 'none';
-  setTimeout(() => reveal.style.animation = 'slideIn 0.5s ease forwards', 10);
-  // Mark flower as picked
   el.style.opacity = '0.5';
   el.style.transform = 'scale(0.9)';
   el.onclick = null;
@@ -1651,11 +755,27 @@ function pickFlower(el, wish) {
 }
 
 // ===== GIFT BOX =====
+function blowGiftCandle() {
+  const flame = document.getElementById('flameGroup');
+  const smoke = document.getElementById('smokeGroup');
+  const btn = document.getElementById('blowCandleBtn');
+  flame.style.transition = 'opacity 0.4s ease';
+  flame.style.opacity = '0';
+  smoke.style.opacity = '1';
+  btn.textContent = '🎉 Wish made!';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+  launchMiniConfetti();
+  setTimeout(() => {
+    document.getElementById('giftStep1').classList.add('hidden');
+    document.getElementById('giftStep2').classList.remove('hidden');
+  }, 1200);
+}
+
 function openGiftBox() {
   const closed = document.getElementById('giftClosed');
   const opened = document.getElementById('giftOpened');
   if (opened.classList.contains('hidden')) {
-    closed.style.animation = 'none';
     closed.style.transform = 'scale(1.1)';
     setTimeout(() => {
       closed.classList.add('hidden');
@@ -1665,35 +785,26 @@ function openGiftBox() {
   }
 }
 
-// ===== BLOW CANDLE =====
-function blowCandle() {
-  const content = document.getElementById('recipientContent');
-  launchConfetti();
-  content.classList.remove('hidden');
-  content.style.animation = 'fadeInPage 0.8s ease';
-  document.querySelector('#page-recipient button').textContent = '🎉 Candle blown!';
-  document.querySelector('#page-recipient button').disabled = true;
-  document.querySelector('#page-recipient button').style.opacity = '0.7';
-}
-
 // ===== COUPON =====
 function applyCoupon() {
   const code = document.getElementById('couponInput').value.trim().toUpperCase();
   const msgEl = document.getElementById('couponMsg');
   const discountRow = document.getElementById('discountRow');
-  const discountAmount = document.getElementById('discountAmount');
-  const totalAmount = document.getElementById('totalAmount');
-
   if (COUPONS[code]) {
     const discount = COUPONS[code];
     state.discount = discount;
     state.finalPrice = Math.max(0, state.basePrice - discount);
-
-    discountAmount.textContent = `-₹${discount}`;
-    totalAmount.textContent = `₹${state.finalPrice}`;
+    document.getElementById('discountAmount').textContent = `-₹${discount}`;
+    document.getElementById('totalAmount').textContent = state.finalPrice === 0 ? '🎉 FREE' : `₹${state.finalPrice}`;
     discountRow.classList.remove('hidden');
-
-    msgEl.textContent = `🎉 Code "${code}" applied! You saved ₹${discount}`;
+    // Update pay button label
+    const payBtn = document.querySelector('#page-checkout .btn-pink.w-full');
+    if (payBtn) {
+      if (state.finalPrice === 0) payBtn.textContent = '🎉 Unlock for FREE!';
+      else if (state.finalPrice === 1) payBtn.textContent = '⚡ Pay just ₹1!';
+      else payBtn.textContent = '🎀 Pay with Razorpay';
+    }
+    msgEl.textContent = `🎉 Code "${code}" applied! You saved ₹${discount}` + (state.finalPrice === 0 ? ' — It\'s FREE! 🥳' : state.finalPrice === 1 ? ' — Just ₹1! 🤩' : '');
     msgEl.className = 'text-xs mt-2 text-green-600 font-semibold';
     msgEl.classList.remove('hidden');
   } else {
@@ -1709,16 +820,28 @@ function initiatePayment() {
   btn.textContent = '⏳ Opening Razorpay...';
   btn.disabled = true;
 
-  // Direct Razorpay — no pre-form needed, Razorpay collects details natively
+  // Free coupon — skip payment entirely
+  if (state.finalPrice === 0) {
+    setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 600);
+    return;
+  }
+
+  // ₹1 coupon — instant "payment" then proceed
+  if (state.finalPrice === 1) {
+    btn.textContent = '⚡ Processing ₹1...';
+    setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 1000);
+    return;
+  }
+
   const options = {
-    key: 'rzp_test_YourKeyHere', // Replace with your live Razorpay key
+    key: 'rzp_live_SvD983baZpuP2A', // Replace with your live Razorpay key
     amount: state.finalPrice * 100,
     currency: 'INR',
     name: 'Birthday Surprise 🎂',
     description: 'Birthday Website for ' + state.recipient,
     theme: { color: '#E8477A' },
     handler: function(response) {
-      state.shareId = generateShareId();
+      // Payment success — build shareable link and show success page
       goToPage('page-success');
       launchConfetti();
     },
@@ -1734,43 +857,47 @@ function initiatePayment() {
     const rzp = new Razorpay(options);
     rzp.open();
   } else {
-    // Demo mode
+    // Demo mode (Razorpay not loaded / test environment)
     setTimeout(() => {
-      state.shareId = generateShareId();
       goToPage('page-success');
       launchConfetti();
     }, 1200);
   }
 }
 
-function generateShareId() {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  let id = '';
-  for (let i = 0; i < 8; i++) id += chars[Math.floor(Math.random() * chars.length)];
-  return id;
-}
-
 // ===== SUCCESS PAGE =====
+// Builds a self-contained shareable URL with ALL state encoded in base64 hash.
+// The recipient opens the same HTML file — no backend needed.
 function showSuccessPage() {
-  // Build a self-contained link using the current page URL + query params
-  // so the recipient can open the same HTML file with their personalised view
-  const base = window.location.href.split('?')[0].split('#')[0];
-  const params = new URLSearchParams({
-    view: '1',
-    r: state.recipient || 'Beautiful',
-    s: state.sender   || 'Someone special',
-    m: state.message  || 'You are loved beyond words 💕'
-  });
-  const link = `${base}?${params.toString()}`;
-  document.getElementById('shareableLink').textContent = link;
+  const payload = {
+    r: state.recipient,
+    s: state.sender,
+    m: state.message
+  };
+  const encoded = encodeState(payload);
+
+  // Use hash-based routing so the link works even when opened as a local file
+  const base = window.location.href.split('#')[0].split('?')[0];
+  const shareLink = `${base}#gift=${encoded}`;
+
+  document.getElementById('shareableLink').textContent = shareLink;
   document.getElementById('successRecipient').textContent = state.recipient;
-  launchConfetti();
 }
 
 // ===== COPY LINK =====
 function copyLink() {
   const link = document.getElementById('shareableLink').textContent;
   navigator.clipboard.writeText(link).then(() => {
+    document.getElementById('copiedMsg').classList.remove('hidden');
+    setTimeout(() => document.getElementById('copiedMsg').classList.add('hidden'), 3000);
+  }).catch(() => {
+    // Fallback for older browsers / file:// protocol
+    const ta = document.createElement('textarea');
+    ta.value = link;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
     document.getElementById('copiedMsg').classList.remove('hidden');
     setTimeout(() => document.getElementById('copiedMsg').classList.add('hidden'), 3000);
   });
@@ -1788,13 +915,9 @@ function toggleMusic() {
   const btn = document.getElementById('musicBtn');
   const audio = document.getElementById('bgMusic');
   if (state.musicPlaying) {
-    audio.pause();
-    btn.textContent = '🔇';
-    state.musicPlaying = false;
+    audio.pause(); btn.textContent = '🔇'; state.musicPlaying = false;
   } else {
-    audio.play().catch(() => {});
-    btn.textContent = '🎵';
-    state.musicPlaying = true;
+    audio.play().catch(() => {}); btn.textContent = '🎵'; state.musicPlaying = true;
   }
 }
 
@@ -1802,8 +925,6 @@ function toggleMusic() {
 function launchConfetti() {
   const container = document.getElementById('confettiContainer');
   const colors = ['#FF7BAC', '#FFD700', '#E8477A', '#FFB6D3', '#FF6B9D', '#FFF'];
-  const shapes = ['♥', '⭐', '✨', '🌸', '•'];
-  
   for (let i = 0; i < 60; i++) {
     setTimeout(() => {
       const piece = document.createElement('div');
@@ -1838,42 +959,72 @@ function launchMiniConfetti() {
   }
 }
 
-// ===== URL ROUTING =====
+// ===== URL ROUTING — THE MAGIC PIECE =====
+// When recipient opens the link (e.g. file.html#gift=BASE64DATA),
+// we decode the state from the hash and jump straight to the experience.
 function checkRoute() {
   const hash = window.location.hash;
-  const search = window.location.search;
-  
-  if (hash.startsWith('#/view/') || search.includes('view=1')) {
-    // Recipient view
-    const params = new URLSearchParams(search);
-    state.recipient = params.get('r') || 'Beautiful';
-    state.sender = params.get('s') || 'Someone special';
-    state.message = params.get('m') || 'You are loved beyond words 💕';
-    goToPage('page-recipient');
-    updateRecipientPage();
+
+  if (hash.startsWith('#gift=')) {
+    const encoded = hash.slice(6); // everything after "#gift="
+    const data = decodeState(encoded);
+
+    if (!data) {
+      // Bad/corrupt link — just show welcome
+      return;
+    }
+
+    // Populate state from the encoded payload
+    state.recipient = data.r || 'Beautiful';
+    state.sender    = data.s || 'Someone special';
+    state.message   = data.m || 'You are loved beyond words 💕';
+    state.isRecipientView = true;
+
+    // Populate all personalised content fields before showing pages
+    populateRecipientContent();
+
+    // Take recipient straight to the memory cards (page 1 of their journey)
+    // They get the full experience: storybook → letter → reasons → gift
+    // with NO welcome form, NO preview, NO checkout, NO success pages
+    goToPage('page-storybook');
+    launchConfetti();
     return;
   }
 }
 
+// Fills in all text fields with recipient's personalised content
+function populateRecipientContent() {
+  // Letter page
+  const sub = document.getElementById('letterSubtitle');
+  const msg = document.getElementById('customMsgDisplay');
+  const sen = document.getElementById('senderNameDisplay');
+  if (sub) sub.textContent = `For ${state.recipient} with love 💕`;
+  if (msg) msg.textContent = state.message;
+  if (sen) sen.textContent = `— ${state.sender} ❤️`;
+
+  // Reasons page
+  const rsub = document.getElementById('reasonsSubtitle');
+  if (rsub) rsub.textContent = `for ${state.recipient} ✨`;
+
+  // Gift page
+  const gname = document.getElementById('giftRecipientName');
+  const gcname = document.getElementById('giftCandleName');
+  if (gname) gname.textContent = state.recipient + '!';
+  if (gcname) gcname.textContent = state.recipient;
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  checkRoute();
-  
-  // Add shake keyframe dynamically
+  // Add shake keyframe
   const style = document.createElement('style');
   style.textContent = '@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }';
   document.head.appendChild(style);
 
-  // Animate reason cards on page load
-  const cards = document.querySelectorAll('.reason-card');
-  cards.forEach((card, i) => {
-    card.style.animationDelay = (i * 0.1) + 's';
-  });
+  // Check if this is a recipient link — this must run first
+  checkRoute();
 });
 </script>
 
-<!-- Razorpay SDK (loads asynchronously) -->
 <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
-
 </body>
 </html>
