@@ -1322,11 +1322,11 @@
         </ul>
       </div>
 
-      <!-- Email note -->
+      <!-- Save link note -->
       <div class="text-center p-4 rounded-2xl mb-6" style="background: var(--pink-soft);">
         <p class="text-sm" style="color: var(--text-mid);">
-          📧 We've also sent the link to your email.<br/>
-          <span class="text-xs" style="color: var(--text-light);">Check your inbox (and spam folder, just in case!)</span>
+          💡 <strong>Save this link!</strong> Copy it or share it directly via WhatsApp.<br/>
+          <span class="text-xs" style="color: var(--text-light);">The link works as long as this file is accessible.</span>
         </p>
       </div>
 
@@ -1711,7 +1711,7 @@ function initiatePayment() {
 
   // Direct Razorpay — no pre-form needed, Razorpay collects details natively
   const options = {
-    key: 'rzp_live_SvD983baZpuP2A', // Replace with your live Razorpay key
+    key: 'rzp_test_YourKeyHere', // Replace with your live Razorpay key
     amount: state.finalPrice * 100,
     currency: 'INR',
     name: 'Birthday Surprise 🎂',
@@ -1752,9 +1752,16 @@ function generateShareId() {
 
 // ===== SUCCESS PAGE =====
 function showSuccessPage() {
-  const id = state.shareId || generateShareId();
-  state.shareId = id;
-  const link = `https://bdaysurprise.love/s/${id}`;
+  // Build a self-contained link using the current page URL + query params
+  // so the recipient can open the same HTML file with their personalised view
+  const base = window.location.href.split('?')[0].split('#')[0];
+  const params = new URLSearchParams({
+    view: '1',
+    r: state.recipient || 'Beautiful',
+    s: state.sender   || 'Someone special',
+    m: state.message  || 'You are loved beyond words 💕'
+  });
+  const link = `${base}?${params.toString()}`;
   document.getElementById('shareableLink').textContent = link;
   document.getElementById('successRecipient').textContent = state.recipient;
   launchConfetti();
@@ -1836,7 +1843,7 @@ function checkRoute() {
   const hash = window.location.hash;
   const search = window.location.search;
   
-  if (hash.startsWith('#/view/') || search.includes('view=')) {
+  if (hash.startsWith('#/view/') || search.includes('view=1')) {
     // Recipient view
     const params = new URLSearchParams(search);
     state.recipient = params.get('r') || 'Beautiful';
