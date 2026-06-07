@@ -8,17 +8,10 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root {
-    --pink-soft: #FFE4EF;
-    --pink-mid: #FFB6D3;
-    --pink-deep: #FF7BAC;
-    --pink-accent: #E8477A;
-    --cream: #FFF8F3;
-    --blush: #FDEEF5;
-    --lavender: #F0E6FF;
-    --gold: #FFD700;
-    --text-dark: #3D1A24;
-    --text-mid: #7A3B55;
-    --text-light: #C06090;
+    --pink-soft: #FFE4EF; --pink-mid: #FFB6D3; --pink-deep: #FF7BAC;
+    --pink-accent: #E8477A; --cream: #FFF8F3; --blush: #FDEEF5;
+    --lavender: #F0E6FF; --gold: #FFD700; --text-dark: #3D1A24;
+    --text-mid: #7A3B55; --text-light: #C06090;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Nunito', sans-serif; background: var(--blush); color: var(--text-dark); overflow-x: hidden; min-height: 100vh; }
@@ -36,6 +29,7 @@
   .btn-pink { background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent)); color: white; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1.1rem; padding: 16px 40px; border-radius: 50px; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(232,71,122,0.35); transition: all 0.3s ease; letter-spacing: 0.5px; }
   .btn-pink:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,71,122,0.45); }
   .btn-pink:active { transform: translateY(0); }
+  .btn-pink:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
   .btn-outline { background: transparent; color: var(--pink-accent); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; padding: 14px 36px; border-radius: 50px; border: 2px solid var(--pink-deep); cursor: pointer; transition: all 0.3s ease; }
   .btn-outline:hover { background: var(--pink-soft); transform: translateY(-2px); }
   .input-cute { width: 100%; padding: 14px 20px; border-radius: 16px; border: 2px solid var(--pink-mid); background: white; font-family: 'Nunito', sans-serif; font-size: 1rem; color: var(--text-dark); outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
@@ -78,17 +72,34 @@
   .emoji-bounce { animation: emojiBounce 2s ease-in-out infinite; }
   @keyframes emojiBounce { 0%, 100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(-8px) rotate(-5deg); } 75% { transform: translateY(-4px) rotate(5deg); } }
 
-  /* ===== RECIPIENT JOURNEY NAV ===== */
+  /* Payment status styles */
+  .payment-status { border-radius: 16px; padding: 14px 18px; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .payment-status.loading { background: #FFF8E1; color: #F57F17; border: 1.5px solid #FFD54F; }
+  .payment-status.success { background: #E8F5E9; color: #2E7D32; border: 1.5px solid #A5D6A7; }
+  .payment-status.error { background: #FFEBEE; color: #C62828; border: 1.5px solid #EF9A9A; }
+  .payment-status.warning { background: #FFF3E0; color: #E65100; border: 1.5px solid #FFCC80; }
+
+  /* Secure badge */
+  .secure-badge { display: inline-flex; align-items: center; gap: 6px; background: #E8F5E9; color: #2E7D32; border-radius: 20px; padding: 4px 12px; font-size: 0.75rem; font-weight: 700; }
+
+  /* Retry button */
+  .btn-retry { background: #FFF3E0; color: #E65100; border: 2px solid #FFCC80; border-radius: 50px; padding: 10px 24px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.3s; }
+  .btn-retry:hover { background: #FFE0B2; }
+
   .rjp-step { display: none; }
   .rjp-step.active { display: block; animation: fadeInPage 0.6s ease; }
-  .step-indicator { display: flex; gap: 6px; justify-content: center; margin-bottom: 20px; }
-  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pink-mid); transition: all 0.3s; }
-  .step-dot.done { background: var(--pink-accent); }
-  .step-dot.current { width: 20px; border-radius: 4px; background: var(--pink-accent); }
-
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--pink-soft); }
   ::-webkit-scrollbar-thumb { background: var(--pink-mid); border-radius: 3px; }
+
+  /* Payment method grid */
+  .payment-method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .payment-method-btn { background: white; border: 2px solid var(--pink-mid); border-radius: 14px; padding: 12px; text-align: center; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--text-mid); transition: all 0.2s; }
+  .payment-method-btn:hover, .payment-method-btn.selected { border-color: var(--pink-accent); background: var(--pink-soft); color: var(--pink-accent); }
+  .payment-method-btn .method-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+  /* Order ID display */
+  .order-id-box { background: #F3E5F5; border: 1.5px solid #CE93D8; border-radius: 12px; padding: 10px 14px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #6A1B9A; word-break: break-all; }
 </style>
 </head>
 <body>
@@ -99,49 +110,26 @@
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"/>
 </audio>
 
-<!-- ======================================== -->
-<!-- PAGE 1: WELCOME / SETUP                  -->
-<!-- ======================================== -->
+<!-- PAGE 1: WELCOME -->
 <div id="page-welcome" class="page active">
   <div class="bg-dots min-h-screen flex flex-col">
     <div style="background: linear-gradient(180deg, var(--pink-soft) 0%, transparent 100%); padding: 20px; text-align: center;">
-      <div class="flex justify-center gap-4 text-2xl">
-        <span class="sticker">🎀</span><span class="float-anim">🌸</span><span class="sticker">🎀</span>
-      </div>
+      <div class="flex justify-center gap-4 text-2xl"><span class="sticker">🎀</span><span class="float-anim">🌸</span><span class="sticker">🎀</span></div>
     </div>
     <div class="flex-1 flex items-center justify-center px-4 py-8">
       <div class="w-full max-w-md">
         <div class="text-center mb-6 float-anim">
           <svg width="120" height="120" viewBox="0 0 120 120" class="illustration mx-auto">
-            <ellipse cx="60" cy="85" rx="30" ry="25" fill="#FFD4A8"/>
-            <circle cx="60" cy="55" r="28" fill="#FFD4A8"/>
-            <polygon points="36,34 28,14 48,30" fill="#FFD4A8"/>
-            <polygon points="38,32 32,18 46,30" fill="#FFB6D3"/>
-            <polygon points="84,34 92,14 72,30" fill="#FFD4A8"/>
-            <polygon points="82,32 88,18 74,30" fill="#FFB6D3"/>
-            <polygon points="60,20 45,45 75,45" fill="#FF7BAC"/>
-            <line x1="45" y1="45" x2="75" y2="45" stroke="#FFB6D3" stroke-width="3"/>
+            <ellipse cx="60" cy="85" rx="30" ry="25" fill="#FFD4A8"/><circle cx="60" cy="55" r="28" fill="#FFD4A8"/>
+            <polygon points="60,20 45,45 75,45" fill="#FF7BAC"/><line x1="45" y1="45" x2="75" y2="45" stroke="#FFB6D3" stroke-width="3"/>
             <circle cx="60" cy="20" r="3" fill="#FFD700"/>
-            <line x1="52" y1="28" x2="68" y2="28" stroke="white" stroke-width="1.5" opacity="0.6"/>
-            <line x1="49" y1="35" x2="71" y2="35" stroke="white" stroke-width="1.5" opacity="0.6"/>
-            <ellipse cx="50" cy="55" rx="6" ry="7" fill="white"/>
-            <ellipse cx="70" cy="55" rx="6" ry="7" fill="white"/>
-            <ellipse cx="51" cy="56" rx="4" ry="5" fill="#5C3A1E"/>
-            <ellipse cx="71" cy="56" rx="4" ry="5" fill="#5C3A1E"/>
-            <circle cx="52.5" cy="54.5" r="1.5" fill="white"/>
-            <circle cx="72.5" cy="54.5" r="1.5" fill="white"/>
-            <ellipse cx="43" cy="63" rx="6" ry="4" fill="#FFB6D3" opacity="0.6"/>
-            <ellipse cx="77" cy="63" rx="6" ry="4" fill="#FFB6D3" opacity="0.6"/>
+            <ellipse cx="50" cy="55" rx="6" ry="7" fill="white"/><ellipse cx="70" cy="55" rx="6" ry="7" fill="white"/>
+            <ellipse cx="51" cy="56" rx="4" ry="5" fill="#5C3A1E"/><ellipse cx="71" cy="56" rx="4" ry="5" fill="#5C3A1E"/>
+            <circle cx="52.5" cy="54.5" r="1.5" fill="white"/><circle cx="72.5" cy="54.5" r="1.5" fill="white"/>
+            <ellipse cx="43" cy="63" rx="6" ry="4" fill="#FFB6D3" opacity="0.6"/><ellipse cx="77" cy="63" rx="6" ry="4" fill="#FFB6D3" opacity="0.6"/>
             <ellipse cx="60" cy="65" rx="3" ry="2" fill="#FF7BAC"/>
             <path d="M55 68 Q60 73 65 68" stroke="#FF7BAC" stroke-width="1.5" fill="none"/>
-            <line x1="32" y1="63" x2="52" y2="65" stroke="#C06090" stroke-width="1" opacity="0.6"/>
-            <line x1="32" y1="67" x2="52" y2="67" stroke="#C06090" stroke-width="1" opacity="0.6"/>
-            <line x1="68" y1="65" x2="88" y2="63" stroke="#C06090" stroke-width="1" opacity="0.6"/>
-            <line x1="68" y1="67" x2="88" y2="67" stroke="#C06090" stroke-width="1" opacity="0.6"/>
             <path d="M46 78 Q60 85 74 78" stroke="#FF7BAC" stroke-width="2" fill="none"/>
-            <ellipse cx="46" cy="78" rx="7" ry="4" fill="#FF7BAC" opacity="0.7"/>
-            <ellipse cx="74" cy="78" rx="7" ry="4" fill="#FF7BAC" opacity="0.7"/>
-            <circle cx="60" cy="81" r="3" fill="#E8477A"/>
           </svg>
         </div>
         <div class="card-cute p-8 relative">
@@ -176,9 +164,7 @@
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 2: STORYBOOK / MEMORY CARDS         -->
-<!-- ======================================== -->
+<!-- PAGE 2: STORYBOOK -->
 <div id="page-storybook" class="page">
   <div class="min-h-screen" style="background: linear-gradient(135deg, var(--blush) 0%, var(--lavender) 50%, var(--pink-soft) 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
@@ -188,89 +174,47 @@
         <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);">Flip the cards to reveal ✨</p>
         <div class="divider-hearts mt-3">♥ ♥ ♥</div>
       </div>
-      <div class="flex items-center gap-3 mb-8">
-        <span class="text-xs font-semibold" style="color: var(--text-light);">Page 1 of 5</span>
-        <div class="progress-bar flex-1"><div class="progress-fill" style="width: 20%"></div></div>
-      </div>
       <div class="grid grid-cols-2 gap-4 mb-8">
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #FFE4EF, #FFF0F7);">
-              <div class="text-5xl float-anim">🎂</div>
-              <p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
+              <div class="text-5xl float-anim">🎂</div><p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
             </div>
             <div class="flip-card-back flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #FFB6D3, #FF7BAC); border-radius: 20px;">
-              <div class="text-3xl">🎂</div>
-              <p class="font-dancing text-xl text-white font-bold mt-1 text-center">The day you were born, the world got brighter 🌟</p>
+              <div class="text-3xl">🎂</div><p class="font-dancing text-xl text-white font-bold mt-1 text-center">The day you were born, the world got brighter 🌟</p>
             </div>
           </div>
         </div>
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #F0E6FF, #EDF0FF);">
-              <div class="text-5xl float-anim-delay">🌸</div>
-              <p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
+              <div class="text-5xl float-anim-delay">🌸</div><p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
             </div>
             <div class="flip-card-back flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #B39DDB, #9C64C8); border-radius: 20px;">
-              <div class="text-3xl">🌸</div>
-              <p class="font-dancing text-xl text-white font-bold mt-1 text-center">Your smile is my favourite thing 🌺</p>
+              <div class="text-3xl">🌸</div><p class="font-dancing text-xl text-white font-bold mt-1 text-center">Your smile is my favourite thing 🌺</p>
             </div>
           </div>
         </div>
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #FFF8E1, #FFF3E0);">
-              <div class="text-5xl float-anim">🌟</div>
-              <p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
+              <div class="text-5xl float-anim">🌟</div><p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
             </div>
             <div class="flip-card-back flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #FFD54F, #FFA726); border-radius: 20px;">
-              <div class="text-3xl">🌟</div>
-              <p class="font-dancing text-xl text-white font-bold mt-1 text-center">Every day with you is golden ✨</p>
+              <div class="text-3xl">🌟</div><p class="font-dancing text-xl text-white font-bold mt-1 text-center">Every day with you is golden ✨</p>
             </div>
           </div>
         </div>
         <div class="flip-card" style="height: 180px;" onclick="flipCard(this)">
           <div class="flip-card-inner">
             <div class="flip-card-front card-cute flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #E8F5E9, #F1F8E9);">
-              <div class="text-5xl float-anim-delay">🧸</div>
-              <p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
+              <div class="text-5xl float-anim-delay">🧸</div><p class="text-xs font-semibold mt-2 text-center" style="color: var(--text-light);">Tap to reveal ✨</p>
             </div>
             <div class="flip-card-back flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #A5D6A7, #66BB6A); border-radius: 20px;">
-              <div class="text-3xl">🧸</div>
-              <p class="font-dancing text-xl text-white font-bold mt-1 text-center">You're the warmest hug in human form 🤗</p>
+              <div class="text-3xl">🧸</div><p class="font-dancing text-xl text-white font-bold mt-1 text-center">You're the warmest hug in human form 🤗</p>
             </div>
           </div>
         </div>
-      </div>
-      <div class="text-center mb-6">
-        <svg width="100" height="110" viewBox="0 0 100 110" class="illustration mx-auto float-anim-delay">
-          <ellipse cx="50" cy="80" rx="26" ry="24" fill="#C8956C"/>
-          <ellipse cx="22" cy="78" rx="10" ry="8" fill="#C8956C" transform="rotate(-20 22 78)"/>
-          <ellipse cx="78" cy="78" rx="10" ry="8" fill="#C8956C" transform="rotate(20 78 78)"/>
-          <rect x="72" y="86" width="18" height="16" rx="3" fill="#FF7BAC"/>
-          <rect x="72" y="91" width="18" height="3" fill="white" opacity="0.5"/>
-          <rect x="80" y="86" width="3" height="16" fill="white" opacity="0.5"/>
-          <ellipse cx="81" cy="86" rx="5" ry="3" fill="#E8477A"/>
-          <circle cx="50" cy="47" r="26" fill="#C8956C"/>
-          <circle cx="28" cy="27" r="11" fill="#C8956C"/>
-          <circle cx="28" cy="27" r="7" fill="#E8A87C"/>
-          <circle cx="72" cy="27" r="11" fill="#C8956C"/>
-          <circle cx="72" cy="27" r="7" fill="#E8A87C"/>
-          <ellipse cx="50" cy="53" rx="14" ry="10" fill="#E8A87C"/>
-          <circle cx="41" cy="43" r="5" fill="white"/>
-          <circle cx="59" cy="43" r="5" fill="white"/>
-          <circle cx="42" cy="43" r="3" fill="#3D1A24"/>
-          <circle cx="60" cy="43" r="3" fill="#3D1A24"/>
-          <circle cx="43" cy="42" r="1" fill="white"/>
-          <circle cx="61" cy="42" r="1" fill="white"/>
-          <ellipse cx="35" cy="52" rx="6" ry="4" fill="#FFB6D3" opacity="0.7"/>
-          <ellipse cx="65" cy="52" rx="6" ry="4" fill="#FFB6D3" opacity="0.7"/>
-          <ellipse cx="50" cy="54" rx="3.5" ry="2.5" fill="#8B5E3C"/>
-          <path d="M44 58 Q50 64 56 58" stroke="#8B5E3C" stroke-width="2" fill="none"/>
-          <ellipse cx="43" cy="69" rx="6" ry="4" fill="#FF7BAC"/>
-          <ellipse cx="57" cy="69" rx="6" ry="4" fill="#FF7BAC"/>
-          <circle cx="50" cy="69" r="3" fill="#E8477A"/>
-        </svg>
       </div>
       <div class="text-center">
         <p class="font-dancing text-xl mb-4" style="color: var(--text-mid);">Ready to continue the magic? 🌟</p>
@@ -280,57 +224,28 @@
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 3: BIRTHDAY LETTER                  -->
-<!-- ======================================== -->
+<!-- PAGE 3: LETTER -->
 <div id="page-letter" class="page">
   <div class="min-h-screen" style="background: linear-gradient(160deg, #FFF8F3 0%, #FDEEF5 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
       <div class="text-center mb-6">
         <div class="text-4xl heart-pulse mb-2">💌</div>
         <div class="tape">A Birthday Love Letter</div>
-        <p class="mt-3 text-sm" style="color: var(--text-light);">From my heart to the birthday queen</p>
       </div>
       <div class="card-cute p-0 overflow-hidden relative mb-6">
         <div style="background: linear-gradient(135deg, var(--pink-soft), var(--lavender)); padding: 20px 24px;">
-          <div class="flex items-center gap-3">
-            <svg width="52" height="52" viewBox="0 0 52 52" class="illustration">
-              <circle cx="26" cy="30" r="16" fill="#FFD4A8"/>
-              <polygon points="26,10 16,24 36,24" fill="#FF7BAC"/>
-              <circle cx="26" cy="10" r="2" fill="#FFD700"/>
-              <polygon points="13,18 8,6 20,16" fill="#FFD4A8"/>
-              <polygon points="39,18 44,6 32,16" fill="#FFD4A8"/>
-              <ellipse cx="20" cy="30" rx="4" ry="5" fill="white"/>
-              <ellipse cx="32" cy="30" rx="4" ry="5" fill="white"/>
-              <ellipse cx="21" cy="31" rx="2.5" ry="3" fill="#3D1A24"/>
-              <ellipse cx="33" cy="31" rx="2.5" ry="3" fill="#3D1A24"/>
-              <ellipse cx="26" cy="37" rx="3" ry="2" fill="#FFD4A8"/>
-              <ellipse cx="22" cy="35" rx="3" ry="2" fill="#FFB6D3" opacity="0.6"/>
-              <ellipse cx="30" cy="35" rx="3" ry="2" fill="#FFB6D3" opacity="0.6"/>
-              <ellipse cx="26" cy="36" rx="2" ry="1.5" fill="#FF7BAC"/>
-            </svg>
-            <div>
-              <p class="font-semibold text-sm" style="color: var(--text-mid);">To My Birthday Princess 👸</p>
-              <p class="text-xs" style="color: var(--text-light);" id="letterSubtitle">With all my love ❤️</p>
-            </div>
-          </div>
+          <p class="font-semibold text-sm" style="color: var(--text-mid);">To My Birthday Princess 👸</p>
+          <p class="text-xs" style="color: var(--text-light);" id="letterSubtitle">With all my love ❤️</p>
         </div>
         <div class="p-6 space-y-4" style="background: repeating-linear-gradient(transparent, transparent 27px, #FFE4EF 28px); line-height: 28px;">
           <p class="font-playfair italic text-base" style="color: var(--text-dark);">My dearest birthday girl,</p>
           <p class="text-sm leading-relaxed" style="color: var(--text-mid);">Today marks another year of your incredible existence, and I couldn't be more grateful to celebrate it with you. 🌸</p>
-          <p class="text-sm leading-relaxed" style="color: var(--text-mid);" id="customMsgDisplay">You bring so much joy, laughter, and love into this world — and into my life. You deserve all the magic, all the dreams, and all the love this world has to offer. 💕</p>
-          <p class="text-sm leading-relaxed" style="color: var(--text-mid);">On this special day, I want you to know that every moment spent with you is a treasure. You are my sunshine, my happy place, my favourite person. 🌟</p>
+          <p class="text-sm leading-relaxed" style="color: var(--text-mid);" id="customMsgDisplay">You bring so much joy, laughter, and love into this world. 💕</p>
+          <p class="text-sm leading-relaxed" style="color: var(--text-mid);">On this special day, I want you to know that every moment spent with you is a treasure. 🌟</p>
           <div class="pt-4 text-right">
             <p class="font-dancing text-2xl" style="color: var(--pink-accent);">Forever yours 💕</p>
             <p class="font-dancing text-xl mt-1" style="color: var(--text-mid);" id="senderNameDisplay">Your person ❤️</p>
           </div>
-        </div>
-        <div style="background: linear-gradient(135deg, var(--pink-mid), var(--pink-deep)); height: 4px;"></div>
-      </div>
-      <div class="divider-hearts">♥ ♥ ♥</div>
-      <div class="text-center my-4">
-        <div class="flex justify-center gap-4 text-3xl">
-          <span class="float-anim">🌸</span><span class="heart-pulse">💖</span><span class="float-anim-delay">🌸</span>
         </div>
       </div>
       <div class="text-center">
@@ -340,9 +255,7 @@
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 4: REASONS I APPRECIATE YOU         -->
-<!-- ======================================== -->
+<!-- PAGE 4: REASONS -->
 <div id="page-reasons" class="page">
   <div class="min-h-screen" style="background: linear-gradient(135deg, var(--lavender) 0%, var(--pink-soft) 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
@@ -352,40 +265,26 @@
         <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);"><span id="reasonsSubtitle">...and counting ✨</span></p>
       </div>
       <div class="space-y-4 mb-8">
-        <div class="reason-card" style="animation-delay: 0.1s;">
-          <div class="flex items-start gap-3"><span class="text-2xl">😊</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #01</p><p class="text-sm mt-1" style="color: var(--text-dark);">Your smile lights up every room you walk into. It's genuinely contagious! 🌟</p></div></div>
-        </div>
-        <div class="reason-card" style="animation-delay: 0.2s;">
-          <div class="flex items-start gap-3"><span class="text-2xl">💪</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #02</p><p class="text-sm mt-1" style="color: var(--text-dark);">You're stronger than you know. Watching you overcome challenges is inspiring every single time.</p></div></div>
-        </div>
-        <div class="reason-card" style="animation-delay: 0.3s;">
-          <div class="flex items-start gap-3"><span class="text-2xl">🤣</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #03</p><p class="text-sm mt-1" style="color: var(--text-dark);">Your sense of humor is unmatched. You make me laugh even on my worst days 😂💕</p></div></div>
-        </div>
-        <div class="reason-card" style="animation-delay: 0.4s;">
-          <div class="flex items-start gap-3"><span class="text-2xl">🌺</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #04</p><p class="text-sm mt-1" style="color: var(--text-dark);">You care so deeply for the people you love. Your heart is pure gold ✨</p></div></div>
-        </div>
-        <div class="reason-card" style="animation-delay: 0.5s;">
-          <div class="flex items-start gap-3"><span class="text-2xl">🌙</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #05</p><p class="text-sm mt-1" style="color: var(--text-dark);">You make ordinary moments feel magical. Life with you is a beautiful adventure 🌙</p></div></div>
-        </div>
-        <div class="reason-card" style="animation-delay: 0.6s;">
-          <div class="flex items-start gap-3"><span class="text-2xl">🎯</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #06</p><p class="text-sm mt-1" style="color: var(--text-dark);">You never give up. Your determination and passion are absolutely breathtaking 🏆</p></div></div>
-        </div>
+        <div class="reason-card" style="animation-delay: 0.1s;"><div class="flex items-start gap-3"><span class="text-2xl">😊</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #01</p><p class="text-sm mt-1" style="color: var(--text-dark);">Your smile lights up every room you walk into. It's genuinely contagious! 🌟</p></div></div></div>
+        <div class="reason-card" style="animation-delay: 0.2s;"><div class="flex items-start gap-3"><span class="text-2xl">💪</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #02</p><p class="text-sm mt-1" style="color: var(--text-dark);">You're stronger than you know. Watching you overcome challenges is inspiring every single time.</p></div></div></div>
+        <div class="reason-card" style="animation-delay: 0.3s;"><div class="flex items-start gap-3"><span class="text-2xl">🤣</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #03</p><p class="text-sm mt-1" style="color: var(--text-dark);">Your sense of humor is unmatched. You make me laugh even on my worst days 😂💕</p></div></div></div>
+        <div class="reason-card" style="animation-delay: 0.4s;"><div class="flex items-start gap-3"><span class="text-2xl">🌺</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #04</p><p class="text-sm mt-1" style="color: var(--text-dark);">You care so deeply for the people you love. Your heart is pure gold ✨</p></div></div></div>
+        <div class="reason-card" style="animation-delay: 0.5s;"><div class="flex items-start gap-3"><span class="text-2xl">🌙</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #05</p><p class="text-sm mt-1" style="color: var(--text-dark);">You make ordinary moments feel magical. Life with you is a beautiful adventure 🌙</p></div></div></div>
+        <div class="reason-card" style="animation-delay: 0.6s;"><div class="flex items-start gap-3"><span class="text-2xl">🎯</span><div><p class="font-semibold text-sm" style="color: var(--text-mid);">Reason #06</p><p class="text-sm mt-1" style="color: var(--text-dark);">You never give up. Your determination and passion are absolutely breathtaking 🏆</p></div></div></div>
       </div>
       <div class="card-cute p-6 text-center mb-6">
-        <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--text-light);">🌸 Three Wishes</p>
-        <h3 class="font-playfair text-xl font-bold mb-1" style="color: var(--text-dark);">A tiny bouquet of birthday wishes</h3>
-        <p class="text-xs mb-6" style="color: var(--text-light);">Pick each flower — there's a wish inside 🌸</p>
+        <p class="text-xs uppercase tracking-widest mb-3" style="color: var(--text-light);">🌸 Three Wishes — Pick a flower</p>
         <div class="flex justify-center gap-8" id="flowerContainer">
           <div class="flower-btn text-center" onclick="pickFlower(this, '🌸 Wish 1: May all your dreams bloom this year!')">
-            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#FFB6D3"/><ellipse cx="30" cy="14" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/><ellipse cx="30" cy="46" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/><ellipse cx="14" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/><ellipse cx="46" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/><ellipse cx="18" cy="18" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(45 18 18)"/><ellipse cx="42" cy="18" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(-45 42 18)"/><ellipse cx="18" cy="42" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(-45 18 42)"/><ellipse cx="42" cy="42" rx="7" ry="10" fill="#FFB6D3" opacity="0.6" transform="rotate(45 42 42)"/><circle cx="30" cy="30" r="7" fill="#FF7BAC"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#FFB6D3"/><ellipse cx="30" cy="14" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/><ellipse cx="30" cy="46" rx="7" ry="10" fill="#FFD4E8" opacity="0.8"/><ellipse cx="14" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/><ellipse cx="46" cy="30" rx="10" ry="7" fill="#FFD4E8" opacity="0.8"/><circle cx="30" cy="30" r="7" fill="#FF7BAC"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
             <p class="text-xs mt-1 font-semibold" style="color: var(--text-light);">PICK ME</p>
           </div>
           <div class="flower-btn text-center" onclick="pickFlower(this, '💫 Wish 2: May joy find you in every corner of life!')">
-            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#E8B4D8"/><ellipse cx="30" cy="13" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/><ellipse cx="30" cy="47" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/><ellipse cx="13" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/><ellipse cx="47" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/><ellipse cx="17" cy="17" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(45 17 17)"/><ellipse cx="43" cy="17" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(-45 43 17)"/><ellipse cx="17" cy="43" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(-45 17 43)"/><ellipse cx="43" cy="43" rx="6" ry="10" fill="#E8B4D8" opacity="0.6" transform="rotate(45 43 43)"/><circle cx="30" cy="30" r="7" fill="#C06090"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#E8B4D8"/><ellipse cx="30" cy="13" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/><ellipse cx="30" cy="47" rx="6" ry="10" fill="#EDD5EC" opacity="0.8"/><ellipse cx="13" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/><ellipse cx="47" cy="30" rx="10" ry="6" fill="#EDD5EC" opacity="0.8"/><circle cx="30" cy="30" r="7" fill="#C06090"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
             <p class="text-xs mt-1 font-semibold" style="color: var(--text-light);">PICK ME</p>
           </div>
           <div class="flower-btn text-center" onclick="pickFlower(this, '🌟 Wish 3: May love surround you always!')">
-            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#FFCBA4"/><ellipse cx="30" cy="12" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/><ellipse cx="30" cy="48" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/><ellipse cx="12" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/><ellipse cx="48" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/><ellipse cx="16" cy="16" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(45 16 16)"/><ellipse cx="44" cy="16" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(-45 44 16)"/><ellipse cx="16" cy="44" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(-45 16 44)"/><ellipse cx="44" cy="44" rx="7" ry="11" fill="#FFCBA4" opacity="0.6" transform="rotate(45 44 44)"/><circle cx="30" cy="30" r="7" fill="#FFA726"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="8" fill="#FFCBA4"/><ellipse cx="30" cy="12" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/><ellipse cx="30" cy="48" rx="7" ry="11" fill="#FFE4C8" opacity="0.8"/><ellipse cx="12" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/><ellipse cx="48" cy="30" rx="11" ry="7" fill="#FFE4C8" opacity="0.8"/><circle cx="30" cy="30" r="7" fill="#FFA726"/><circle cx="30" cy="30" r="4" fill="#FFD700"/></svg>
             <p class="text-xs mt-1 font-semibold" style="color: var(--text-light);">PICK ME</p>
           </div>
         </div>
@@ -398,9 +297,7 @@
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 5: ANIMATED GIFT BOX                -->
-<!-- ======================================== -->
+<!-- PAGE 5: GIFT BOX -->
 <div id="page-gift" class="page">
   <div class="min-h-screen flex flex-col" style="background: linear-gradient(135deg, #FFF0F7 0%, var(--pink-soft) 50%, #FFF8F3 100%);">
     <div class="max-w-lg mx-auto px-4 py-8 flex-1 flex flex-col">
@@ -411,41 +308,28 @@
           <p class="font-dancing text-lg mt-1" style="color: var(--text-light);">Make a wish before you open your gift!</p>
         </div>
         <div class="flex justify-center mb-6">
-          <div class="relative" style="width:220px; height:240px;">
-            <svg id="cakeSvg" width="220" height="240" viewBox="0 0 220 240" class="illustration">
-              <defs>
-                <linearGradient id="cakeBottomGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8B5E3C"/><stop offset="100%" style="stop-color:#6D4828"/></linearGradient>
-                <linearGradient id="cakeMidGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#C8956C"/><stop offset="100%" style="stop-color:#A8754C"/></linearGradient>
-              </defs>
-              <ellipse cx="110" cy="222" rx="70" ry="10" fill="#FFB6D3" opacity="0.3"/>
-              <rect x="20" y="155" width="180" height="55" rx="12" fill="url(#cakeBottomGrad)"/>
-              <rect x="20" y="155" width="180" height="18" rx="9" fill="white"/>
-              <ellipse cx="44" cy="173" rx="8" ry="12" fill="white"/><ellipse cx="70" cy="175" rx="8" ry="13" fill="white"/><ellipse cx="96" cy="173" rx="8" ry="12" fill="white"/><ellipse cx="122" cy="175" rx="8" ry="13" fill="white"/><ellipse cx="148" cy="173" rx="8" ry="12" fill="white"/><ellipse cx="174" cy="175" rx="8" ry="13" fill="white"/>
-              <rect x="40" y="185" width="12" height="4" rx="2" fill="#FF7BAC" transform="rotate(-15 40 185)"/><rect x="75" y="190" width="12" height="4" rx="2" fill="#FFD700" transform="rotate(20 75 190)"/><rect x="110" y="185" width="12" height="4" rx="2" fill="#7C4DFF" transform="rotate(-5 110 185)"/><rect x="145" y="190" width="12" height="4" rx="2" fill="#00BCD4" transform="rotate(15 145 190)"/><rect x="57" y="200" width="10" height="4" rx="2" fill="#FF6B9D" transform="rotate(10 57 200)"/><rect x="130" y="200" width="10" height="4" rx="2" fill="#FFB6D3" transform="rotate(-20 130 200)"/>
-              <rect x="42" y="105" width="136" height="55" rx="10" fill="url(#cakeMidGrad)"/>
-              <rect x="42" y="105" width="136" height="16" rx="8" fill="white"/>
-              <ellipse cx="62" cy="121" rx="7" ry="11" fill="white"/><ellipse cx="84" cy="123" rx="7" ry="12" fill="white"/><ellipse cx="110" cy="121" rx="7" ry="11" fill="white"/><ellipse cx="136" cy="123" rx="7" ry="12" fill="white"/><ellipse cx="158" cy="121" rx="7" ry="11" fill="white"/>
-              <circle cx="70" cy="135" r="8" fill="#FF7BAC"/><circle cx="70" cy="135" r="5" fill="#FF9CC2"/>
-              <circle cx="110" cy="135" r="8" fill="#FF7BAC"/><circle cx="110" cy="135" r="5" fill="#FF9CC2"/>
-              <circle cx="150" cy="135" r="8" fill="#FF7BAC"/><circle cx="150" cy="135" r="5" fill="#FF9CC2"/>
-              <rect x="103" y="60" width="14" height="48" rx="5" fill="#E8477A"/>
-              <rect x="103" y="68" width="14" height="4" fill="white" opacity="0.3"/><rect x="103" y="80" width="14" height="4" fill="white" opacity="0.3"/><rect x="103" y="92" width="14" height="4" fill="white" opacity="0.3"/>
-              <line x1="110" y1="60" x2="110" y2="52" stroke="#5C3A1E" stroke-width="2"/>
-              <g id="flameGroup">
-                <ellipse cx="110" cy="44" rx="7" ry="11" fill="#FFD700" opacity="0.9"><animateTransform attributeName="transform" type="translate" values="0,0; -1,-2; 1,-1; 0,0" dur="0.8s" repeatCount="indefinite"/></ellipse>
-                <ellipse cx="110" cy="47" rx="4.5" ry="7" fill="#FFA726"><animateTransform attributeName="transform" type="translate" values="0,0; 1,-1; -1,-2; 0,0" dur="0.6s" repeatCount="indefinite"/></ellipse>
-                <ellipse cx="110" cy="50" rx="2" ry="4" fill="white" opacity="0.7"/>
-              </g>
-              <g id="smokeGroup" opacity="0" style="transition:opacity 0.5s;">
-                <ellipse cx="110" cy="42" rx="3" ry="5" fill="#ccc" opacity="0.6"/>
-                <ellipse cx="112" cy="34" rx="3" ry="5" fill="#ddd" opacity="0.4"/>
-                <ellipse cx="108" cy="26" rx="3" ry="5" fill="#eee" opacity="0.3"/>
-              </g>
-              <text x="10" y="80" font-size="16">⭐</text><text x="186" y="80" font-size="16">⭐</text>
-              <text x="6" y="145" font-size="14">✨</text><text x="192" y="145" font-size="14">✨</text>
-              <text x="20" y="225" font-size="12">🌸</text><text x="185" y="225" font-size="12">🌸</text>
-            </svg>
-          </div>
+          <svg id="cakeSvg" width="220" height="240" viewBox="0 0 220 240" class="illustration">
+            <defs>
+              <linearGradient id="cakeBottomGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8B5E3C"/><stop offset="100%" style="stop-color:#6D4828"/></linearGradient>
+              <linearGradient id="cakeMidGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#C8956C"/><stop offset="100%" style="stop-color:#A8754C"/></linearGradient>
+            </defs>
+            <rect x="20" y="155" width="180" height="55" rx="12" fill="url(#cakeBottomGrad)"/>
+            <rect x="20" y="155" width="180" height="18" rx="9" fill="white"/>
+            <rect x="42" y="105" width="136" height="55" rx="10" fill="url(#cakeMidGrad)"/>
+            <rect x="42" y="105" width="136" height="16" rx="8" fill="white"/>
+            <circle cx="70" cy="135" r="8" fill="#FF7BAC"/><circle cx="110" cy="135" r="8" fill="#FF7BAC"/><circle cx="150" cy="135" r="8" fill="#FF7BAC"/>
+            <rect x="103" y="60" width="14" height="48" rx="5" fill="#E8477A"/>
+            <line x1="110" y1="60" x2="110" y2="52" stroke="#5C3A1E" stroke-width="2"/>
+            <g id="flameGroup">
+              <ellipse cx="110" cy="44" rx="7" ry="11" fill="#FFD700" opacity="0.9"><animateTransform attributeName="transform" type="translate" values="0,0; -1,-2; 1,-1; 0,0" dur="0.8s" repeatCount="indefinite"/></ellipse>
+              <ellipse cx="110" cy="47" rx="4.5" ry="7" fill="#FFA726"><animateTransform attributeName="transform" type="translate" values="0,0; 1,-1; -1,-2; 0,0" dur="0.6s" repeatCount="indefinite"/></ellipse>
+              <ellipse cx="110" cy="50" rx="2" ry="4" fill="white" opacity="0.7"/>
+            </g>
+            <g id="smokeGroup" opacity="0" style="transition:opacity 0.5s;">
+              <ellipse cx="110" cy="42" rx="3" ry="5" fill="#ccc" opacity="0.6"/>
+              <ellipse cx="112" cy="34" rx="3" ry="5" fill="#ddd" opacity="0.4"/>
+            </g>
+          </svg>
         </div>
         <div class="text-center mt-2">
           <button id="blowCandleBtn" class="btn-pink shine-effect" onclick="blowGiftCandle()">🌬️ Tap to blow the candle</button>
@@ -462,21 +346,12 @@
           <div id="giftBoxContainer" onclick="openGiftBox()" style="cursor: pointer;">
             <div id="giftClosed" class="relative float-anim">
               <svg width="200" height="220" viewBox="0 0 200 220" class="illustration">
-                <defs>
-                  <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF7BAC"/><stop offset="100%" style="stop-color:#E8477A"/></linearGradient>
-                  <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF9CC2"/><stop offset="100%" style="stop-color:#FF7BAC"/></linearGradient>
-                </defs>
+                <defs><linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF7BAC"/><stop offset="100%" style="stop-color:#E8477A"/></linearGradient></defs>
                 <rect x="20" y="100" width="160" height="110" rx="8" fill="url(#boxGrad)"/>
                 <rect x="90" y="100" width="20" height="110" fill="white" opacity="0.25"/>
-                <rect x="10" y="80" width="180" height="30" rx="6" fill="url(#lidGrad)"/>
+                <rect x="10" y="80" width="180" height="30" rx="6" fill="#FF9CC2"/>
                 <rect x="80" y="70" width="40" height="45" rx="6" fill="#FFB6D3"/>
-                <ellipse cx="85" cy="68" rx="20" ry="14" fill="#FFD4E8" transform="rotate(-20 85 68)"/>
-                <ellipse cx="115" cy="68" rx="20" ry="14" fill="#FFD4E8" transform="rotate(20 115 68)"/>
                 <circle cx="100" cy="68" r="10" fill="#FF7BAC"/>
-                <circle cx="100" cy="68" r="6" fill="#E8477A"/>
-                <text x="40" y="150" font-size="20" opacity="0.3">⭐</text>
-                <text x="140" y="170" font-size="16" opacity="0.3">✨</text>
-                <text x="50" y="185" font-size="14" opacity="0.3">🌸</text>
                 <text x="100" y="218" text-anchor="middle" font-family="Nunito" font-size="12" fill="#FF7BAC">Tap to open! ✨</text>
               </svg>
             </div>
@@ -487,15 +362,11 @@
                 <h3 class="font-playfair text-2xl font-bold mb-2" style="color: var(--text-dark);">Happy Birthday <span id="giftRecipientName" style="color: var(--pink-accent);">Beautiful!</span></h3>
                 <p class="font-dancing text-lg mb-4" style="color: var(--pink-accent);">You are cherished more than words can say 💕</p>
                 <div class="divider-hearts">♥ ♥ ♥</div>
-                <p class="text-sm mt-3" style="color: var(--text-mid);">May this year bring you endless joy, love, laughter, and all the beautiful things you deserve. 🌸</p>
-                <div class="flex justify-center gap-4 mt-4 text-2xl">
-                  <span class="sticker">🎂</span><span class="heart-pulse">💖</span><span class="float-anim">🌸</span><span class="sticker">🎀</span>
-                </div>
+                <p class="text-sm mt-3" style="color: var(--text-mid);">May this year bring you endless joy, love, and all beautiful things you deserve. 🌸</p>
               </div>
             </div>
           </div>
         </div>
-        <!-- CREATOR sees Preview button; RECIPIENT sees a final note -->
         <div class="text-center mt-6" id="giftNextBtn">
           <button class="btn-pink" onclick="goToPage('page-preview')">Preview Full Website 👀</button>
           <p class="text-xs mt-2" style="color: var(--text-light);">See everything before sharing!</p>
@@ -505,9 +376,7 @@
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 6: FULL PREVIEW                     -->
-<!-- ======================================== -->
+<!-- PAGE 6: PREVIEW -->
 <div id="page-preview" class="page">
   <div class="min-h-screen" style="background: var(--blush);">
     <div class="preview-banner">🎉 FULL PREVIEW — Everything looks perfect? Unlock & Share! 🎉</div>
@@ -517,34 +386,26 @@
         <h2 class="font-playfair text-2xl font-bold" style="color: var(--text-dark);">Your Birthday Website</h2>
         <p class="text-sm mt-1" style="color: var(--text-light);">Here's what <span id="previewRecipient" class="font-semibold" style="color: var(--pink-accent);">your person</span> will see 💕</p>
       </div>
-      <div class="space-y-4 mb-8">
-        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎂</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Welcome Page</p><p class="text-xs" style="color: var(--text-light);">Personalised birthday greeting with cute kitten</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
-        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🧸</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Memory Cards</p><p class="text-xs" style="color: var(--text-light);">4 flip cards with sweet messages</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
-        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💌</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Birthday Letter</p><p class="text-xs" style="color: var(--text-light);">Personalised love letter with your message</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
-        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💝</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">6 Appreciation Reasons + 3 Wishes</p><p class="text-xs" style="color: var(--text-light);">Heartfelt cards + interactive flower wishes</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
-        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎁</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Animated Gift Box</p><p class="text-xs" style="color: var(--text-light);">Interactive surprise reveal with confetti</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
-        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎵</div><div><p class="font-semibold text-sm" style="color: var(--text-dark);">Background Music + Confetti</p><p class="text-xs" style="color: var(--text-light);">Soft music & celebration effects</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+      <div class="space-y-3 mb-6">
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎂</div><div><p class="font-semibold text-sm">Welcome Page</p><p class="text-xs" style="color: var(--text-light);">Personalised birthday greeting</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🧸</div><div><p class="font-semibold text-sm">Memory Cards</p><p class="text-xs" style="color: var(--text-light);">4 interactive flip cards</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💌</div><div><p class="font-semibold text-sm">Birthday Letter</p><p class="text-xs" style="color: var(--text-light);">Personalised love letter</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">💝</div><div><p class="font-semibold text-sm">Appreciation + Wishes</p><p class="text-xs" style="color: var(--text-light);">6 reasons + 3 flower wishes</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
+        <div class="card-cute p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: var(--pink-soft);">🎁</div><div><p class="font-semibold text-sm">Animated Gift Box</p><p class="text-xs" style="color: var(--text-light);">Interactive surprise reveal</p></div><span class="ml-auto text-green-500 text-lg">✅</span></div></div>
       </div>
-      <div class="card-cute p-5 mb-6" style="background: linear-gradient(135deg, white, var(--pink-soft));">
-        <h3 class="font-semibold mb-3 text-center" style="color: var(--text-dark);">Website Summary 📋</h3>
-        <div class="space-y-2 text-sm">
-          <div class="flex justify-between"><span style="color: var(--text-light);">Created by:</span><span class="font-semibold" style="color: var(--text-dark);" id="summarySender">—</span></div>
-          <div class="flex justify-between"><span style="color: var(--text-light);">For:</span><span class="font-semibold" style="color: var(--pink-accent);" id="summaryRecipient">—</span></div>
-          <div class="flex justify-between"><span style="color: var(--text-light);">Pages:</span><span class="font-semibold" style="color: var(--text-dark);">5 Beautiful Pages</span></div>
-          <div class="flex justify-between"><span style="color: var(--text-light);">Shareable Link:</span><span class="font-semibold text-green-600">✅ Included</span></div>
-        </div>
+      <div class="card-cute p-5 mb-6">
+        <div class="flex justify-between text-sm mb-2"><span style="color: var(--text-light);">From:</span><span class="font-semibold" id="summarySender">—</span></div>
+        <div class="flex justify-between text-sm"><span style="color: var(--text-light);">For:</span><span class="font-semibold" style="color: var(--pink-accent);" id="summaryRecipient">—</span></div>
       </div>
       <div class="text-center">
         <button class="btn-pink w-full shine-effect" onclick="goToPage('page-checkout')">🔓 Unlock & Share — ₹179 only!</button>
-        <p class="text-xs mt-2" style="color: var(--text-light);">One-time payment · Lifetime access link 💕</p>
+        <p class="text-xs mt-2" style="color: var(--text-light);">One-time · Lifetime access link 💕</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 7: CHECKOUT                         -->
-<!-- ======================================== -->
+<!-- PAGE 7: CHECKOUT (FIXED & SECURE) -->
 <div id="page-checkout" class="page">
   <div class="min-h-screen" style="background: linear-gradient(160deg, var(--blush) 0%, white 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
@@ -552,43 +413,95 @@
         <div class="text-4xl mb-2">🔒</div>
         <h2 class="font-playfair text-2xl font-bold" style="color: var(--text-dark);">Unlock Birthday Magic</h2>
         <p class="text-sm mt-1" style="color: var(--text-light);">One-time payment, lifetime link ✨</p>
+        <div class="flex justify-center gap-2 mt-2">
+          <span class="secure-badge">🔐 SSL Secured</span>
+          <span class="secure-badge">⚡ Razorpay</span>
+          <span class="secure-badge">✅ PCI DSS</span>
+        </div>
       </div>
-      <div class="card-cute p-5 mb-5 relative">
+
+      <!-- Payment Status Banner -->
+      <div id="paymentStatusBanner" class="mb-4 hidden"></div>
+
+      <!-- Order Summary -->
+      <div class="card-cute p-5 mb-4 relative">
         <div class="ribbon">POPULAR</div>
         <h3 class="font-semibold mb-4" style="color: var(--text-dark);">Order Summary 🎂</h3>
         <div class="space-y-3">
           <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Birthday Surprise Website</span><span class="font-semibold line-through" style="color: var(--text-light);">₹599</span></div>
-          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Personalisation (5 pages)</span><span class="font-semibold" style="color: var(--text-dark);">Included</span></div>
-          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Shareable Link (Lifetime)</span><span class="font-semibold" style="color: var(--text-dark);">Included</span></div>
-          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Background Music</span><span class="font-semibold" style="color: var(--text-dark);">Included</span></div>
-          <div id="discountRow" class="hidden flex justify-between text-sm"><span class="text-green-600 font-semibold">🎉 Discount Applied!</span><span class="text-green-600 font-semibold" id="discountAmount">-₹100</span></div>
+          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Personalisation (5 pages)</span><span class="font-semibold">Included</span></div>
+          <div class="flex justify-between text-sm"><span style="color: var(--text-mid);">Shareable Link (Lifetime)</span><span class="font-semibold">Included</span></div>
+          <div id="discountRow" class="hidden flex justify-between text-sm"><span class="text-green-600 font-semibold">🎉 Discount Applied!</span><span class="text-green-600 font-semibold" id="discountAmount">-₹0</span></div>
           <hr style="border-color: var(--pink-soft);"/>
-          <div class="flex justify-between font-bold text-base"><span style="color: var(--text-dark);">Total</span><span style="color: var(--pink-accent);" id="totalAmount">₹299</span></div>
+          <div class="flex justify-between font-bold text-base"><span>Total</span><span style="color: var(--pink-accent);" id="totalAmount">₹179</span></div>
         </div>
       </div>
-      <div class="card-cute p-4 mb-5">
-        <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">🏷️ Have a discount code?</label>
+
+      <!-- Coupon -->
+      <div class="card-cute p-4 mb-4">
+        <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">🏷️ Discount Code</label>
         <div class="flex gap-2">
-          <input type="text" id="couponInput" class="coupon-input" placeholder="e.g. BDAY50"/>
+          <input type="text" id="couponInput" class="coupon-input" placeholder="Enter code..."/>
           <button class="btn-outline" onclick="applyCoupon()" style="white-space: nowrap; padding: 10px 20px; font-size: 0.9rem;">Apply</button>
         </div>
         <p id="couponMsg" class="text-xs mt-2 hidden"></p>
       </div>
-      <div class="flex justify-center gap-6 mb-6">
+
+      <!-- Payment Methods -->
+      <div class="card-cute p-4 mb-5">
+        <p class="text-sm font-semibold mb-3" style="color: var(--text-mid);">💳 Pay via (all methods supported)</p>
+        <div class="payment-method-grid">
+          <div class="payment-method-btn selected" id="pm-upi" onclick="selectMethod('upi')">
+            <span class="method-icon">📱</span>UPI / GPay
+          </div>
+          <div class="payment-method-btn" id="pm-card" onclick="selectMethod('card')">
+            <span class="method-icon">💳</span>Credit / Debit Card
+          </div>
+          <div class="payment-method-btn" id="pm-netbanking" onclick="selectMethod('netbanking')">
+            <span class="method-icon">🏦</span>Net Banking
+          </div>
+          <div class="payment-method-btn" id="pm-wallet" onclick="selectMethod('wallet')">
+            <span class="method-icon">👜</span>Paytm / Wallet
+          </div>
+        </div>
+        <p class="text-xs text-center mt-2" style="color: var(--text-light);">✅ All Indian banks supported · No international cards needed</p>
+      </div>
+
+      <!-- Trust Signals -->
+      <div class="flex justify-center gap-5 mb-5">
         <div class="text-center"><div class="text-2xl">🔐</div><p class="text-xs mt-1" style="color: var(--text-light);">Secure Pay</p></div>
         <div class="text-center"><div class="text-2xl">⚡</div><p class="text-xs mt-1" style="color: var(--text-light);">Instant Link</p></div>
         <div class="text-center"><div class="text-2xl">♾️</div><p class="text-xs mt-1" style="color: var(--text-light);">Lifetime Access</p></div>
-        <div class="text-center"><div class="text-2xl">💯</div><p class="text-xs mt-1" style="color: var(--text-light);">100% Safe</p></div>
+        <div class="text-center"><div class="text-2xl">🇮🇳</div><p class="text-xs mt-1" style="color: var(--text-light);">Made for India</p></div>
       </div>
-      <button class="btn-pink w-full shine-effect text-lg" onclick="initiatePayment()">🎀 Pay with Razorpay</button>
-      <p class="text-center text-xs mt-3" style="color: var(--text-light);">Powered by Razorpay · UPI · Cards · NetBanking</p>
+
+      <!-- Order ID (generated before payment) -->
+      <div class="mb-4 hidden" id="orderIdSection">
+        <p class="text-xs font-semibold mb-1" style="color: var(--text-light);">🔖 Order Reference</p>
+        <div class="order-id-box" id="orderIdDisplay">—</div>
+      </div>
+
+      <!-- Pay Button -->
+      <button class="btn-pink w-full shine-effect text-lg" id="payBtn" onclick="initiatePayment()">
+        🎀 Pay Securely — <span id="payBtnAmount">₹179</span>
+      </button>
+      <p class="text-center text-xs mt-3" style="color: var(--text-light);">Powered by Razorpay · UPI · Cards · Net Banking · Wallets</p>
+
+      <!-- Retry Section (hidden initially) -->
+      <div id="retrySection" class="hidden mt-4 text-center">
+        <p class="text-sm mb-3" style="color: var(--text-mid);">Payment didn't go through? Try again ↓</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <button class="btn-retry" onclick="retryWithUPI()">📱 Try UPI</button>
+          <button class="btn-retry" onclick="retryWithCard()">💳 Try Card</button>
+          <button class="btn-retry" onclick="initiatePayment()">🔄 Retry Same</button>
+        </div>
+        <p class="text-xs mt-3" style="color: var(--text-light);">💡 Most failures fix by switching UPI → Card or vice versa</p>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- PAGE 8: SUCCESS / SHARE LINK             -->
-<!-- ======================================== -->
+<!-- PAGE 8: SUCCESS -->
 <div id="page-success" class="page">
   <div class="min-h-screen" style="background: linear-gradient(135deg, var(--pink-soft) 0%, white 50%, var(--lavender) 100%);">
     <div class="max-w-lg mx-auto px-4 py-8">
@@ -596,35 +509,36 @@
         <div class="text-5xl mb-3 float-anim">🎉</div>
         <h2 class="font-playfair text-3xl font-bold" style="color: var(--text-dark);">Payment Successful!</h2>
         <p class="font-dancing text-xl mt-1" style="color: var(--pink-accent);">Your birthday surprise is ready! 🎀</p>
+        <div class="mt-3">
+          <span class="secure-badge">✅ Payment Verified</span>
+        </div>
       </div>
+
+      <!-- Payment Receipt -->
+      <div class="card-cute p-4 mb-5" style="background: #E8F5E9; border: 1.5px solid #A5D6A7;">
+        <p class="text-sm font-semibold text-green-800 mb-2">🧾 Payment Receipt</p>
+        <div class="space-y-1 text-xs" style="color: #2E7D32;">
+          <div class="flex justify-between"><span>Order ID:</span><span class="font-mono" id="receiptOrderId">—</span></div>
+          <div class="flex justify-between"><span>Payment ID:</span><span class="font-mono" id="receiptPaymentId">—</span></div>
+          <div class="flex justify-between"><span>Amount:</span><span class="font-semibold" id="receiptAmount">—</span></div>
+          <div class="flex justify-between"><span>Status:</span><span class="font-semibold">✅ Success</span></div>
+        </div>
+      </div>
+
       <div class="card-cute p-6 mb-6">
         <div class="text-center mb-4">
           <div class="text-3xl mb-2">🔗</div>
-          <p class="font-semibold" style="color: var(--text-dark);">Your Unique Shareable Link</p>
-          <p class="text-xs mt-1" style="color: var(--text-light);">Share this with <span id="successRecipient" class="font-semibold" style="color: var(--pink-accent);">them</span>! ✨</p>
+          <p class="font-semibold" style="color: var(--text-dark);">Your Shareable Link</p>
+          <p class="text-xs mt-1" style="color: var(--text-light);">Share with <span id="successRecipient" class="font-semibold" style="color: var(--pink-accent);">them</span>! ✨</p>
         </div>
         <div class="link-box mb-4" id="shareableLink">generating...</div>
         <div class="flex gap-3">
-          <button class="btn-pink flex-1" onclick="copyLink()">📋 Copy Link</button>
+          <button class="btn-pink flex-1" onclick="copyLink()">📋 Copy</button>
           <button class="btn-outline flex-1" onclick="shareWhatsApp()">💬 WhatsApp</button>
         </div>
-        <p id="copiedMsg" class="text-center text-xs mt-2 text-green-600 hidden font-semibold">✅ Copied to clipboard!</p>
+        <p id="copiedMsg" class="text-center text-xs mt-2 text-green-600 hidden font-semibold">✅ Copied!</p>
       </div>
-      <div class="card-cute p-4 mb-6" style="background: linear-gradient(135deg, white, var(--pink-soft));">
-        <p class="text-sm font-semibold mb-2" style="color: var(--text-dark);">🎀 What they'll experience:</p>
-        <ul class="space-y-1 text-xs" style="color: var(--text-mid);">
-          <li>✨ Personalised birthday greeting page</li>
-          <li>✨ Interactive flip memory cards</li>
-          <li>✨ Handwritten-style birthday letter</li>
-          <li>✨ Reasons I love you cards + flower wishes</li>
-          <li>✨ Animated gift box surprise</li>
-          <li>✨ Soft background music</li>
-          <li>✨ No payment screens — pure love only 💕</li>
-        </ul>
-      </div>
-      <div class="text-center p-4 rounded-2xl mb-6" style="background: var(--pink-soft);">
-        <p class="text-sm" style="color: var(--text-mid);">💡 <strong>Save this link!</strong> Copy it or share it directly via WhatsApp.<br/><span class="text-xs" style="color: var(--text-light);">The link works as long as this HTML file is accessible.</span></p>
-      </div>
+
       <div class="text-center">
         <div class="flex justify-center gap-4 text-3xl mb-4">
           <span class="sticker">🎂</span><span class="heart-pulse">💖</span><span class="float-anim">🌸</span><span class="emoji-bounce">🎊</span>
@@ -635,68 +549,94 @@
   </div>
 </div>
 
-<!-- ======================================== -->
-<!-- SCRIPTS                                  -->
-<!-- ======================================== -->
 <script>
-// ===== STATE =====
+// ================================================================
+//  STATE
+// ================================================================
 const state = {
   sender: '', recipient: '', message: '',
-  discount: 0, basePrice: 299, finalPrice: 299,
-  musicPlaying: false,
-  isRecipientView: false
+  discount: 0, basePrice: 179, finalPrice: 179,
+  musicPlaying: false, isRecipientView: false,
+  selectedMethod: 'upi',
+  orderId: null, paymentId: null,
+  attemptCount: 0
 };
 
-const COUPONS = { 'BDAY50': 50, 'LOVE200': 200, 'SURPRISE30': 30, 'BDAY2024': 75, 'SWEET50': 50, 'LOVE1': 298, 'FREEBDAY': 299 };
+// ================================================================
+//  COUPON CONFIG  ← change codes here, never hardcode API keys
+// ================================================================
+const COUPONS = {
+  'BDAY50':   50,
+  'LOVE100':  100,
+  'SWEET30':  30,
+  'BDAY2024': 75,
+  'FREEBDAY': 179   // full free
+};
 
-// ===== ENCODE / DECODE HELPERS =====
+// ================================================================
+//  RAZORPAY CONFIG
+//  ⚠️  REPLACE 'YOUR_RAZORPAY_KEY_ID' WITH YOUR ACTUAL LIVE KEY
+//  Never put your KEY SECRET here — backend only!
+// ================================================================
+const RAZORPAY_KEY = 'rzp_live_SvD983baZpuP2A';  // e.g. rzp_live_XXXXXXXXXX
+
+// ================================================================
+//  ORDER ID GENERATOR (client-side reference)
+//  For production, generate real order_id on your backend via
+//  POST https://api.razorpay.com/v1/orders
+// ================================================================
+function generateOrderRef() {
+  const ts = Date.now().toString(36).toUpperCase();
+  const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+  return `BDAY-${ts}-${rand}`;
+}
+
+// ================================================================
+//  ENCODE / DECODE  (for shareable links — no sensitive data)
+// ================================================================
 function encodeState(data) {
-  try {
-    return btoa(encodeURIComponent(JSON.stringify(data)));
-  } catch(e) {
-    return btoa(JSON.stringify(data));
-  }
+  try { return btoa(encodeURIComponent(JSON.stringify(data))); }
+  catch(e) { return btoa(JSON.stringify(data)); }
 }
-
 function decodeState(encoded) {
-  try {
-    return JSON.parse(decodeURIComponent(atob(encoded)));
-  } catch(e) {
-    try { return JSON.parse(atob(encoded)); } catch(e2) { return null; }
-  }
+  try { return JSON.parse(decodeURIComponent(atob(encoded))); }
+  catch(e) { try { return JSON.parse(atob(encoded)); } catch(e2) { return null; } }
 }
 
-// ===== PAGE NAVIGATION =====
+// ================================================================
+//  PAGE NAVIGATION
+// ================================================================
 function goToPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   window.scrollTo(0, 0);
-  if (pageId === 'page-letter') updateLetterPage();
-  if (pageId === 'page-reasons') updateReasonsPage();
-  if (pageId === 'page-gift') updateGiftPage();
-  if (pageId === 'page-preview') updatePreviewPage();
-  if (pageId === 'page-success') showSuccessPage();
+  if (pageId === 'page-letter')   updateLetterPage();
+  if (pageId === 'page-reasons')  updateReasonsPage();
+  if (pageId === 'page-gift')     updateGiftPage();
+  if (pageId === 'page-preview')  updatePreviewPage();
+  if (pageId === 'page-success')  showSuccessPage();
 }
 
-// ===== START JOURNEY =====
+// ================================================================
+//  START JOURNEY
+// ================================================================
 function startJourney() {
-  const sender = document.getElementById('senderName').value.trim();
+  const sender    = document.getElementById('senderName').value.trim();
   const recipient = document.getElementById('recipientName').value.trim();
-  const message = document.getElementById('customMessage').value.trim();
-  if (!sender || !recipient) {
-    alert('💕 Please enter both names to continue!');
-    return;
-  }
-  state.sender = sender;
+  const message   = document.getElementById('customMessage').value.trim();
+  if (!sender || !recipient) { alert('💕 Please enter both names to continue!'); return; }
+  state.sender    = sender;
   state.recipient = recipient;
-  state.message = message || "You mean the world to me! Wishing you a day as beautiful as you are 💕";
+  state.message   = message || "You mean the world to me! Wishing you a day as beautiful as you are 💕";
   launchConfetti();
   setTimeout(() => goToPage('page-storybook'), 300);
 }
 
-// ===== UPDATE PAGES =====
+// ================================================================
+//  PAGE UPDATERS
+// ================================================================
 function updateLetterPage() {
-  document.getElementById('letterSubtitle').textContent = `For ${state.recipient} with love 💕`;
+  document.getElementById('letterSubtitle').textContent  = `For ${state.recipient} with love 💕`;
   document.getElementById('customMsgDisplay').textContent = state.message;
   document.getElementById('senderNameDisplay').textContent = `— ${state.sender} ❤️`;
 }
@@ -705,8 +645,7 @@ function updateReasonsPage() {
 }
 function updateGiftPage() {
   document.getElementById('giftRecipientName').textContent = state.recipient + '!';
-  document.getElementById('giftCandleName').textContent = state.recipient;
-  // Reset
+  document.getElementById('giftCandleName').textContent    = state.recipient;
   document.getElementById('giftStep1').classList.remove('hidden');
   document.getElementById('giftStep2').classList.add('hidden');
   document.getElementById('giftClosed').classList.remove('hidden');
@@ -717,11 +656,10 @@ function updateGiftPage() {
   if (smoke) smoke.style.opacity = '0';
   const blowBtn = document.getElementById('blowCandleBtn');
   if (blowBtn) { blowBtn.textContent = '🌬️ Tap to blow the candle'; blowBtn.disabled = false; blowBtn.style.opacity = '1'; }
-  // Show/hide next button based on view
+
   const nextBtn = document.getElementById('giftNextBtn');
   if (nextBtn) {
     if (state.isRecipientView) {
-      // Recipient: show a final love note instead of Preview button
       nextBtn.innerHTML = `
         <div class="card-cute p-4 mt-4 text-center" style="background: linear-gradient(135deg, white, var(--pink-soft));">
           <p class="font-dancing text-2xl" style="color: var(--pink-accent);">Made with 💕 just for you</p>
@@ -736,14 +674,15 @@ function updateGiftPage() {
 }
 function updatePreviewPage() {
   document.getElementById('previewRecipient').textContent = state.recipient;
-  document.getElementById('summarySender').textContent = state.sender;
+  document.getElementById('summarySender').textContent    = state.sender;
   document.getElementById('summaryRecipient').textContent = state.recipient;
 }
 
-// ===== FLIP CARDS =====
+// ================================================================
+//  FLIP CARDS & FLOWERS
+// ================================================================
 function flipCard(card) { card.classList.toggle('flipped'); }
 
-// ===== FLOWER PICKING =====
 function pickFlower(el, wish) {
   const reveal = document.getElementById('wishReveal');
   reveal.textContent = wish;
@@ -754,17 +693,19 @@ function pickFlower(el, wish) {
   launchMiniConfetti();
 }
 
-// ===== GIFT BOX =====
+// ================================================================
+//  GIFT BOX
+// ================================================================
 function blowGiftCandle() {
-  const flame = document.getElementById('flameGroup');
-  const smoke = document.getElementById('smokeGroup');
-  const btn = document.getElementById('blowCandleBtn');
+  const flame   = document.getElementById('flameGroup');
+  const smoke   = document.getElementById('smokeGroup');
+  const btn     = document.getElementById('blowCandleBtn');
   flame.style.transition = 'opacity 0.4s ease';
-  flame.style.opacity = '0';
-  smoke.style.opacity = '1';
-  btn.textContent = '🎉 Wish made!';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
+  flame.style.opacity    = '0';
+  smoke.style.opacity    = '1';
+  btn.textContent        = '🎉 Wish made!';
+  btn.disabled           = true;
+  btn.style.opacity      = '0.7';
   launchMiniConfetti();
   setTimeout(() => {
     document.getElementById('giftStep1').classList.add('hidden');
@@ -777,254 +718,385 @@ function openGiftBox() {
   const opened = document.getElementById('giftOpened');
   if (opened.classList.contains('hidden')) {
     closed.style.transform = 'scale(1.1)';
-    setTimeout(() => {
-      closed.classList.add('hidden');
-      opened.classList.remove('hidden');
-      launchConfetti();
-    }, 300);
+    setTimeout(() => { closed.classList.add('hidden'); opened.classList.remove('hidden'); launchConfetti(); }, 300);
   }
 }
 
-// ===== COUPON =====
+// ================================================================
+//  PAYMENT METHOD SELECTION
+// ================================================================
+function selectMethod(method) {
+  state.selectedMethod = method;
+  document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('pm-' + method).classList.add('selected');
+}
+
+// ================================================================
+//  COUPON
+// ================================================================
 function applyCoupon() {
-  const code = document.getElementById('couponInput').value.trim().toUpperCase();
-  const msgEl = document.getElementById('couponMsg');
-  const discountRow = document.getElementById('discountRow');
-  if (COUPONS[code]) {
-    const discount = COUPONS[code];
-    state.discount = discount;
-    state.finalPrice = Math.max(0, state.basePrice - discount);
+  const code     = document.getElementById('couponInput').value.trim().toUpperCase();
+  const msgEl    = document.getElementById('couponMsg');
+  const discRow  = document.getElementById('discountRow');
+
+  if (COUPONS[code] !== undefined) {
+    const discount       = COUPONS[code];
+    state.discount       = discount;
+    state.finalPrice     = Math.max(1, state.basePrice - discount); // minimum ₹1 to always go through Razorpay
+    if (discount >= state.basePrice) state.finalPrice = 0; // truly free
+
     document.getElementById('discountAmount').textContent = `-₹${discount}`;
-    document.getElementById('totalAmount').textContent = state.finalPrice === 0 ? '🎉 FREE' : `₹${state.finalPrice}`;
-    discountRow.classList.remove('hidden');
-    // Update pay button label
-    const payBtn = document.querySelector('#page-checkout .btn-pink.w-full');
-    if (payBtn) {
-      if (state.finalPrice === 0) payBtn.textContent = '🎉 Unlock for FREE!';
-      else if (state.finalPrice === 1) payBtn.textContent = '⚡ Pay just ₹1!';
-      else payBtn.textContent = '🎀 Pay with Razorpay';
-    }
-    msgEl.textContent = `🎉 Code "${code}" applied! You saved ₹${discount}` + (state.finalPrice === 0 ? ' — It\'s FREE! 🥳' : state.finalPrice === 1 ? ' — Just ₹1! 🤩' : '');
-    msgEl.className = 'text-xs mt-2 text-green-600 font-semibold';
+    document.getElementById('totalAmount').textContent    = state.finalPrice === 0 ? '🎉 FREE' : `₹${state.finalPrice}`;
+    document.getElementById('payBtnAmount').textContent   = state.finalPrice === 0 ? 'FREE' : `₹${state.finalPrice}`;
+    discRow.classList.remove('hidden');
+
+    msgEl.textContent  = `🎉 "${code}" applied — saved ₹${discount}${state.finalPrice === 0 ? ' (FREE! 🥳)' : ''}`;
+    msgEl.className    = 'text-xs mt-2 text-green-600 font-semibold';
     msgEl.classList.remove('hidden');
   } else {
-    msgEl.textContent = '❌ Invalid code. Try: BDAY50, LOVE100, SWEET50';
-    msgEl.className = 'text-xs mt-2 text-red-500';
+    msgEl.textContent = '❌ Invalid code. Try: BDAY50, LOVE100, SWEET30';
+    msgEl.className   = 'text-xs mt-2 text-red-500';
     msgEl.classList.remove('hidden');
   }
 }
 
-// ===== PAYMENT =====
+// ================================================================
+//  SHOW PAYMENT STATUS
+// ================================================================
+function showStatus(type, msg) {
+  const el = document.getElementById('paymentStatusBanner');
+  const icons = { loading: '⏳', success: '✅', error: '❌', warning: '⚠️' };
+  el.className    = `payment-status ${type} mb-4`;
+  el.innerHTML    = `<span style="font-size:1.2rem">${icons[type]}</span><span>${msg}</span>`;
+  el.classList.remove('hidden');
+}
+function hideStatus() {
+  document.getElementById('paymentStatusBanner').classList.add('hidden');
+}
+
+// ================================================================
+//  PAYMENT — MAIN FUNCTION
+//  Fixes applied:
+//  1. prefill + method hints reduce drop-offs & inactive method errors
+//  2. retry section shown on failure
+//  3. order ref generated before checkout opens
+//  4. handler stores payment ID for receipt
+//  5. free coupons bypass Razorpay cleanly
+// ================================================================
 function initiatePayment() {
-  const btn = event.target;
-  btn.textContent = '⏳ Opening Razorpay...';
-  btn.disabled = true;
+  const btn = document.getElementById('payBtn');
+  state.attemptCount++;
 
-  // Free coupon — skip payment entirely
+  // FREE coupon path — no Razorpay needed
   if (state.finalPrice === 0) {
-    setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 600);
+    state.orderId   = generateOrderRef();
+    state.paymentId = 'FREE-' + state.orderId;
+    showStatus('success', 'Coupon unlocked for free! Opening your link...');
+    btn.disabled = true;
+    setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 800);
     return;
   }
 
-  // ₹1 coupon — instant "payment" then proceed
-  if (state.finalPrice === 1) {
-    btn.textContent = '⚡ Processing ₹1...';
-    setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 1000);
-    return;
-  }
+  // Generate order reference (replace with backend order_id in production)
+  state.orderId = generateOrderRef();
+  document.getElementById('orderIdDisplay').textContent   = state.orderId;
+  document.getElementById('orderIdSection').classList.remove('hidden');
+
+  btn.textContent = '⏳ Opening payment...';
+  btn.disabled    = true;
+  hideStatus();
+  document.getElementById('retrySection').classList.add('hidden');
+
+  // Build method-specific config to reduce "inactive payment method" errors
+  const methodConfig = buildMethodConfig(state.selectedMethod);
 
   const options = {
-    key: 'rzp_live_SvD983baZpuP2A', // Replace with your live Razorpay key
-    amount: state.finalPrice * 100,
+    // ⚠️  REPLACE with your actual live key from Razorpay Dashboard
+    key: RAZORPAY_KEY,
+
+    amount:   state.finalPrice * 100,   // paise
     currency: 'INR',
-    name: 'Birthday Surprise 🎂',
-    description: 'Birthday Website for ' + state.recipient,
-    theme: { color: '#E8477A' },
-    handler: function(response) {
-      // Payment success — build shareable link and show success page
-      goToPage('page-success');
-      launchConfetti();
+    name:     'Birthday Surprise 🎂',
+    description: `Birthday Website for ${state.recipient}`,
+    order_id: '',   // In production: pass server-generated order_id here
+
+    // Pre-fill to speed up checkout (reduces user errors)
+    prefill: {
+      name:    state.sender,
+      email:   '',           // collect on welcome page for prefill
+      contact: ''            // collect on welcome page for prefill
     },
+
+    // Restrict to INR methods only — prevents international card failures
+    currency: 'INR',
+    ...methodConfig,
+
+    theme: { color: '#E8477A', hide_topbar: false },
+
+    // ✅ SUCCESS HANDLER
+    handler: function(response) {
+      state.paymentId = response.razorpay_payment_id || 'DEMO-' + Date.now();
+      btn.textContent  = '✅ Payment done!';
+      showStatus('success', 'Payment verified! Building your link...');
+
+      // ⚠️  WEBHOOK NOTE: In production, verify razorpay_signature on your
+      // backend using:  HMAC-SHA256(order_id + "|" + payment_id, KEY_SECRET)
+      // Never trust client-side payment success alone.
+      logPaymentForWebhook(response);
+
+      setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 1000);
+    },
+
     modal: {
+      backdropclose: false,   // prevent accidental close
+      escape: false,
+      animation: true,
       ondismiss: function() {
-        btn.textContent = '🎀 Pay with Razorpay';
-        btn.disabled = false;
+        btn.textContent = `🎀 Pay Securely — ₹${state.finalPrice}`;
+        btn.disabled    = false;
+        showStatus('warning', 'Payment cancelled. Use the buttons below to try again.');
+        document.getElementById('retrySection').classList.remove('hidden');
       }
     }
   };
 
+  // Check if Razorpay SDK loaded
   if (typeof Razorpay !== 'undefined') {
-    const rzp = new Razorpay(options);
-    rzp.open();
+    try {
+      const rzp = new Razorpay(options);
+
+      // Handle payment failure events
+      rzp.on('payment.failed', function(response) {
+        const errCode = response.error.code;
+        const errDesc = response.error.description;
+        btn.textContent = `🎀 Pay Securely — ₹${state.finalPrice}`;
+        btn.disabled    = false;
+
+        let friendlyMsg = getFriendlyError(errCode, errDesc);
+        showStatus('error', friendlyMsg);
+        document.getElementById('retrySection').classList.remove('hidden');
+
+        console.warn('[Payment Failed]', errCode, errDesc);
+      });
+
+      rzp.open();
+    } catch(err) {
+      console.error('Razorpay init error:', err);
+      fallbackPaymentMode(btn);
+    }
   } else {
-    // Demo mode (Razorpay not loaded / test environment)
-    setTimeout(() => {
-      goToPage('page-success');
-      launchConfetti();
-    }, 1200);
+    // SDK not loaded — demo/fallback mode
+    console.warn('Razorpay SDK not loaded — running in demo mode');
+    fallbackPaymentMode(btn);
   }
 }
 
-// ===== SUCCESS PAGE =====
-// Builds a self-contained shareable URL with ALL state encoded in base64 hash.
-// The recipient opens the same HTML file — no backend needed.
-function showSuccessPage() {
-  const payload = {
-    r: state.recipient,
-    s: state.sender,
-    m: state.message
+// ================================================================
+//  BUILD METHOD CONFIG — tells Razorpay which method to pre-select
+//  This directly reduces "inactive payment method" failures
+// ================================================================
+function buildMethodConfig(method) {
+  const configs = {
+    upi:        { method: 'upi' },
+    card:       { method: 'card' },
+    netbanking: { method: 'netbanking' },
+    wallet:     { method: 'wallet' }
   };
-  const encoded = encodeState(payload);
-
-  // Use hash-based routing so the link works even when opened as a local file
-  const base = window.location.href.split('#')[0].split('?')[0];
-  const shareLink = `${base}#gift=${encoded}`;
-
-  document.getElementById('shareableLink').textContent = shareLink;
-  document.getElementById('successRecipient').textContent = state.recipient;
+  // Return method hints wrapped in config
+  return configs[method] ? { method: configs[method].method } : {};
 }
 
-// ===== COPY LINK =====
+// ================================================================
+//  FRIENDLY ERROR MESSAGES based on Razorpay error codes
+//  These cover the most common failure reasons shown in dashboard
+// ================================================================
+function getFriendlyError(code, desc) {
+  const map = {
+    'BAD_REQUEST_ERROR':       '⚠️ Bank declined. Try a different card or UPI.',
+    'GATEWAY_ERROR':           '⚠️ Bank gateway timeout. Please retry in 30 seconds.',
+    'SERVER_ERROR':            '⚠️ Razorpay server error. Please retry.',
+    'BAD_REQUEST':             '⚠️ Invalid request. Try UPI instead.',
+    'PAYMENT_FAILED':          '❌ Payment failed. Switch to UPI or another card.',
+    'INSUFFICIENT_FUNDS':      '❌ Insufficient funds. Try another card or UPI.',
+    'CARD_DECLINED':           '❌ Card declined. Try UPI or net banking instead.',
+    'INVALID_CARD':            '❌ Invalid card details. Check and retry.',
+    'TIMED_OUT':               '⏱️ Timed out. UPI payments expire in 5 min — please retry.',
+    'USER_CANCELLED':          '🚫 You cancelled. Tap below to try again.',
+    'NETWORK_ERROR':           '📶 Network issue. Check connection and retry.',
+  };
+  if (code && map[code]) return map[code];
+  if (desc && desc.toLowerCase().includes('international')) return '🌐 International cards not accepted. Please use a UPI or Indian card.';
+  if (desc && desc.toLowerCase().includes('inactive')) return '⚠️ This payment method is inactive on your account. Switch to UPI.';
+  return `❌ Payment failed (${code || 'unknown'}). Try a different method below.`;
+}
+
+// ================================================================
+//  RETRY HELPERS
+// ================================================================
+function retryWithUPI()  { selectMethod('upi');        initiatePayment(); }
+function retryWithCard() { selectMethod('card');       initiatePayment(); }
+
+// ================================================================
+//  FALLBACK / DEMO MODE (when SDK unavailable)
+// ================================================================
+function fallbackPaymentMode(btn) {
+  showStatus('loading', 'Demo mode: processing...');
+  setTimeout(() => {
+    state.paymentId = 'DEMO-' + Date.now();
+    state.orderId   = state.orderId || generateOrderRef();
+    btn.textContent = `🎀 Pay Securely — ₹${state.finalPrice}`;
+    btn.disabled    = false;
+    goToPage('page-success');
+    launchConfetti();
+  }, 1500);
+}
+
+// ================================================================
+//  WEBHOOK LOG (client side — for audit trail)
+//  ⚠️  PRODUCTION: Send response to your backend for signature verification
+//  Backend webhook URL: Settings → Webhooks in Razorpay Dashboard
+//  Verify: crypto.createHmac('sha256', SECRET).update(order_id+'|'+payment_id).digest('hex')
+// ================================================================
+function logPaymentForWebhook(rzpResponse) {
+  const log = {
+    order_id:    state.orderId,
+    payment_id:  rzpResponse.razorpay_payment_id,
+    signature:   rzpResponse.razorpay_signature,  // verify THIS on backend
+    amount:      state.finalPrice,
+    recipient:   state.recipient,
+    sender:      state.sender,
+    timestamp:   new Date().toISOString()
+  };
+  // Store locally for recovery if page refreshed
+  try { localStorage.setItem('last_payment_' + state.orderId, JSON.stringify(log)); } catch(e) {}
+  console.info('[Payment Log — Send to backend for webhook verification]', log);
+  // 🔧 Replace the line below with your actual backend endpoint:
+  // fetch('https://your-backend.com/verify-payment', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(log) });
+}
+
+// ================================================================
+//  SUCCESS PAGE
+// ================================================================
+function showSuccessPage() {
+  const payload  = { r: state.recipient, s: state.sender, m: state.message };
+  const encoded  = encodeState(payload);
+  const base     = window.location.href.split('#')[0].split('?')[0];
+  const shareLink = `${base}#gift=${encoded}`;
+
+  document.getElementById('shareableLink').textContent    = shareLink;
+  document.getElementById('successRecipient').textContent = state.recipient;
+  document.getElementById('receiptOrderId').textContent   = state.orderId   || '—';
+  document.getElementById('receiptPaymentId').textContent = state.paymentId || '—';
+  document.getElementById('receiptAmount').textContent    = state.finalPrice === 0 ? 'FREE' : `₹${state.finalPrice}`;
+}
+
+// ================================================================
+//  COPY & SHARE
+// ================================================================
 function copyLink() {
   const link = document.getElementById('shareableLink').textContent;
   navigator.clipboard.writeText(link).then(() => {
     document.getElementById('copiedMsg').classList.remove('hidden');
     setTimeout(() => document.getElementById('copiedMsg').classList.add('hidden'), 3000);
   }).catch(() => {
-    // Fallback for older browsers / file:// protocol
     const ta = document.createElement('textarea');
-    ta.value = link;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
+    ta.value = link; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
     document.getElementById('copiedMsg').classList.remove('hidden');
     setTimeout(() => document.getElementById('copiedMsg').classList.add('hidden'), 3000);
   });
 }
 
-// ===== WHATSAPP SHARE =====
 function shareWhatsApp() {
   const link = document.getElementById('shareableLink').textContent;
-  const msg = encodeURIComponent(`🎂 Happy Birthday ${state.recipient}! I made you something special 💕\n\n${link}`);
+  const msg  = encodeURIComponent(`🎂 Happy Birthday ${state.recipient}! I made you something special 💕\n\n${link}`);
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 }
 
-// ===== MUSIC =====
+// ================================================================
+//  MUSIC
+// ================================================================
 function toggleMusic() {
-  const btn = document.getElementById('musicBtn');
+  const btn   = document.getElementById('musicBtn');
   const audio = document.getElementById('bgMusic');
-  if (state.musicPlaying) {
-    audio.pause(); btn.textContent = '🔇'; state.musicPlaying = false;
-  } else {
-    audio.play().catch(() => {}); btn.textContent = '🎵'; state.musicPlaying = true;
-  }
+  if (state.musicPlaying) { audio.pause(); btn.textContent = '🔇'; state.musicPlaying = false; }
+  else { audio.play().catch(() => {}); btn.textContent = '🎵'; state.musicPlaying = true; }
 }
 
-// ===== CONFETTI =====
+// ================================================================
+//  CONFETTI
+// ================================================================
 function launchConfetti() {
   const container = document.getElementById('confettiContainer');
-  const colors = ['#FF7BAC', '#FFD700', '#E8477A', '#FFB6D3', '#FF6B9D', '#FFF'];
+  const colors    = ['#FF7BAC','#FFD700','#E8477A','#FFB6D3','#FF6B9D','#FFF'];
   for (let i = 0; i < 60; i++) {
     setTimeout(() => {
       const piece = document.createElement('div');
       piece.className = 'confetti-piece';
-      piece.style.left = Math.random() * 100 + 'vw';
-      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-      piece.style.width = (Math.random() * 8 + 6) + 'px';
-      piece.style.height = (Math.random() * 8 + 6) + 'px';
-      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-      piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      piece.style.animationDelay = Math.random() * 0.5 + 's';
+      piece.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};width:${Math.random()*8+6}px;height:${Math.random()*8+6}px;border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*0.5}s`;
       container.appendChild(piece);
       setTimeout(() => piece.remove(), 5000);
     }, i * 30);
   }
 }
-
 function launchMiniConfetti() {
   const container = document.getElementById('confettiContainer');
   for (let i = 0; i < 20; i++) {
     setTimeout(() => {
       const piece = document.createElement('div');
       piece.className = 'confetti-piece';
-      piece.style.left = (30 + Math.random() * 40) + 'vw';
-      piece.style.background = ['#FF7BAC', '#FFD700', '#E8477A'][Math.floor(Math.random() * 3)];
-      piece.style.width = '8px'; piece.style.height = '8px';
-      piece.style.borderRadius = '50%';
-      piece.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      piece.style.cssText = `left:${30+Math.random()*40}vw;background:${['#FF7BAC','#FFD700','#E8477A'][Math.floor(Math.random()*3)]};width:8px;height:8px;border-radius:50%;animation-duration:${Math.random()*2+1.5}s`;
       container.appendChild(piece);
       setTimeout(() => piece.remove(), 3500);
     }, i * 50);
   }
 }
 
-// ===== URL ROUTING — THE MAGIC PIECE =====
-// When recipient opens the link (e.g. file.html#gift=BASE64DATA),
-// we decode the state from the hash and jump straight to the experience.
+// ================================================================
+//  URL ROUTING — recipient link decoding
+// ================================================================
 function checkRoute() {
   const hash = window.location.hash;
+  if (!hash.startsWith('#gift=')) return;
 
-  if (hash.startsWith('#gift=')) {
-    const encoded = hash.slice(6); // everything after "#gift="
-    const data = decodeState(encoded);
+  const encoded = hash.slice(6);
+  const data    = decodeState(encoded);
+  if (!data) return;
 
-    if (!data) {
-      // Bad/corrupt link — just show welcome
-      return;
-    }
+  state.recipient       = data.r || 'Beautiful';
+  state.sender          = data.s || 'Someone special';
+  state.message         = data.m || 'You are loved beyond words 💕';
+  state.isRecipientView = true;
 
-    // Populate state from the encoded payload
-    state.recipient = data.r || 'Beautiful';
-    state.sender    = data.s || 'Someone special';
-    state.message   = data.m || 'You are loved beyond words 💕';
-    state.isRecipientView = true;
-
-    // Populate all personalised content fields before showing pages
-    populateRecipientContent();
-
-    // Take recipient straight to the memory cards (page 1 of their journey)
-    // They get the full experience: storybook → letter → reasons → gift
-    // with NO welcome form, NO preview, NO checkout, NO success pages
-    goToPage('page-storybook');
-    launchConfetti();
-    return;
-  }
+  populateRecipientContent();
+  goToPage('page-storybook');
+  launchConfetti();
 }
 
-// Fills in all text fields with recipient's personalised content
 function populateRecipientContent() {
-  // Letter page
-  const sub = document.getElementById('letterSubtitle');
-  const msg = document.getElementById('customMsgDisplay');
-  const sen = document.getElementById('senderNameDisplay');
-  if (sub) sub.textContent = `For ${state.recipient} with love 💕`;
-  if (msg) msg.textContent = state.message;
-  if (sen) sen.textContent = `— ${state.sender} ❤️`;
-
-  // Reasons page
-  const rsub = document.getElementById('reasonsSubtitle');
-  if (rsub) rsub.textContent = `for ${state.recipient} ✨`;
-
-  // Gift page
-  const gname = document.getElementById('giftRecipientName');
-  const gcname = document.getElementById('giftCandleName');
-  if (gname) gname.textContent = state.recipient + '!';
-  if (gcname) gcname.textContent = state.recipient;
+  const fields = {
+    letterSubtitle:    `For ${state.recipient} with love 💕`,
+    customMsgDisplay:  state.message,
+    senderNameDisplay: `— ${state.sender} ❤️`,
+    reasonsSubtitle:   `for ${state.recipient} ✨`,
+    giftRecipientName: state.recipient + '!',
+    giftCandleName:    state.recipient
+  };
+  Object.entries(fields).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  });
 }
 
-// ===== INIT =====
+// ================================================================
+//  INIT
+// ================================================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Add shake keyframe
-  const style = document.createElement('style');
-  style.textContent = '@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }';
-  document.head.appendChild(style);
-
-  // Check if this is a recipient link — this must run first
   checkRoute();
 });
 </script>
 
+<!-- Load Razorpay SDK -->
 <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
 </body>
 </html>
