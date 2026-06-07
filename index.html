@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<!-- ✅ FIX 1: Permissions policy — allow Razorpay sensors it needs -->
 <meta http-equiv="Permissions-Policy" content="accelerometer=*, gyroscope=*"/>
 <title>Birthday Surprise 🎂</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<!-- ✅ FIX 2: Use HTTPS CDN for Tailwind (fixes Mixed Content error) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"/>
 <style>
   :root {
@@ -88,17 +86,89 @@
   .payment-method-btn:hover, .payment-method-btn.selected { border-color: var(--pink-accent); background: var(--pink-soft); color: var(--pink-accent); }
   .payment-method-btn .method-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
   .order-id-box { background: #F3E5F5; border: 1.5px solid #CE93D8; border-radius: 12px; padding: 10px 14px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #6A1B9A; word-break: break-all; }
-
-  /* ✅ FIX 3: Loading overlay so user sees feedback while Razorpay SDK loads */
   #rzpLoadingOverlay { display:none; position:fixed; inset:0; background:rgba(253,238,245,0.92); z-index:9998; align-items:center; justify-content:center; flex-direction:column; gap:16px; }
   #rzpLoadingOverlay.show { display:flex; }
   .spinner { width:48px; height:48px; border:4px solid var(--pink-mid); border-top-color:var(--pink-accent); border-radius:50%; animation:spin 0.8s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* ===== RECIPIENT LANDING PAGE ===== */
+  #page-recipient-landing {
+    background: linear-gradient(135deg, #FFF0F7 0%, var(--blush) 40%, var(--lavender) 100%);
+    min-height: 100vh;
+  }
+  .recipient-hero {
+    text-align: center;
+    padding: 60px 24px 40px;
+  }
+  .big-emoji-anim {
+    font-size: 5rem;
+    display: block;
+    animation: bigBounce 2s ease-in-out infinite;
+  }
+  @keyframes bigBounce {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-18px) scale(1.08); }
+  }
+  .recipient-name-tag {
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .from-tag {
+    display: inline-block;
+    background: white;
+    border: 2px solid var(--pink-mid);
+    border-radius: 50px;
+    padding: 8px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-mid);
+    margin-top: 12px;
+    box-shadow: 0 4px 16px rgba(232,71,122,0.1);
+  }
+  .open-btn-big {
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 20px 52px;
+    border-radius: 60px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(232,71,122,0.4);
+    transition: all 0.3s ease;
+    animation: pulseBtn 2s ease-in-out infinite;
+    margin-top: 32px;
+  }
+  .open-btn-big:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 18px 40px rgba(232,71,122,0.5); }
+  @keyframes pulseBtn {
+    0%,100% { box-shadow: 0 12px 32px rgba(232,71,122,0.4); }
+    50% { box-shadow: 0 12px 48px rgba(232,71,122,0.7); }
+  }
+  .floating-hearts {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .floating-heart {
+    position: absolute;
+    animation: floatHeart linear infinite;
+    font-size: 1.5rem;
+    opacity: 0.15;
+  }
+  @keyframes floatHeart {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0.15; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ✅ FIX 4: Loading overlay for Razorpay init delay -->
 <div id="rzpLoadingOverlay">
   <div class="spinner"></div>
   <p style="color:var(--pink-accent);font-weight:700;font-family:'Nunito',sans-serif;">Opening secure payment... 🔒</p>
@@ -107,12 +177,43 @@
 <button id="musicBtn" onclick="toggleMusic()" title="Toggle Music">🎵</button>
 <div class="confetti-container" id="confettiContainer"></div>
 
-<!-- ✅ FIX 5: Use HTTPS audio source to prevent Mixed Content error -->
 <audio id="bgMusic" loop>
   <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg"/>
 </audio>
 
-<!-- PAGE 1: WELCOME -->
+<!-- ============================================================ -->
+<!-- PAGE 0: RECIPIENT LANDING — shown when opening a gift link  -->
+<!-- ============================================================ -->
+<div id="page-recipient-landing" class="page">
+  <!-- floating bg hearts -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="recipient-hero">
+      <span class="big-emoji-anim">🎂</span>
+      <p style="color:var(--text-light);font-size:1rem;font-weight:600;margin-top:16px;letter-spacing:2px;text-transform:uppercase;">Someone made this for you</p>
+      <h1 class="recipient-name-tag" id="recipientLandingName">Beautiful</h1>
+      <p style="color:var(--text-mid);font-size:1.1rem;margin-top:8px;font-family:'Playfair Display',serif;font-style:italic;">it's your birthday! 🎉</p>
+      <div class="from-tag">💌 From: <span id="recipientLandingSender" style="color:var(--pink-accent);">Someone Special</span></div>
+    </div>
+
+    <div style="max-width:400px;margin:0 auto;padding:0 24px 16px;">
+      <div class="card-cute p-6 text-center" style="background:linear-gradient(135deg,white,var(--pink-soft));">
+        <div class="text-3xl mb-3">💝</div>
+        <p class="font-playfair text-lg font-semibold" style="color:var(--text-dark);">A birthday surprise is waiting inside...</p>
+        <p id="recipientLandingMsg" class="text-sm mt-3 leading-relaxed" style="color:var(--text-mid);font-style:italic;">"You mean the world to me!"</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:8px 24px 60px;">
+      <button class="open-btn-big" onclick="goToPage('page-storybook')">
+        ✨ Open Your Surprise ✨
+      </button>
+      <p style="color:var(--text-light);font-size:0.8rem;margin-top:16px;">Tap to begin the journey 🌸</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 1: WELCOME / CREATOR FORM -->
 <div id="page-welcome" class="page active">
   <div class="bg-dots min-h-screen flex flex-col">
     <div style="background: linear-gradient(180deg, var(--pink-soft) 0%, transparent 100%); padding: 20px; text-align: center;">
@@ -149,7 +250,6 @@
               <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">🎂 Birthday Person's Name</label>
               <input type="text" id="recipientName" class="input-cute" placeholder="e.g. Mahii"/>
             </div>
-            <!-- ✅ FIX 6: Collect email/phone here for Razorpay prefill → reduces checkout failures -->
             <div>
               <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">📱 Your Phone (for payment)</label>
               <input type="tel" id="senderPhone" class="input-cute" placeholder="10-digit mobile number" maxlength="10"/>
@@ -379,15 +479,14 @@
           </div>
         </div>
         <div class="text-center mt-6" id="giftNextBtn">
-          <button class="btn-pink" onclick="goToPage('page-preview')">Preview Full Website 👀</button>
-          <p class="text-xs mt-2" style="color: var(--text-light);">See everything before sharing!</p>
+          <!-- filled dynamically -->
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PAGE 6: PREVIEW -->
+<!-- PAGE 6: PREVIEW (creator only) -->
 <div id="page-preview" class="page">
   <div class="min-h-screen" style="background: var(--blush);">
     <div class="preview-banner">🎉 FULL PREVIEW — Everything looks perfect? Unlock & Share! 🎉</div>
@@ -430,14 +529,10 @@
           <span class="secure-badge">✅ PCI DSS</span>
         </div>
       </div>
-
       <div id="paymentStatusBanner" class="mb-4 hidden"></div>
-
-      <!-- ✅ FIX 7: Added note about what to do if Razorpay SDK fails -->
       <div id="sdkWarning" class="hidden mb-4 p-3 rounded-2xl text-sm font-semibold" style="background:#FFF8E1;border:1.5px solid #FFD54F;color:#F57F17;">
         ⚠️ Payment gateway loading... If this persists, disable your ad-blocker and refresh.
       </div>
-
       <div class="card-cute p-5 mb-4 relative">
         <div class="ribbon">POPULAR</div>
         <h3 class="font-semibold mb-4" style="color: var(--text-dark);">Order Summary 🎂</h3>
@@ -450,7 +545,6 @@
           <div class="flex justify-between font-bold text-base"><span>Total</span><span style="color: var(--pink-accent);" id="totalAmount">₹179</span></div>
         </div>
       </div>
-
       <div class="card-cute p-4 mb-4">
         <label class="block text-sm font-semibold mb-2" style="color: var(--text-mid);">🏷️ Discount Code</label>
         <div class="flex gap-2">
@@ -459,43 +553,30 @@
         </div>
         <p id="couponMsg" class="text-xs mt-2 hidden"></p>
       </div>
-
       <div class="card-cute p-4 mb-5">
         <p class="text-sm font-semibold mb-3" style="color: var(--text-mid);">💳 Choose Payment Method</p>
         <div class="payment-method-grid">
-          <div class="payment-method-btn selected" id="pm-upi" onclick="selectMethod('upi')">
-            <span class="method-icon">📱</span>UPI / GPay
-          </div>
-          <div class="payment-method-btn" id="pm-card" onclick="selectMethod('card')">
-            <span class="method-icon">💳</span>Credit / Debit Card
-          </div>
-          <div class="payment-method-btn" id="pm-netbanking" onclick="selectMethod('netbanking')">
-            <span class="method-icon">🏦</span>Net Banking
-          </div>
-          <div class="payment-method-btn" id="pm-wallet" onclick="selectMethod('wallet')">
-            <span class="method-icon">👜</span>Paytm / Wallet
-          </div>
+          <div class="payment-method-btn selected" id="pm-upi" onclick="selectMethod('upi')"><span class="method-icon">📱</span>UPI / GPay</div>
+          <div class="payment-method-btn" id="pm-card" onclick="selectMethod('card')"><span class="method-icon">💳</span>Credit / Debit Card</div>
+          <div class="payment-method-btn" id="pm-netbanking" onclick="selectMethod('netbanking')"><span class="method-icon">🏦</span>Net Banking</div>
+          <div class="payment-method-btn" id="pm-wallet" onclick="selectMethod('wallet')"><span class="method-icon">👜</span>Paytm / Wallet</div>
         </div>
         <p class="text-xs text-center mt-2" style="color: var(--text-light);">✅ All Indian banks · No international cards needed</p>
       </div>
-
       <div class="flex justify-center gap-5 mb-5">
         <div class="text-center"><div class="text-2xl">🔐</div><p class="text-xs mt-1" style="color: var(--text-light);">Secure Pay</p></div>
         <div class="text-center"><div class="text-2xl">⚡</div><p class="text-xs mt-1" style="color: var(--text-light);">Instant Link</p></div>
         <div class="text-center"><div class="text-2xl">♾️</div><p class="text-xs mt-1" style="color: var(--text-light);">Lifetime Access</p></div>
         <div class="text-center"><div class="text-2xl">🇮🇳</div><p class="text-xs mt-1" style="color: var(--text-light);">Made for India</p></div>
       </div>
-
       <div class="mb-4 hidden" id="orderIdSection">
         <p class="text-xs font-semibold mb-1" style="color: var(--text-light);">🔖 Order Reference</p>
         <div class="order-id-box" id="orderIdDisplay">—</div>
       </div>
-
       <button class="btn-pink w-full shine-effect text-lg" id="payBtn" onclick="initiatePayment()">
         🎀 Pay Securely — <span id="payBtnAmount">₹179</span>
       </button>
       <p class="text-center text-xs mt-3" style="color: var(--text-light);">Powered by Razorpay · UPI · Cards · Net Banking · Wallets</p>
-
       <div id="retrySection" class="hidden mt-4 text-center">
         <p class="text-sm mb-3" style="color: var(--text-mid);">Payment didn't go through? Try again ↓</p>
         <div class="flex gap-3 justify-center flex-wrap">
@@ -566,9 +647,6 @@ const state = {
   rzpReady: false
 };
 
-// ================================================================
-//  COUPONS
-// ================================================================
 const COUPONS = {
   'BDAY50':   50,
   'LOVE100':  100,
@@ -577,41 +655,11 @@ const COUPONS = {
   'FREEBDAY': 179
 };
 
-// ================================================================
-//  ✅ FIX 8: Razorpay key — replace with your actual key
-//  Get it from: https://dashboard.razorpay.com/app/website-app-settings/api-keys
-//  Use rzp_test_XXXXXX for testing, rzp_live_XXXXXX for production
-// ================================================================
-const RAZORPAY_KEY = 'rzp_live_SvD983baZpuP2A'; // ← Replace with your key
+const RAZORPAY_KEY = 'rzp_live_SvD983baZpuP2A';
 
 // ================================================================
-//  ✅ FIX 9: Check Razorpay SDK loaded on page load, warn if not
+//  ENCODE / DECODE
 // ================================================================
-function checkRazorpaySDK() {
-  if (typeof Razorpay !== 'undefined') {
-    state.rzpReady = true;
-    console.info('✅ Razorpay SDK ready');
-  } else {
-    console.warn('⚠️ Razorpay SDK not loaded yet');
-    // retry after 2s
-    setTimeout(() => {
-      if (typeof Razorpay !== 'undefined') {
-        state.rzpReady = true;
-        console.info('✅ Razorpay SDK ready (delayed)');
-        document.getElementById('sdkWarning').classList.add('hidden');
-      } else {
-        document.getElementById('sdkWarning').classList.remove('hidden');
-      }
-    }, 2000);
-  }
-}
-
-function generateOrderRef() {
-  const ts   = Date.now().toString(36).toUpperCase();
-  const rand = Math.random().toString(36).substring(2,6).toUpperCase();
-  return `BDAY-${ts}-${rand}`;
-}
-
 function encodeState(data) {
   try { return btoa(encodeURIComponent(JSON.stringify(data))); }
   catch(e) { return btoa(JSON.stringify(data)); }
@@ -619,6 +667,106 @@ function encodeState(data) {
 function decodeState(encoded) {
   try { return JSON.parse(decodeURIComponent(atob(encoded))); }
   catch(e) { try { return JSON.parse(atob(encoded)); } catch(e2) { return null; } }
+}
+function generateOrderRef() {
+  const ts   = Date.now().toString(36).toUpperCase();
+  const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+  return `BDAY-${ts}-${rand}`;
+}
+
+// ================================================================
+//  URL ROUTING — MUST RUN FIRST
+//  When recipient opens #gift=... link → show landing page
+// ================================================================
+function checkRoute() {
+  const hash = window.location.hash;
+  if (!hash.startsWith('#gift=')) return false;
+
+  const encoded = hash.slice(6);
+  const data    = decodeState(encoded);
+  if (!data) return false;
+
+  // Populate state from link data
+  state.recipient       = data.r || 'Beautiful';
+  state.sender          = data.s || 'Someone Special';
+  state.message         = data.m || 'You are loved beyond words 💕';
+  state.isRecipientView = true;
+
+  // Populate ALL pages immediately so they're ready when navigated to
+  populateAllPages();
+
+  // Show recipient landing page instead of creator form
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-recipient-landing').classList.add('active');
+
+  // Populate the landing page
+  document.getElementById('recipientLandingName').textContent  = state.recipient;
+  document.getElementById('recipientLandingSender').textContent = state.sender;
+  document.getElementById('recipientLandingMsg').textContent   = '"' + state.message + '"';
+
+  // Spawn floating hearts bg
+  spawnFloatingHearts();
+
+  // Fire confetti after short delay
+  setTimeout(() => launchConfetti(), 400);
+
+  return true;
+}
+
+function spawnFloatingHearts() {
+  const container = document.getElementById('floatingHearts');
+  const emojis = ['💕','🌸','💖','🎂','✨','🌟','💝','🎀'];
+  for (let i = 0; i < 12; i++) {
+    const el = document.createElement('div');
+    el.className = 'floating-heart';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.cssText = `
+      left: ${Math.random() * 100}vw;
+      animation-duration: ${6 + Math.random() * 8}s;
+      animation-delay: ${Math.random() * 6}s;
+      font-size: ${1 + Math.random() * 1.5}rem;
+    `;
+    container.appendChild(el);
+  }
+}
+
+// ================================================================
+//  POPULATE ALL PAGES AT ONCE (called when recipient opens link)
+// ================================================================
+function populateAllPages() {
+  const r = state.recipient;
+  const s = state.sender;
+  const m = state.message;
+
+  // Letter page
+  const letterSub = document.getElementById('letterSubtitle');
+  const msgDisp   = document.getElementById('customMsgDisplay');
+  const snDisp    = document.getElementById('senderNameDisplay');
+  if (letterSub) letterSub.textContent   = `For ${r} with love 💕`;
+  if (msgDisp)   msgDisp.textContent     = m;
+  if (snDisp)    snDisp.textContent      = `— ${s} ❤️`;
+
+  // Reasons page
+  const rSub = document.getElementById('reasonsSubtitle');
+  if (rSub) rSub.textContent = `for ${r} ✨`;
+
+  // Gift page
+  const gName  = document.getElementById('giftRecipientName');
+  const gCName = document.getElementById('giftCandleName');
+  if (gName)  gName.textContent  = r + '!';
+  if (gCName) gCName.textContent = r;
+
+  // Gift next button — show "Made with love" card for recipient, no checkout
+  const nextBtn = document.getElementById('giftNextBtn');
+  if (nextBtn) {
+    nextBtn.innerHTML = `
+      <div class="card-cute p-6 text-center mt-4" style="background:linear-gradient(135deg,white,var(--pink-soft));">
+        <div class="text-3xl mb-2">💕</div>
+        <p class="font-dancing text-2xl" style="color:var(--pink-accent);">Made with all my love</p>
+        <p class="text-sm mt-2" style="color:var(--text-mid);">From <strong>${s}</strong>, just for you 🌸</p>
+        <p class="font-dancing text-lg mt-3" style="color:var(--text-light);">Happy Birthday, ${r}! 🎂</p>
+      </div>`;
+  }
 }
 
 // ================================================================
@@ -628,19 +776,25 @@ function goToPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   window.scrollTo(0, 0);
-  if (pageId === 'page-letter')   updateLetterPage();
-  if (pageId === 'page-reasons')  updateReasonsPage();
-  if (pageId === 'page-gift')     updateGiftPage();
-  if (pageId === 'page-preview')  updatePreviewPage();
-  if (pageId === 'page-success')  showSuccessPage();
-  // Show SDK warning on checkout if SDK not ready
+
+  // For creator flow, update dynamic content
+  if (!state.isRecipientView) {
+    if (pageId === 'page-letter')   updateLetterPage();
+    if (pageId === 'page-reasons')  updateReasonsPage();
+    if (pageId === 'page-gift')     updateGiftPage();
+    if (pageId === 'page-preview')  updatePreviewPage();
+  } else {
+    // Recipient: re-reset gift animation state when visiting gift page
+    if (pageId === 'page-gift') resetGiftAnimation();
+  }
+  if (pageId === 'page-success') showSuccessPage();
   if (pageId === 'page-checkout' && !state.rzpReady) {
     document.getElementById('sdkWarning').classList.remove('hidden');
   }
 }
 
 // ================================================================
-//  START JOURNEY
+//  START JOURNEY (creator)
 // ================================================================
 function startJourney() {
   const sender    = document.getElementById('senderName').value.trim();
@@ -659,7 +813,7 @@ function startJourney() {
 }
 
 // ================================================================
-//  PAGE UPDATERS
+//  PAGE UPDATERS (creator flow)
 // ================================================================
 function updateLetterPage() {
   document.getElementById('letterSubtitle').textContent   = `For ${state.recipient} with love 💕`;
@@ -672,6 +826,13 @@ function updateReasonsPage() {
 function updateGiftPage() {
   document.getElementById('giftRecipientName').textContent = state.recipient + '!';
   document.getElementById('giftCandleName').textContent    = state.recipient;
+  resetGiftAnimation();
+  const nextBtn = document.getElementById('giftNextBtn');
+  if (nextBtn) {
+    nextBtn.innerHTML = `<button class="btn-pink" onclick="goToPage('page-preview')">Preview Full Website 👀</button><p class="text-xs mt-2" style="color: var(--text-light);">See everything before sharing!</p>`;
+  }
+}
+function resetGiftAnimation() {
   document.getElementById('giftStep1').classList.remove('hidden');
   document.getElementById('giftStep2').classList.add('hidden');
   document.getElementById('giftClosed').classList.remove('hidden');
@@ -682,14 +843,6 @@ function updateGiftPage() {
   if (smoke) smoke.style.opacity = '0';
   const blowBtn = document.getElementById('blowCandleBtn');
   if (blowBtn) { blowBtn.textContent = '🌬️ Tap to blow the candle'; blowBtn.disabled = false; blowBtn.style.opacity = '1'; }
-  const nextBtn = document.getElementById('giftNextBtn');
-  if (nextBtn) {
-    if (state.isRecipientView) {
-      nextBtn.innerHTML = `<div class="card-cute p-4 mt-4 text-center" style="background: linear-gradient(135deg, white, var(--pink-soft));"><p class="font-dancing text-2xl" style="color: var(--pink-accent);">Made with 💕 just for you</p><p class="text-sm mt-2" style="color: var(--text-mid);">From <strong>${state.sender}</strong>, with all my love 🌸</p></div>`;
-    } else {
-      nextBtn.innerHTML = `<button class="btn-pink" onclick="goToPage('page-preview')">Preview Full Website 👀</button><p class="text-xs mt-2" style="color: var(--text-light);">See everything before sharing!</p>`;
-    }
-  }
 }
 function updatePreviewPage() {
   document.getElementById('previewRecipient').textContent = state.recipient;
@@ -701,7 +854,6 @@ function updatePreviewPage() {
 //  FLIP CARDS & FLOWERS
 // ================================================================
 function flipCard(card) { card.classList.toggle('flipped'); }
-
 function pickFlower(el, wish) {
   const reveal = document.getElementById('wishReveal');
   reveal.textContent = wish;
@@ -716,9 +868,9 @@ function pickFlower(el, wish) {
 //  GIFT BOX
 // ================================================================
 function blowGiftCandle() {
-  const flame   = document.getElementById('flameGroup');
-  const smoke   = document.getElementById('smokeGroup');
-  const btn     = document.getElementById('blowCandleBtn');
+  const flame = document.getElementById('flameGroup');
+  const smoke = document.getElementById('smokeGroup');
+  const btn   = document.getElementById('blowCandleBtn');
   flame.style.transition = 'opacity 0.4s ease';
   flame.style.opacity    = '0';
   smoke.style.opacity    = '1';
@@ -731,7 +883,6 @@ function blowGiftCandle() {
     document.getElementById('giftStep2').classList.remove('hidden');
   }, 1200);
 }
-
 function openGiftBox() {
   const closed = document.getElementById('giftClosed');
   const opened = document.getElementById('giftOpened');
@@ -742,7 +893,7 @@ function openGiftBox() {
 }
 
 // ================================================================
-//  PAYMENT METHOD SELECTION
+//  PAYMENT METHOD
 // ================================================================
 function selectMethod(method) {
   state.selectedMethod = method;
@@ -776,10 +927,10 @@ function applyCoupon() {
 }
 
 // ================================================================
-//  PAYMENT STATUS BANNER
+//  PAYMENT STATUS
 // ================================================================
 function showStatus(type, msg) {
-  const el   = document.getElementById('paymentStatusBanner');
+  const el = document.getElementById('paymentStatusBanner');
   const icons = { loading:'⏳', success:'✅', error:'❌', warning:'⚠️' };
   el.className = `payment-status ${type} mb-4`;
   el.innerHTML = `<span style="font-size:1.2rem">${icons[type]}</span><span>${msg}</span>`;
@@ -790,18 +941,11 @@ function hideStatus() {
 }
 
 // ================================================================
-//  PAYMENT — MAIN
-//  ✅ FIX 10: currency duplicate removed, prefill populated from
-//             phone/email collected on page 1
-//  ✅ FIX 11: loading overlay prevents double-taps
-//  ✅ FIX 12: Razorpay 'config' block added to restrict methods
-//             to domestic INR only (prevents inactive method error)
+//  PAYMENT
 // ================================================================
 function initiatePayment() {
   const btn = document.getElementById('payBtn');
   state.attemptCount++;
-
-  // FREE coupon
   if (state.finalPrice === 0) {
     state.orderId   = generateOrderRef();
     state.paymentId = 'FREE-' + state.orderId;
@@ -810,36 +954,26 @@ function initiatePayment() {
     setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 800);
     return;
   }
-
-  // Prevent double tap
   if (btn.disabled) return;
-
   state.orderId = generateOrderRef();
   document.getElementById('orderIdDisplay').textContent = state.orderId;
   document.getElementById('orderIdSection').classList.remove('hidden');
-
   btn.textContent = '⏳ Opening payment...';
   btn.disabled    = true;
   hideStatus();
   document.getElementById('retrySection').classList.add('hidden');
   document.getElementById('rzpLoadingOverlay').classList.add('show');
-
   const options = {
-    key:      RAZORPAY_KEY,
-    amount:   state.finalPrice * 100,
-    currency: 'INR',
-    name:     'Birthday Surprise 🎂',
+    key:         RAZORPAY_KEY,
+    amount:      state.finalPrice * 100,
+    currency:    'INR',
+    name:        'Birthday Surprise 🎂',
     description: `Birthday Website for ${state.recipient}`,
-
-    // ✅ FIX 13: Prefill with collected phone & email
     prefill: {
       name:    state.sender,
-      email:   state.email    || '',
-      contact: state.phone    || ''
+      email:   state.email  || '',
+      contact: state.phone  || ''
     },
-
-    // ✅ FIX 14: config.display restricts to INR domestic methods only
-    // This directly prevents "inactive payment method" errors
     config: {
       display: {
         blocks: {
@@ -854,9 +988,7 @@ function initiatePayment() {
         preferences: { show_default_blocks: false }
       }
     },
-
     theme: { color: '#E8477A', hide_topbar: false },
-
     handler: function(response) {
       document.getElementById('rzpLoadingOverlay').classList.remove('show');
       state.paymentId = response.razorpay_payment_id || ('DEMO-' + Date.now());
@@ -865,7 +997,6 @@ function initiatePayment() {
       logPaymentForWebhook(response);
       setTimeout(() => { goToPage('page-success'); launchConfetti(); }, 1000);
     },
-
     modal: {
       backdropclose: false,
       escape: false,
@@ -879,7 +1010,6 @@ function initiatePayment() {
       }
     }
   };
-
   if (typeof Razorpay !== 'undefined') {
     try {
       const rzp = new Razorpay(options);
@@ -889,30 +1019,22 @@ function initiatePayment() {
         btn.disabled    = false;
         showStatus('error', getFriendlyError(response.error.code, response.error.description));
         document.getElementById('retrySection').classList.remove('hidden');
-        console.warn('[Payment Failed]', response.error.code, response.error.description);
       });
-      // ✅ FIX 15: Hide overlay AFTER modal opens (not before)
       rzp.on('ready', function() {
         document.getElementById('rzpLoadingOverlay').classList.remove('show');
       });
       rzp.open();
-      // Fallback: hide overlay after 3s regardless
       setTimeout(() => document.getElementById('rzpLoadingOverlay').classList.remove('show'), 3000);
     } catch(err) {
-      console.error('Razorpay init error:', err);
       document.getElementById('rzpLoadingOverlay').classList.remove('show');
       fallbackPaymentMode(btn);
     }
   } else {
     document.getElementById('rzpLoadingOverlay').classList.remove('show');
-    console.warn('Razorpay SDK not loaded — demo mode');
     fallbackPaymentMode(btn);
   }
 }
 
-// ================================================================
-//  FRIENDLY ERROR MESSAGES
-// ================================================================
 function getFriendlyError(code, desc) {
   const map = {
     'BAD_REQUEST_ERROR':  '⚠️ Bank declined. Try a different card or UPI.',
@@ -932,15 +1054,9 @@ function getFriendlyError(code, desc) {
   return `❌ Payment failed (${code || 'unknown'}). Try a different method below.`;
 }
 
-// ================================================================
-//  RETRY HELPERS
-// ================================================================
 function retryWithUPI()  { selectMethod('upi');  initiatePayment(); }
 function retryWithCard() { selectMethod('card'); initiatePayment(); }
 
-// ================================================================
-//  FALLBACK / DEMO MODE
-// ================================================================
 function fallbackPaymentMode(btn) {
   showStatus('loading', 'Demo mode: processing...');
   setTimeout(() => {
@@ -953,12 +1069,6 @@ function fallbackPaymentMode(btn) {
   }, 1500);
 }
 
-// ================================================================
-//  WEBHOOK LOG
-//  ⚠️  PRODUCTION: Verify razorpay_signature on your backend!
-//  Backend verification:
-//    HMAC-SHA256(order_id + "|" + payment_id, KEY_SECRET)
-// ================================================================
 function logPaymentForWebhook(rzpResponse) {
   const log = {
     order_id:   state.orderId,
@@ -970,23 +1080,17 @@ function logPaymentForWebhook(rzpResponse) {
     timestamp:  new Date().toISOString()
   };
   try { localStorage.setItem('last_payment_' + state.orderId, JSON.stringify(log)); } catch(e) {}
-  console.info('[Payment Log — Send to backend for webhook verification]', log);
-  // Uncomment and replace URL for production:
-  // fetch('https://your-backend.com/verify-payment', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(log)
-  // });
+  console.info('[Payment Log]', log);
 }
 
 // ================================================================
 //  SUCCESS PAGE
 // ================================================================
 function showSuccessPage() {
-  const payload    = { r: state.recipient, s: state.sender, m: state.message };
-  const encoded    = encodeState(payload);
-  const base       = window.location.href.split('#')[0].split('?')[0];
-  const shareLink  = `${base}#gift=${encoded}`;
+  const payload   = { r: state.recipient, s: state.sender, m: state.message };
+  const encoded   = encodeState(payload);
+  const base      = window.location.href.split('#')[0].split('?')[0];
+  const shareLink = `${base}#gift=${encoded}`;
   document.getElementById('shareableLink').textContent    = shareLink;
   document.getElementById('successRecipient').textContent = state.recipient;
   document.getElementById('receiptOrderId').textContent   = state.orderId   || '—';
@@ -994,9 +1098,6 @@ function showSuccessPage() {
   document.getElementById('receiptAmount').textContent    = state.finalPrice === 0 ? 'FREE' : `₹${state.finalPrice}`;
 }
 
-// ================================================================
-//  COPY & SHARE
-// ================================================================
 function copyLink() {
   const link = document.getElementById('shareableLink').textContent;
   navigator.clipboard.writeText(link).then(() => {
@@ -1037,8 +1138,8 @@ function launchConfetti() {
   const colors    = ['#FF7BAC','#FFD700','#E8477A','#FFB6D3','#FF6B9D','#FFF'];
   for (let i = 0; i < 60; i++) {
     setTimeout(() => {
-      const piece        = document.createElement('div');
-      piece.className    = 'confetti-piece';
+      const piece     = document.createElement('div');
+      piece.className = 'confetti-piece';
       piece.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};width:${Math.random()*8+6}px;height:${Math.random()*8+6}px;border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*0.5}s`;
       container.appendChild(piece);
       setTimeout(() => piece.remove(), 5000);
@@ -1049,8 +1150,8 @@ function launchMiniConfetti() {
   const container = document.getElementById('confettiContainer');
   for (let i = 0; i < 20; i++) {
     setTimeout(() => {
-      const piece        = document.createElement('div');
-      piece.className    = 'confetti-piece';
+      const piece     = document.createElement('div');
+      piece.className = 'confetti-piece';
       piece.style.cssText = `left:${30+Math.random()*40}vw;background:${['#FF7BAC','#FFD700','#E8477A'][Math.floor(Math.random()*3)]};width:8px;height:8px;border-radius:50%;animation-duration:${Math.random()*2+1.5}s`;
       container.appendChild(piece);
       setTimeout(() => piece.remove(), 3500);
@@ -1059,48 +1160,32 @@ function launchMiniConfetti() {
 }
 
 // ================================================================
-//  URL ROUTING — recipient link decoding
+//  SDK CHECK
 // ================================================================
-function checkRoute() {
-  const hash = window.location.hash;
-  if (!hash.startsWith('#gift=')) return;
-  const encoded = hash.slice(6);
-  const data    = decodeState(encoded);
-  if (!data) return;
-  state.recipient       = data.r || 'Beautiful';
-  state.sender          = data.s || 'Someone special';
-  state.message         = data.m || 'You are loved beyond words 💕';
-  state.isRecipientView = true;
-  populateRecipientContent();
-  goToPage('page-storybook');
-  launchConfetti();
-}
-function populateRecipientContent() {
-  const fields = {
-    letterSubtitle:    `For ${state.recipient} with love 💕`,
-    customMsgDisplay:  state.message,
-    senderNameDisplay: `— ${state.sender} ❤️`,
-    reasonsSubtitle:   `for ${state.recipient} ✨`,
-    giftRecipientName: state.recipient + '!',
-    giftCandleName:    state.recipient
-  };
-  Object.entries(fields).forEach(([id, val]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  });
+function checkRazorpaySDK() {
+  if (typeof Razorpay !== 'undefined') {
+    state.rzpReady = true;
+  } else {
+    setTimeout(() => {
+      if (typeof Razorpay !== 'undefined') {
+        state.rzpReady = true;
+        document.getElementById('sdkWarning').classList.add('hidden');
+      } else {
+        document.getElementById('sdkWarning').classList.remove('hidden');
+      }
+    }, 2000);
+  }
 }
 
 // ================================================================
 //  INIT
 // ================================================================
 document.addEventListener('DOMContentLoaded', () => {
-  checkRoute();
+  checkRoute();      // check for recipient link FIRST
   checkRazorpaySDK();
 });
 </script>
 
-<!-- ✅ FIX 16: Load Razorpay SDK synchronously (not async) to ensure
-     it's available when user reaches checkout page -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 </html>
